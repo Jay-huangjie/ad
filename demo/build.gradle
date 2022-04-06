@@ -1,0 +1,92 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+
+android {
+    compileSdkVersion rootProject.ext.android.compileSdkVersion
+    defaultConfig {
+        applicationId "com.ifmvo.togetherad.demo"
+        minSdkVersion rootProject.ext.android.minSdkVersion
+        targetSdkVersion rootProject.ext.android.targetSdkVersion
+        versionCode rootProject.ext.android.versionCode
+        versionName rootProject.ext.android.versionName
+        multiDexEnabled true
+    }
+
+    lintOptions {
+        abortOnError false
+    }
+
+    signingConfigs {
+        release {
+            keyAlias 'TogetherAd2020'
+            keyPassword 'TogetherAd2020'
+            storeFile file('TogetherAd.jks')
+            storePassword 'TogetherAd2020'
+        }
+    }
+
+    buildTypes {
+        release {
+            signingConfig signingConfigs.release
+            minifyEnabled true
+            shrinkResources true
+            zipAlignEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            signingConfig signingConfigs.release
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    // 自定义APK文件名
+    applicationVariants.all { variant ->
+        variant.outputs.all {
+            outputFileName = "TogetherAdDemo_${releaseTime()}.apk"
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility 1.8
+        targetCompatibility 1.8
+    }
+
+    repositories { flatDir { dirs 'libs' } }
+}
+
+//获取时间
+static def releaseTime() {
+    return new Date().format("yyyyMMdd", TimeZone.getTimeZone("UTC"))
+}
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation 'com.android.support:appcompat-v7:28.0.0'
+    implementation 'com.android.support:recyclerview-v7:28.0.0'
+
+    //内存泄漏检测工具
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.4'
+
+    //多量CPL激励式游戏广告平台
+    implementation(name: 'dy-task-sdk-2.1.8', ext: 'aar')
+
+    //TogetherAd
+    implementation project(':csj')
+    implementation project(':gdt')
+    implementation project(':ks')
+    implementation project(':baidu')
+
+//    //核心库（ 必要 ）
+//    implementation 'com.github.ifmvo.TogetherAd:core:5.2.1'
+//    //腾讯优量汇 （ 可选 ）
+//    implementation 'com.github.ifmvo.TogetherAd:gdt:5.2.1'
+//    //穿山甲 （ 可选 ）
+//    implementation 'com.github.ifmvo.TogetherAd:csj:5.2.1'
+//    //快手联盟 （ 可选 ）
+//    implementation 'com.github.ifmvo.TogetherAd:ks:5.2.1'
+//    //百度百青藤 （ 可选 ）
+//    implementation 'com.github.ifmvo.TogetherAd:baidu:5.2.1'
+
+}
