@@ -4,7 +4,7 @@ apply plugin: 'kotlin-android'
 // JitPack Maven
 apply plugin: 'com.github.dcendents.android-maven'
 // Your Group
-group = 'com.github.ifmvo'
+group = 'com.github.Jay-huangjie'
 
 android {
     compileSdkVersion rootProject.ext.android.compileSdkVersion
