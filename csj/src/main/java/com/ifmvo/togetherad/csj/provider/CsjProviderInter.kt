@@ -3,6 +3,7 @@ package com.ifmvo.togetherad.csj.provider
 import android.app.Activity
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.View
 import com.bytedance.sdk.openadsdk.*
 import com.ifmvo.togetherad.core.listener.InterListener
@@ -43,10 +44,11 @@ abstract class CsjProviderInter : CsjProviderFullVideo() {
             .loadFullScreenVideoAd(adSlotBuilder.build(),
                 object : TTAdNative.FullScreenVideoAdListener {
                     override fun onError(p0: Int, p1: String?) {
-
+                         Log.e("HJ", "Error:$p1--$p0")
                     }
 
                     override fun onFullScreenVideoAdLoad(fullScreenVideoAd: TTFullScreenVideoAd?) {
+                        Log.e("HJ","onFullScreenVideoAdLoad")
                         mFllScreenVideoAd = fullScreenVideoAd
                         mFllScreenVideoAd?.setFullScreenVideoAdInteractionListener(object : TTFullScreenVideoAd.FullScreenVideoAdInteractionListener {
                             override fun onSkippedVideo() {
@@ -54,7 +56,7 @@ abstract class CsjProviderInter : CsjProviderFullVideo() {
                             }
 
                             override fun onAdShow() {
-                                callbackInterLoaded(adProviderType, alias, listener)
+
                             }
 
                             override fun onAdVideoBarClick() {
@@ -72,11 +74,12 @@ abstract class CsjProviderInter : CsjProviderFullVideo() {
                     }
 
                     override fun onFullScreenVideoCached() {
-
+                        Log.e("HJ","onFullScreenVideoCached")
+                        callbackInterLoaded(adProviderType, alias, listener)
                     }
 
                     override fun onFullScreenVideoCached(p0: TTFullScreenVideoAd?) {
-
+                        Log.e("HJ","onFullScreenVideoCached")
                     }
 
                 });
@@ -142,7 +145,7 @@ abstract class CsjProviderInter : CsjProviderFullVideo() {
     }
 
     override fun destroyInterAd() {
-
+        mFllScreenVideoAd = null
     }
 
 }
