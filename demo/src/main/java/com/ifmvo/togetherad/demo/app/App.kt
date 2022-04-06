@@ -8,6 +8,7 @@ import com.ifmvo.togetherad.demo.BuildConfig
 import com.ifmvo.togetherad.demo.R
 import com.ifmvo.togetherad.gdt.TogetherAdGdt
 import com.ifmvo.togetherad.ks.TogetherAdKs
+import com.qq.e.comm.compliance.DownloadConfirmListener
 
 /*
  * Created by Matthew Chen on 2020-04-16.
@@ -223,6 +224,9 @@ class App : ActLifecycleAppBase() {
      * 多量CPL激励式游戏广告平台
      */
     private fun initDy() {
+TogetherAdGdt.downloadConfirmListener = DownloadConfirmListener { activity, i, s, downloadConfirmCallBack ->
+
+}
         DyAdApi.getDyAdApi().init(this,"dy_59633678", "ee0a8ee5de2ce442c8b094410440ec8c", "channel", true)
     }
 }
