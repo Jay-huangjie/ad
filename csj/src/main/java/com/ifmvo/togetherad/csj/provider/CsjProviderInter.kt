@@ -37,7 +37,6 @@ abstract class CsjProviderInter : CsjProviderFullVideo() {
                 CsjProvider.Inter.expressViewAcceptedSizeWidth,
                 CsjProvider.Inter.expressViewAcceptedSizeHeight
             )
-            .setImageAcceptedSize(640, 320)//这个参数设置即可，不影响个性化模板广告的size
             .setAdCount(1) //请求广告数量为1到3条
             .setOrientation(CsjProvider.FullVideo.orientation)
         TogetherAdCsj.mTTAdManager.createAdNative(activity)
