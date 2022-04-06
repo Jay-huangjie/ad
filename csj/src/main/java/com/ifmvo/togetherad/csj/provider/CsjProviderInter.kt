@@ -17,7 +17,6 @@ import com.ifmvo.togetherad.csj.TogetherAdCsj
  */
 abstract class CsjProviderInter : CsjProviderFullVideo() {
 
-    //    private var mTTNativeExpressInterAd: TTNativeExpressAd? = null
     private var mFllScreenVideoAd: TTFullScreenVideoAd? = null
     override fun requestInterAd(
         activity: Activity,
@@ -43,13 +42,13 @@ abstract class CsjProviderInter : CsjProviderFullVideo() {
             .loadFullScreenVideoAd(adSlotBuilder.build(),
                 object : TTAdNative.FullScreenVideoAdListener {
                     override fun onError(p0: Int, p1: String?) {
-                         Log.e("HJ", "Error:$p1--$p0")
+                        callbackInterFailed(adProviderType, alias, listener, p0, p1)
                     }
 
                     override fun onFullScreenVideoAdLoad(fullScreenVideoAd: TTFullScreenVideoAd?) {
-                        Log.e("HJ","onFullScreenVideoAdLoad")
                         mFllScreenVideoAd = fullScreenVideoAd
-                        mFllScreenVideoAd?.setFullScreenVideoAdInteractionListener(object : TTFullScreenVideoAd.FullScreenVideoAdInteractionListener {
+                        mFllScreenVideoAd?.setFullScreenVideoAdInteractionListener(object :
+                            TTFullScreenVideoAd.FullScreenVideoAdInteractionListener {
                             override fun onSkippedVideo() {
 
                             }
@@ -73,60 +72,13 @@ abstract class CsjProviderInter : CsjProviderFullVideo() {
                     }
 
                     override fun onFullScreenVideoCached() {
-                        Log.e("HJ","onFullScreenVideoCached")
-                        callbackInterLoaded(adProviderType, alias, listener)
+
                     }
 
                     override fun onFullScreenVideoCached(p0: TTFullScreenVideoAd?) {
-                        Log.e("HJ","onFullScreenVideoCached")
+                        callbackInterLoaded(adProviderType, alias, listener)
                     }
-
                 });
-//        TogetherAdCsj.mTTAdManager.createAdNative(activity).loadFullScreenVideoAd(adSlotBuilder.build(), object : TTAdNative.NativeExpressAdListener {
-//
-//
-//
-//
-//            override fun onNativeExpressAdLoad(adList: MutableList<TTNativeExpressAd>?) {
-//                if (adList.isNullOrEmpty()) {
-//                    callbackInterFailed(adProviderType, alias, listener, null, "请求成功，但是返回的list为空")
-//                    return
-//                }
-//                callbackInterLoaded(adProviderType, alias, listener)
-//
-//                mTTNativeExpressInterAd = adList[0]
-//                mTTNativeExpressInterAd?.setExpressInteractionListener(object : TTNativeExpressAd.AdInteractionListener {
-//                    override fun onAdDismiss() {
-//                        callbackInterClosed(adProviderType, listener)
-//                    }
-//
-//                    override fun onAdClicked(p0: View?, p1: Int) {
-//                        callbackInterClicked(adProviderType, listener)
-//                    }
-//
-//                    override fun onAdShow(view: View?, p1: Int) {
-//                        callbackInterExpose(adProviderType, listener)
-//                    }
-//
-//                    override fun onRenderSuccess(view: View?, p1: Float, p2: Float) {
-//                        mTTNativeExpressInterAd?.showInteractionExpressAd(activity)
-//                    }
-//
-//                    override fun onRenderFail(view: View?, errorMsg: String?, errorCode: Int) {
-//
-//                    }
-//                })
-//                mTTNativeExpressInterAd?.setDislikeCallback(activity, object : TTAdDislike.DislikeInteractionCallback {
-//                    override fun onSelected(p0: Int, p1: String?, enforce: Boolean) {}
-//                    override fun onCancel() {}
-//                    override fun onShow() {}
-//                })
-//            }
-//
-//            override fun onError(errorCode: Int, errorMsg: String?) {
-//                callbackInterFailed(adProviderType, alias, listener, errorCode, errorMsg)
-//            }
-//        })
     }
 
     override fun showInterAd(activity: Activity) {
