@@ -29,9 +29,18 @@ open class CsjProvider : CsjProviderSplash() {
 
         internal var imageAcceptedSizeHeight = 1920
 
+        internal var imageAcceptedSizeWidthDp = 1920f
+
+        internal var imageAcceptedSizeHeightDp = 1920f
+
         fun setImageAcceptedSize(width: Int, height: Int) {
             imageAcceptedSizeWidth = width
             imageAcceptedSizeHeight = height
+        }
+
+        fun setExpressViewAcceptedSize(width: Float, height: Float) {
+            imageAcceptedSizeWidthDp = width
+            imageAcceptedSizeHeightDp = height
         }
     }
 
