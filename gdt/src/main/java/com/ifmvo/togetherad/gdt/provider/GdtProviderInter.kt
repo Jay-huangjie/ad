@@ -47,10 +47,7 @@ abstract class GdtProviderInter : GdtProviderFullVideo() {
             }
 
             override fun onADReceive() {
-                TogetherAdGdt.downloadConfirmListener?.let {
-                    interAd?.setDownloadConfirmListener(it)
-                }
-                callbackInterLoaded(adProviderType, alias, listener)
+
             }
 
             override fun onNoAD(adError: AdError?) {
@@ -62,6 +59,10 @@ abstract class GdtProviderInter : GdtProviderFullVideo() {
             }
 
             override fun onRenderSuccess() {
+                TogetherAdGdt.downloadConfirmListener?.let {
+                    interAd?.setDownloadConfirmListener(it)
+                }
+                callbackInterLoaded(adProviderType, alias, listener)
             }
         })
         interAd?.loadAD()
