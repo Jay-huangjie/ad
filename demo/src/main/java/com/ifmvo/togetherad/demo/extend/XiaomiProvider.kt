@@ -15,6 +15,17 @@ import com.ifmvo.togetherad.core.provider.BaseAdProvider
 class XiaomiProvider : BaseAdProvider() {
 
     override fun loadOnlySplashAd(activity: Activity, adProviderType: String, alias: String, listener: SplashListener) {}
+    override fun loadSplashEye(
+        activity: Activity,
+        adProviderType: String,
+        alias: String,
+        container: ViewGroup,
+        listener: EyesSplashListener
+    ) {
+    }
+
+    override fun loadMainSplashEye(activity: Activity, listener: EyesSplashListener) {
+    }
 
     override fun showSplashAd(container: ViewGroup): Boolean {
         return false

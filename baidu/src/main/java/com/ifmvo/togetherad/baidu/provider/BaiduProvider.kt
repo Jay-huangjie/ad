@@ -36,6 +36,18 @@ open class BaiduProvider : BaseAdProvider() {
         callbackSplashFailed(adProviderType, alias, listener, null, "百度开屏不支持加载和展示分开")
     }
 
+    override fun loadSplashEye(
+        activity: Activity,
+        adProviderType: String,
+        alias: String,
+        container: ViewGroup,
+        listener: EyesSplashListener
+    ) {
+    }
+
+    override fun loadMainSplashEye(activity: Activity, listener: EyesSplashListener) {
+    }
+
     override fun showSplashAd(container: ViewGroup): Boolean {
         return false
     }

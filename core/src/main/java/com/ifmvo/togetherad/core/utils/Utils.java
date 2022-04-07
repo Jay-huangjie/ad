@@ -6,8 +6,6 @@ import android.graphics.Point;
 import android.os.Build;
 import android.view.WindowManager;
 
-import com.ifmvo.togetherad.csj.TogetherAdCsj;
-
 /**
  * create by hj on 2022/4/6
  **/
