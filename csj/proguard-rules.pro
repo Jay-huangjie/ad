@@ -35,7 +35,7 @@
 -keep class com.bykv.vk.** {*;}
 
 -keep class com.ifmvo.togetherad.csj.** { *; }
-
+#----------------------新增------------------------------#
 -keepclassmembers class * {
     *** getContext(...);
     *** getActivity(...);
@@ -96,6 +96,9 @@
     *** sendBroadcast(**);
     *** sendBroadcastSync(**);
 }
+-keep class com.volcengine.StubConfig{
+    *;
+}
 
 
 -keep class android.support.v4.app.FragmentActivity{}
@@ -120,3 +123,7 @@
     *** sendBroadcast(**);
     *** sendBroadcastSync(**);
 }
+-keep class com.volcengine.StubConfig{
+    *;
+}
+
