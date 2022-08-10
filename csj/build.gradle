@@ -33,7 +33,7 @@ android {
 dependencies {
     api fileTree(dir: 'libs', include: ['*.jar', '*.aar'])
     //上传需要把这个加入才可以把lib里的aar打入到新生成的aar
-    embed(name: 'open_ad_sdk_4.6.0.7', ext: 'aar')
+    embed(name: 'open_ad_sdk_4.7.0.8', ext: 'aar')
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
     api project(':core')
