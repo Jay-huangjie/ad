@@ -25,9 +25,10 @@ android {
     repositories { flatDir { dirs 'libs' } }
 
 }
-
+//本地编译检测  gradlew publishToMavenLocal
 dependencies {
-    api fileTree(dir: 'libs', include: ['*.jar', '*.aar'])
+    api fileTree(dir: 'libs', include: ['*.jar'])
+    compileOnly fileTree(dir: 'libs', include: ['*.aar'])
     //上传需要把这个加入才可以把lib里的aar打入到新生成的aar
     embed(name: 'open_ad_sdk_4.7.1.2', ext: 'aar')
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
@@ -42,7 +43,7 @@ afterEvaluate {
                 from components.release
                 groupId = 'com.github.Jay-huangjie' //groupId 随便取
                 artifactId = 'csj'  //artifactId 随便取
-                version = '1.0.0'
+                version = '1.1.7'
             }
         }
     }
