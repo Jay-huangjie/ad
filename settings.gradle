@@ -1,6 +1,5 @@
-include ':ks'
+include ':huawei'
 include ':core'
 include ':gdt'
 include ':csj'
-include ':baidu'
 include ':demo'

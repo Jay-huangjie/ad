@@ -1,30 +1,31 @@
-package com.ifmvo.togetherad.ks.provider
+package com.ifmvo.togetherad.huawei.provider
 
 import android.app.Activity
 import android.view.ViewGroup
 import com.ifmvo.togetherad.core.listener.SplashListener
-import com.ifmvo.togetherad.ks.R
-import com.ifmvo.togetherad.ks.TogetherAdKs
+import com.ifmvo.togetherad.core.provider.BaseAdProvider
+import com.ifmvo.togetherad.huawei.R
+import com.ifmvo.togetherad.huawei.TogetherAdHw
 import com.kwad.sdk.api.KsLoadManager
 import com.kwad.sdk.api.KsScene
 import com.kwad.sdk.api.KsSplashScreenAd
 
-abstract class KsProviderSplash : KsProviderReward() {
+abstract class KsProviderSplash : BaseAdProvider() {
 
     override fun loadAndShowSplashAd(activity: Activity, adProviderType: String, alias: String, container: ViewGroup, listener: SplashListener) {
 
         callbackSplashStartRequest(adProviderType, alias, listener)
 
-        if (TogetherAdKs.adRequestManager == null) {
+        if (TogetherAdHw.adRequestManager == null) {
             callbackSplashFailed(adProviderType, alias, listener, null, activity.getString(R.string.ks_init_failed))
             return
         }
 
-        val ksScene = KsScene.Builder(TogetherAdKs.idMapKs[alias] ?: 0)
+        val ksScene = KsScene.Builder(TogetherAdHw.idMapKs[alias] ?: 0)
                 .adNum(1)
                 .build()
 
-        TogetherAdKs.adRequestManager!!.loadSplashScreenAd(ksScene, object : KsLoadManager.SplashScreenAdListener {
+        TogetherAdHw.adRequestManager!!.loadSplashScreenAd(ksScene, object : KsLoadManager.SplashScreenAdListener {
 
             override fun onRequestResult(adNumber: Int) {}
 

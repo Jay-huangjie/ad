@@ -1,11 +1,7 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'com.kezong.fat-aar'
-
-// JitPack Maven
-apply plugin: 'com.github.dcendents.android-maven'
-// Your Group
-group = 'com.github.Jay-huangjie'
+apply plugin: 'maven-publish'
 
 android {
     compileSdkVersion rootProject.ext.android.compileSdkVersion
@@ -33,8 +29,21 @@ android {
 dependencies {
     api fileTree(dir: 'libs', include: ['*.jar', '*.aar'])
     //上传需要把这个加入才可以把lib里的aar打入到新生成的aar
-    embed(name: 'open_ad_sdk_4.7.1.2', ext: 'aar')
+//    embed(name: 'open_ad_sdk_4.7.1.2', ext: 'aar')
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
     api project(':core')
+}
+
+afterEvaluate {
+    publishing {
+        publications {
+            release(MavenPublication) {
+                from components.release
+                groupId = 'com.github.Jay-huangjie' //groupId 随便取
+                artifactId = 'csj'  //artifactId 随便取
+                version = '1.0.0'
+            }
+        }
+    }
 }

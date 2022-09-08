@@ -13,7 +13,7 @@ enum class AdProviderType(val type: String) {
     CSJ("csj"),
 
     //快手
-    KS("ks"),
+    KS("huawei"),
 
     //百度百青藤
     BAIDU("baidu")

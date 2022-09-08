@@ -19,13 +19,7 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
--keep class org.chromium.** {*;}
--keep class org.chromium.** { *; }
--keep class aegon.chrome.** { *; }
--keep class com.kwai.**{ *; }
--dontwarn com.kwai.**
--dontwarn com.kwad.**
--dontwarn com.ksad.**
--dontwarn aegon.chrome.**
 
--keep class com.ifmvo.togetherad.ks.** { *; }
+-keep class com.ifmvo.togetherad.huawei.** { *; }
+-keep class com.huawei.openalliance.ad.** { *; }
+-keep class com.huawei.hms.ads.** { *; }

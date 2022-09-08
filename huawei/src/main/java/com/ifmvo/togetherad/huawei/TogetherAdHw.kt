@@ -1,15 +1,15 @@
-package com.ifmvo.togetherad.ks
+package com.ifmvo.togetherad.huawei
 
 import android.content.Context
+import com.huawei.hms.ads.HwAds
 import com.ifmvo.togetherad.core.TogetherAd
 import com.ifmvo.togetherad.core.entity.AdProviderEntity
-import com.ifmvo.togetherad.ks.provider.KsProvider
 import com.kwad.sdk.api.KsAdSDK
 import com.kwad.sdk.api.KsLoadManager
 import com.kwad.sdk.api.SdkConfig
 import org.jetbrains.annotations.NotNull
 
-object TogetherAdKs {
+object TogetherAdHw {
 
     var idMapKs = mutableMapOf<String, Long>()
 
@@ -44,18 +44,7 @@ object TogetherAdKs {
     }
 
     fun init(@NotNull context: Context, @NotNull adProviderType: String, @NotNull ksAdAppId: String, ksIdMap: Map<String, Long>? = null, providerClassPath: String? = null): Boolean {
-        TogetherAd.addProvider(AdProviderEntity(adProviderType, if (providerClassPath?.isEmpty() != false) KsProvider::class.java.name else providerClassPath))
-        ksIdMap?.let { idMapKs.putAll(it) }
-        val config = SdkConfig.Builder()
-        config.appId(ksAdAppId)
-        appKey?.let { config.appKey(it) }
-        appWebKey?.let { config.appWebKey(it) }
-        nightThemeStyleAssetsFileName?.let { config.nightThemeStyleAssetsFileName(it) }
-        config.showNotification(showNotification)
-        config.debug(debug)
-        val isInitSuccess = KsAdSDK.init(context, config.build())
-        adRequestManager = KsAdSDK.getLoadManager()
-        return isInitSuccess
+        return true
     }
 
 }

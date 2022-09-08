@@ -7,7 +7,7 @@ import com.ifmvo.togetherad.csj.TogetherAdCsj
 import com.ifmvo.togetherad.demo.BuildConfig
 import com.ifmvo.togetherad.demo.R
 import com.ifmvo.togetherad.gdt.TogetherAdGdt
-import com.ifmvo.togetherad.ks.TogetherAdKs
+import com.ifmvo.togetherad.huawei.TogetherAdHw
 import com.qq.e.comm.compliance.DownloadConfirmListener
 
 /*
@@ -82,7 +82,7 @@ class App : ActLifecycleAppBase() {
         //初始化百青藤
         TogetherAdBaidu.init(context = this, adProviderType = AdProviderType.BAIDU.type, baiduAdAppId = "e866cfb0")
         //初始化快手
-        TogetherAdKs.init(context = this, adProviderType = AdProviderType.KS.type, ksAdAppId = "90009")
+        TogetherAdHw.init(context = this, adProviderType = AdProviderType.KS.type, ksAdAppId = "90009")
 
         /**
          * 配置所有广告位ID
@@ -118,7 +118,7 @@ class App : ActLifecycleAppBase() {
             TogetherAdAlias.AD_HYBRID_VERTICAL_PREMOVIE to "6040749702835933"
         )
 
-        TogetherAdKs.idMapKs = mutableMapOf(
+        TogetherAdHw.idMapKs = mutableMapOf(
             TogetherAdAlias.AD_SPLASH to 4000000042L,
             TogetherAdAlias.AD_NATIVE_EXPRESS_SIMPLE to 0L,//不支持
             TogetherAdAlias.AD_NATIVE_EXPRESS_RECYCLERVIEW to 0L,//不支持
