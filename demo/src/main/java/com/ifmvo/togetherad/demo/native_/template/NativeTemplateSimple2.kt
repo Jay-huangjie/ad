@@ -1,6 +1,5 @@
 package com.ifmvo.togetherad.demo.native_.template
 
-import com.ifmvo.togetherad.baidu.native_.view.NativeViewBaiduSimple2
 import com.ifmvo.togetherad.core.custom.native_.BaseNativeTemplate
 import com.ifmvo.togetherad.core.custom.native_.BaseNativeView
 import com.ifmvo.togetherad.csj.native_.view.NativeViewCsjSimple2
@@ -20,9 +19,6 @@ class NativeTemplateSimple2 : BaseNativeTemplate() {
             }
             AdProviderType.CSJ.type -> {
                 NativeViewCsjSimple2()
-            }
-            AdProviderType.BAIDU.type -> {
-                NativeViewBaiduSimple2()
             }
             else -> throw Exception("模板配置错误")
         }

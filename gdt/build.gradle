@@ -28,7 +28,7 @@ android {
 /*需要看一下混淆文件有没有新的添加*/
 dependencies {
     api fileTree(dir: 'libs', include: ['*.jar', '*.aar'])
-//    embed(name: 'GDTSDK.unionNormal.4.482.1352', ext: 'aar')
+    embed(name: 'GDTSDK.unionNormal.4.482.1352', ext: 'aar')
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
     api project(':core')
@@ -41,7 +41,7 @@ afterEvaluate {
                 from components.release
                 groupId = 'com.github.Jay-huangjie' //groupId 随便取
                 artifactId = 'gdt'  //artifactId 随便取
-                version = '1.0.0'
+                version = '1.1.7'
             }
         }
     }

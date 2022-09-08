@@ -48,10 +48,10 @@ android {
         }
     }
 
-    compileOptions {
-        sourceCompatibility 1.8
-        targetCompatibility 1.8
-    }
+//    compileOptions {
+//        sourceCompatibility 1.8
+//        targetCompatibility 1.8
+//    }
 
     repositories { flatDir { dirs 'libs' } }
 }

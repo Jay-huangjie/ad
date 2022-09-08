@@ -1,12 +1,6 @@
 package com.ifmvo.togetherad.huawei
 
 import android.content.Context
-import com.huawei.hms.ads.HwAds
-import com.ifmvo.togetherad.core.TogetherAd
-import com.ifmvo.togetherad.core.entity.AdProviderEntity
-import com.kwad.sdk.api.KsAdSDK
-import com.kwad.sdk.api.KsLoadManager
-import com.kwad.sdk.api.SdkConfig
 import org.jetbrains.annotations.NotNull
 
 object TogetherAdHw {
@@ -28,8 +22,6 @@ object TogetherAdHw {
     // 是否展示下载通知栏
     var showNotification: Boolean = false
 
-    //全局请求广告
-    var adRequestManager: KsLoadManager? = null
 
     fun init(@NotNull context: Context, @NotNull adProviderType: String, @NotNull ksAdAppId: String): Boolean {
         return init(context, adProviderType, ksAdAppId, null, null)

@@ -1,7 +1,6 @@
 package com.ifmvo.togetherad.demo.app
 
 import com.duoyou.task.openapi.DyAdApi
-import com.ifmvo.togetherad.baidu.TogetherAdBaidu
 import com.ifmvo.togetherad.core.TogetherAd
 import com.ifmvo.togetherad.csj.TogetherAdCsj
 import com.ifmvo.togetherad.demo.BuildConfig
@@ -79,9 +78,7 @@ class App : ActLifecycleAppBase() {
         TogetherAdCsj.init(context = this, adProviderType = AdProviderType.CSJ.type, csjAdAppId = "5001121", appName = this.getString(R.string.app_name))
         //初始化广点通
         TogetherAdGdt.init(context = this, adProviderType = AdProviderType.GDT.type, gdtAdAppId = "1101152570")
-        //初始化百青藤
-        TogetherAdBaidu.init(context = this, adProviderType = AdProviderType.BAIDU.type, baiduAdAppId = "e866cfb0")
-        //初始化快手
+        //初始化华为
         TogetherAdHw.init(context = this, adProviderType = AdProviderType.KS.type, ksAdAppId = "90009")
 
         /**
@@ -131,21 +128,6 @@ class App : ActLifecycleAppBase() {
             TogetherAdAlias.AD_HYBRID_SPLASH to 0L,//id是原生类型
             TogetherAdAlias.AD_HYBRID_EXPRESS to 0L,//不支持
             TogetherAdAlias.AD_HYBRID_VERTICAL_PREMOVIE to 0L//不支持
-        )
-
-        TogetherAdBaidu.idMapBaidu = mutableMapOf(
-            TogetherAdAlias.AD_SPLASH to "2058622",
-            TogetherAdAlias.AD_NATIVE_EXPRESS_SIMPLE to "",//不支持
-            TogetherAdAlias.AD_NATIVE_EXPRESS_RECYCLERVIEW to "",//不支持
-            TogetherAdAlias.AD_NATIVE_SIMPLE to "2058628",
-            TogetherAdAlias.AD_NATIVE_RECYCLERVIEW to "2058628",
-            TogetherAdAlias.AD_BANNER to "2015351",
-            TogetherAdAlias.AD_INTER to "2403633",
-            TogetherAdAlias.AD_REWARD to "5925490",
-            TogetherAdAlias.AD_FULL_VIDEO to "",
-            TogetherAdAlias.AD_HYBRID_SPLASH to "2058628",//id是原生类型
-            TogetherAdAlias.AD_HYBRID_EXPRESS to "",//不支持
-            TogetherAdAlias.AD_HYBRID_VERTICAL_PREMOVIE to ""//不支持
         )
 
         /**
