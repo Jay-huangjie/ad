@@ -2,7 +2,6 @@ package com.ifmvo.togetherad.demo.hybrid.helper
 
 import android.app.Activity
 import android.view.ViewGroup
-import com.bytedance.sdk.openadsdk.AdSlot
 import com.ifmvo.togetherad.core.TogetherAd
 import com.ifmvo.togetherad.core.config.AdProviderLoader
 import com.ifmvo.togetherad.core.helper.AdHelperNativePro
@@ -177,7 +176,6 @@ class AdHelperHybridVerticalPreMovie(
 
     private var mAdObject: Any? = null
     private fun realLoadNative(adProviderType: String, ratioMap: LinkedHashMap<String, Int>) {
-        CsjProvider.Native.nativeAdType = AdSlot.TYPE_FEED
         adProvider?.getNativeAdList(mActivity.get()!!, adProviderType, mAlias, 1, object : NativeListener {
             override fun onAdLoaded(providerType: String, adList: List<Any>) {
                 if (isFetchOverTime) return

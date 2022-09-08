@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.widget.Toast
-import com.bytedance.sdk.openadsdk.AdSlot
 import com.ifmvo.togetherad.core.helper.AdHelperNativePro
 import com.ifmvo.togetherad.core.listener.NativeListener
 import com.ifmvo.togetherad.csj.provider.CsjProvider
@@ -67,7 +66,6 @@ class NativeRecyclerViewActivity : AppCompatActivity() {
         //  CsjProvider.Native.nativeAdType = AdSlot.TYPE_REWARD_VIDEO
         //  CsjProvider.Native.nativeAdType = AdSlot.TYPE_SPLASH
         //--------------------------------------------------------------------------------------
-        CsjProvider.Native.nativeAdType = AdSlot.TYPE_FEED
 
         //设置 穿山甲 图片可接受的尺寸 ( 建议设置，默认是 1080，607.5 )
         //CsjProvider.Native.setImageAcceptedSize(ScreenUtil.getDisplayMetricsWidth(this), ScreenUtil.getDisplayMetricsWidth(this) * 9 / 16)

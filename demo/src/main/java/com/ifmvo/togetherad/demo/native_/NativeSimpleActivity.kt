@@ -5,7 +5,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.View
-import com.bytedance.sdk.openadsdk.AdSlot
 import com.ifmvo.togetherad.core.custom.native_.BaseNativeTemplate
 import com.ifmvo.togetherad.core.helper.AdHelperNativePro
 import com.ifmvo.togetherad.core.listener.NativeListener
@@ -98,7 +97,6 @@ class NativeSimpleActivity : AppCompatActivity() {
         //  CsjProvider.Native.nativeAdType = AdSlot.TYPE_SPLASH
         //  CsjProvider.Native.nativeAdType = AdSlot.TYPE_STREAM
         //--------------------------------------------------------------------------------------
-        CsjProvider.Native.nativeAdType = AdSlot.TYPE_FEED
 
         //设置 穿山甲 图片可接受的尺寸 ( 建议设置，默认是 1080，607.5 )
         //CsjProvider.Native.setImageAcceptedSize(ScreenUtil.getDisplayMetricsWidth(this), ScreenUtil.getDisplayMetricsWidth(this) * 9 / 16)

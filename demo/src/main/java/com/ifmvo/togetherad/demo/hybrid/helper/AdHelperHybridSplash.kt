@@ -2,7 +2,6 @@ package com.ifmvo.togetherad.demo.hybrid.helper
 
 import android.app.Activity
 import android.view.ViewGroup
-import com.bytedance.sdk.openadsdk.AdSlot
 import com.ifmvo.togetherad.core.R
 import com.ifmvo.togetherad.core.TogetherAd
 import com.ifmvo.togetherad.core.config.AdProviderLoader
@@ -89,7 +88,6 @@ class AdHelperHybridSplash(
 
     private var mAdObject: Any? = null
     private fun realLoadOnlyNative(ratioMap: LinkedHashMap<String, Int>, adProviderType: String) {
-        CsjProvider.Native.nativeAdType = AdSlot.TYPE_FEED
         adProvider?.getNativeAdList(activity = mActivity.get()!!, adProviderType = adProviderType, alias = mAlias, maxCount = 1, listener = object : NativeListener {
             override fun onAdStartRequest(providerType: String) {
                 mListener?.onAdStartRequest(providerType)
