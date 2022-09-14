@@ -79,6 +79,7 @@ dependencies {
     implementation project(':csj')
     implementation project(':gdt')
     implementation project(':huawei')
+    implementation 'com.huawei.hms.agd:agdpro-embed:2.1.2.300'
 //    implementation 'com.github.Jay-huangjie.ad:huawei:1.2.2'
 //    implementation 'com.github.Jay-huangjie.ad:huawei:1.2.0'
 //    implementation 'com.github.Jay-huangjie:ad:1.2.0'

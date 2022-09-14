@@ -30,7 +30,7 @@ dependencies {
     compileOnly fileTree(dir: 'libs', include: ['*.aar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 //    embed 'com.huawei.hms.agd:agdpro-embed:2.1.2.300'
-    api 'com.huawei.hms.agd:agdpro-embed:2.1.2.300'
+    compileOnly 'com.huawei.hms.agd:agdpro-embed:2.1.2.300'
     api project(':core')
 }
 
@@ -41,7 +41,7 @@ afterEvaluate {
                 from components.release
                 groupId = 'com.github.Jay-huangjie' //groupId 随便取
                 artifactId = 'huawei'  //artifactId 随便取
-                version = '1.2.3'
+                version = rootProject.ext.android.adVersion
             }
         }
     }
