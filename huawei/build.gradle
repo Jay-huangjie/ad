@@ -41,7 +41,7 @@ afterEvaluate {
                 from components.release
                 groupId = 'com.github.Jay-huangjie' //groupId 随便取
                 artifactId = 'huawei'  //artifactId 随便取
-                version = '1.1.7'
+                version = '1.2.0'
             }
         }
     }
