@@ -5,10 +5,10 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import com.zlfcapp.ad.core.helper.AdHelperSplash
-import com.zlfcapp.ad.core.listener.SplashListener
-import com.zlfcapp.ad.core.utils.loge
-import com.zlfcapp.ad.core.utils.logi
+import com.ifmvo.togetherad.core.helper.AdHelperSplash
+import com.ifmvo.togetherad.core.listener.SplashListener
+import com.ifmvo.togetherad.core.utils.loge
+import com.ifmvo.togetherad.core.utils.logi
 import com.zlfcapp.ad.MainActivity
 import com.zlfcapp.ad.app.TogetherAdAlias
 import com.zlfcapp.batterymanager.R

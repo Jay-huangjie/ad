@@ -2,17 +2,16 @@ package com.zlfcapp.ad.hybrid.helper
 
 import android.view.ViewGroup
 import androidx.fragment.app.FragmentActivity
+import com.ifmvo.togetherad.core.config.AdProviderLoader
+import com.ifmvo.togetherad.core.helper.AdHelperNativePro
+import com.ifmvo.togetherad.core.helper.BaseHelper
+import com.ifmvo.togetherad.core.listener.NativeListener
+import com.ifmvo.togetherad.core.listener.NativeViewListener
+import com.ifmvo.togetherad.core.listener.SplashListener
+import com.ifmvo.togetherad.core.provider.BaseAdProvider
+import com.ifmvo.togetherad.core.utils.DispatchUtil
+import com.ifmvo.togetherad.core.utils.loge
 import com.zlfcapp.ad.core.R
-import com.zlfcapp.ad.core.TogetherAd
-import com.zlfcapp.ad.core.config.AdProviderLoader
-import com.zlfcapp.ad.core.helper.AdHelperNativePro
-import com.zlfcapp.ad.core.helper.BaseHelper
-import com.zlfcapp.ad.core.listener.NativeListener
-import com.zlfcapp.ad.core.listener.NativeViewListener
-import com.zlfcapp.ad.core.listener.SplashListener
-import com.zlfcapp.ad.core.provider.BaseAdProvider
-import com.zlfcapp.ad.core.utils.DispatchUtil
-import com.zlfcapp.ad.core.utils.loge
 import com.zlfcapp.ad.app.AdProviderType
 import com.zlfcapp.ad.native_.template.NativeTemplateSimple3
 import org.jetbrains.annotations.NotNull
@@ -48,7 +47,7 @@ class AdHelperHybridSplash(
         destroyAd()
 
         mListener = listener
-        val currentRatioMap = if (mRatioMap?.isEmpty() != false) TogetherAd.getPublicProviderRatio() else mRatioMap!!
+        val currentRatioMap = if (mRatioMap?.isEmpty() != false) com.ifmvo.togetherad.core.TogetherAd.getPublicProviderRatio() else mRatioMap!!
 
         startTimer(listener)
         realLoadOnly(currentRatioMap)
@@ -87,7 +86,8 @@ class AdHelperHybridSplash(
 
     private var mAdObject: Any? = null
     private fun realLoadOnlyNative(ratioMap: LinkedHashMap<String, Int>, adProviderType: String) {
-        adProvider?.getNativeAdList(activity = mActivity.get()!!, adProviderType = adProviderType, alias = mAlias, maxCount = 1, listener = object : NativeListener {
+        adProvider?.getNativeAdList(activity = mActivity.get()!!, adProviderType = adProviderType, alias = mAlias, maxCount = 1, listener = object :
+            NativeListener {
             override fun onAdStartRequest(providerType: String) {
                 mListener?.onAdStartRequest(providerType)
             }
@@ -155,7 +155,8 @@ class AdHelperHybridSplash(
                 destroyAd()
             }
 
-            AdHelperNativePro.show(adObject = mAdObject, container = container, nativeTemplate = NativeTemplateSimple3(::onClose), listener = object : NativeViewListener {
+            AdHelperNativePro.show(adObject = mAdObject, container = container, nativeTemplate = NativeTemplateSimple3(::onClose), listener = object :
+                NativeViewListener {
                 override fun onAdExposed(providerType: String) {
                     mListener?.onAdExposure(providerType)
                 }

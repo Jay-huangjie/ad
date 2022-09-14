@@ -2,14 +2,12 @@ package com.zlfcapp.ad.app
 
 import android.util.Log
 import com.huawei.appgallery.agd.core.api.InitCallback
-import com.huawei.hms.ads.identifier.AdvertisingIdClient
-import com.zlfcapp.ad.core.TogetherAd
-import com.zlfcapp.ad.csj.TogetherAdCsj
-import com.zlfcapp.ad.gdt.TogetherAdGdt
-import com.zlfcapp.ad.huawei.TogetherAdHw
+import com.ifmvo.togetherad.core.TogetherAd
+import com.ifmvo.togetherad.csj.TogetherAdCsj
+import com.ifmvo.togetherad.gdt.TogetherAdGdt
+import com.ifmvo.togetherad.huawei.TogetherAdHw
 import com.zlfcapp.batterymanager.BuildConfig
 import com.zlfcapp.batterymanager.R
-import java.lang.Exception
 
 
 /*
@@ -146,7 +144,7 @@ class App : ActLifecycleAppBase() {
          *
          * 也可以在请求广告前设置，实时生效
          */
-        TogetherAd.setPublicProviderRatio(
+        com.ifmvo.togetherad.core.TogetherAd.setPublicProviderRatio(
             linkedMapOf(
                 AdProviderType.GDT.type to 0,
                 AdProviderType.CSJ.type to 0,
@@ -171,7 +169,7 @@ class App : ActLifecycleAppBase() {
          * 日志的开关
          * 全局实时生效
          */
-        TogetherAd.printLogEnable = BuildConfig.DEBUG
+        com.ifmvo.togetherad.core.TogetherAd.printLogEnable = BuildConfig.DEBUG
 
         /**
          * 是否失败切换 （ 当请求广告失败时，是否允许切换到其他广告提供商再次请求 ）
@@ -185,7 +183,7 @@ class App : ActLifecycleAppBase() {
          * 全局实时生效
          * 不设置或设置为0 -> 超时时间无限长
          */
-        TogetherAd.maxFetchDelay = 8000
+        com.ifmvo.togetherad.core.TogetherAd.maxFetchDelay = 8000
 
         /**
          * 所有广告商所有广告类型的广告都会回调这个监听器
@@ -210,25 +208,25 @@ class App : ActLifecycleAppBase() {
          * DispatchType.Random  按照权重随机分发模式
          */
 //        TogetherAd.dispatchType = DispatchType.Random
-        getOaid()
+//        getOaid()
     }
 
 
-    private fun getOaid() {
-        Thread {
-            try {
-                val info = AdvertisingIdClient.getAdvertisingIdInfo(
-                    applicationContext
-                )
-                if (null != info) {
-                    Log.i(
-                        "HJ", "getAdvertisingIdInfo id=" + info.getId() +
-                                ", isLimitAdTrackingEnabled=" + info.isLimitAdTrackingEnabled()
-                    );
-                }
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
-        }.start()
-    }
+//    private fun getOaid() {
+//        Thread {
+//            try {
+//                val info = AdvertisingIdClient.getAdvertisingIdInfo(
+//                    applicationContext
+//                )
+//                if (null != info) {
+//                    Log.i(
+//                        "HJ", "getAdvertisingIdInfo id=" + info.getId() +
+//                                ", isLimitAdTrackingEnabled=" + info.isLimitAdTrackingEnabled()
+//                    );
+//                }
+//            } catch (e: Exception) {
+//                e.printStackTrace()
+//            }
+//        }.start()
+//    }
 }

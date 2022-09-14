@@ -1,10 +1,10 @@
 package com.zlfcapp.ad.native_.template
 
-import com.zlfcapp.ad.core.custom.native_.BaseNativeTemplate
-import com.zlfcapp.ad.core.custom.native_.BaseNativeView
-import com.zlfcapp.ad.csj.native_.view.NativeViewCsjSimple1
+import com.ifmvo.togetherad.core.custom.native_.BaseNativeTemplate
+import com.ifmvo.togetherad.core.custom.native_.BaseNativeView
+import com.ifmvo.togetherad.csj.native_.view.NativeViewCsjSimple1
 import com.zlfcapp.ad.app.AdProviderType
-import com.zlfcapp.ad.gdt.native_.view.NativeViewGdtSimple1
+import com.ifmvo.togetherad.gdt.native_.view.NativeViewGdtSimple1
 
 /*
  * Created by Matthew Chen on 2020-04-21.

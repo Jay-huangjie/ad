@@ -2,14 +2,13 @@ package com.zlfcapp.ad.hybrid.helper
 
 import android.view.ViewGroup
 import androidx.fragment.app.FragmentActivity
-import com.zlfcapp.ad.core.TogetherAd
-import com.zlfcapp.ad.core.config.AdProviderLoader
-import com.zlfcapp.ad.core.helper.AdHelperNativePro
-import com.zlfcapp.ad.core.helper.BaseHelper
-import com.zlfcapp.ad.core.listener.*
-import com.zlfcapp.ad.core.provider.BaseAdProvider
-import com.zlfcapp.ad.core.utils.DispatchUtil
-import com.zlfcapp.ad.core.utils.loge
+import com.ifmvo.togetherad.core.config.AdProviderLoader
+import com.ifmvo.togetherad.core.helper.AdHelperNativePro
+import com.ifmvo.togetherad.core.helper.BaseHelper
+import com.ifmvo.togetherad.core.listener.*
+import com.ifmvo.togetherad.core.provider.BaseAdProvider
+import com.ifmvo.togetherad.core.utils.DispatchUtil
+import com.ifmvo.togetherad.core.utils.loge
 import com.zlfcapp.ad.app.AdProviderType
 import com.zlfcapp.ad.native_.template.NativeTemplateSimple3
 import com.zlfcapp.batterymanager.R
@@ -50,7 +49,7 @@ class AdHelperHybridVerticalPreMovie(
 
         mListener = listener
 
-        val currentRatioMap: LinkedHashMap<String, Int> = if (mRatioMap?.isEmpty() != false) TogetherAd.getPublicProviderRatio() else mRatioMap!!
+        val currentRatioMap: LinkedHashMap<String, Int> = if (mRatioMap?.isEmpty() != false) com.ifmvo.togetherad.core.TogetherAd.getPublicProviderRatio() else mRatioMap!!
 
         startTimer(mListener)
         reload(currentRatioMap)
@@ -88,7 +87,8 @@ class AdHelperHybridVerticalPreMovie(
     }
 
     private fun realLoadReward(adProviderType: String, ratioMap: LinkedHashMap<String, Int>) {
-        adProvider?.requestRewardAd(mActivity.get()!!, adProviderType, mAlias, object : RewardListener {
+        adProvider?.requestRewardAd(mActivity.get()!!, adProviderType, mAlias, object :
+            RewardListener {
             override fun onAdStartRequest(providerType: String) {
                 mListener?.onAdStartRequest(providerType)
             }
@@ -130,7 +130,8 @@ class AdHelperHybridVerticalPreMovie(
     }
 
     private fun realLoadFullScreen(adProviderType: String, ratioMap: LinkedHashMap<String, Int>) {
-        adProvider?.requestFullVideoAd(mActivity.get()!!, adProviderType, mAlias, object : FullVideoListener {
+        adProvider?.requestFullVideoAd(mActivity.get()!!, adProviderType, mAlias, object :
+            FullVideoListener {
             override fun onAdLoaded(providerType: String) {
                 if (isFetchOverTime) return
 
@@ -174,7 +175,8 @@ class AdHelperHybridVerticalPreMovie(
 
     private var mAdObject: Any? = null
     private fun realLoadNative(adProviderType: String, ratioMap: LinkedHashMap<String, Int>) {
-        adProvider?.getNativeAdList(mActivity.get()!!, adProviderType, mAlias, 1, object : NativeListener {
+        adProvider?.getNativeAdList(mActivity.get()!!, adProviderType, mAlias, 1, object :
+            NativeListener {
             override fun onAdLoaded(providerType: String, adList: List<Any>) {
                 if (isFetchOverTime) return
 
@@ -187,7 +189,8 @@ class AdHelperHybridVerticalPreMovie(
                     mListener?.onAdClose(adProviderType)
                 }
 
-                AdHelperNativePro.show(adObject = mAdObject, container = mContainer, nativeTemplate = NativeTemplateSimple3(::onClose), listener = object : NativeViewListener {
+                AdHelperNativePro.show(adObject = mAdObject, container = mContainer, nativeTemplate = NativeTemplateSimple3(::onClose), listener = object :
+                    NativeViewListener {
                     override fun onAdExposed(providerType: String) {
                         mListener?.onAdExpose(providerType)
                     }

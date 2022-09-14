@@ -5,10 +5,10 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import com.zlfcapp.ad.core.helper.AdHelperRewardPro
-import com.zlfcapp.ad.core.listener.RewardListener
-import com.zlfcapp.ad.core.utils.loge
-import com.zlfcapp.ad.core.utils.logi
+import com.ifmvo.togetherad.core.helper.AdHelperRewardPro
+import com.ifmvo.togetherad.core.listener.RewardListener
+import com.ifmvo.togetherad.core.utils.loge
+import com.ifmvo.togetherad.core.utils.logi
 import com.zlfcapp.ad.app.AdProviderType
 import com.zlfcapp.ad.app.TogetherAdAlias
 import com.zlfcapp.batterymanager.R
@@ -59,7 +59,8 @@ class RewardProActivity : AppCompatActivity() {
          * ratioMap: 非必传。广告商的权重。可以不传或传null，空的情况 TogetherAd 会自动使用初始化时 TogetherAd.setPublicProviderRatio 设置的全局通用权重。
          * listener: 非必传。如果你不需要监听结果可以不传或传空。各个回调方法也可以选择性添加
          */
-        AdHelperRewardPro.show(activity = this, alias = TogetherAdAlias.AD_REWARD, /*ratioMap = ratioMapReward,*/ listener = object : RewardListener {
+        AdHelperRewardPro.show(activity = this, alias = TogetherAdAlias.AD_REWARD, /*ratioMap = ratioMapReward,*/ listener = object :
+            RewardListener {
             override fun onAdStartRequest(providerType: String) {
                 //在开始请求之前会回调此方法，失败切换的情况会回调多次
                 addLog("\n开始请求: $providerType")

@@ -72,13 +72,14 @@ dependencies {
     //多量CPL激励式游戏广告平台
     implementation(name: 'dy-task-sdk-2.1.8', ext: 'aar')
 
-    implementation 'com.huawei.hms:ads-identifier:3.4.39.302'
-    implementation 'com.huawei.hms:ads-installreferrer:3.4.39.302'
+//    implementation 'com.huawei.hms:ads-identifier:3.4.39.302'
+//    implementation 'com.huawei.hms:ads-installreferrer:3.4.39.302'
 
     //TogetherAd
     implementation project(':csj')
     implementation project(':gdt')
     implementation project(':huawei')
+//    implementation 'com.github.Jay-huangjie.ad:huawei:1.2.2'
 //    implementation 'com.github.Jay-huangjie.ad:huawei:1.2.0'
 //    implementation 'com.github.Jay-huangjie:ad:1.2.0'
 

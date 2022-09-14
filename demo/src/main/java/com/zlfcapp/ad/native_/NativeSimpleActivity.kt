@@ -5,12 +5,12 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import com.zlfcapp.ad.core.custom.native_.BaseNativeTemplate
-import com.zlfcapp.ad.core.helper.AdHelperNativePro
-import com.zlfcapp.ad.core.listener.NativeListener
-import com.zlfcapp.ad.core.listener.NativeViewListener
-import com.zlfcapp.ad.core.utils.loge
-import com.zlfcapp.ad.core.utils.logi
+import com.ifmvo.togetherad.core.custom.native_.BaseNativeTemplate
+import com.ifmvo.togetherad.core.helper.AdHelperNativePro
+import com.ifmvo.togetherad.core.listener.NativeListener
+import com.ifmvo.togetherad.core.listener.NativeViewListener
+import com.ifmvo.togetherad.core.utils.loge
+import com.ifmvo.togetherad.core.utils.logi
 import com.zlfcapp.ad.app.AdProviderType
 import com.zlfcapp.ad.app.TogetherAdAlias
 import com.zlfcapp.ad.native_.template.NativeTemplateSimple1
@@ -156,7 +156,8 @@ class NativeSimpleActivity : AppCompatActivity() {
     private fun showAd(adObject: Any?, nativeTemplate: BaseNativeTemplate) {
         if (adObject == null) return
 
-        AdHelperNativePro.show(adObject = adObject, container = adContainer, nativeTemplate = nativeTemplate, listener = object : NativeViewListener {
+        AdHelperNativePro.show(adObject = adObject, container = adContainer, nativeTemplate = nativeTemplate, listener = object :
+            NativeViewListener {
             override fun onAdExposed(providerType: String) {
                 //每次曝光就会回调这里一次
                 addLog("原生广告曝光了")

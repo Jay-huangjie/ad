@@ -6,9 +6,8 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.zlfcapp.ad.core.TogetherAd
-import com.zlfcapp.ad.core.helper.AdHelperNativeExpress
-import com.zlfcapp.ad.core.utils.ScreenUtil
+import com.ifmvo.togetherad.core.helper.AdHelperNativeExpress
+import com.ifmvo.togetherad.core.utils.ScreenUtil
 import com.zlfcapp.ad.other.ContentDataEntity
 import com.zlfcapp.ad.native_.template.NativeExpressTemplateSimple
 import com.zlfcapp.batterymanager.R
@@ -45,7 +44,7 @@ class NativeExpressAdapter(list: List<Any>) : RecyclerView.Adapter<RecyclerView.
                 val contentViewHolder = holder as ContentViewHolder
                 val contentDataEntity = mList[position] as ContentDataEntity
                 contentViewHolder.imageView.layoutParams.height = ScreenUtil.getDisplayMetricsWidth(contentViewHolder.imageView.context) * 9 / 16
-                TogetherAd.mImageLoader?.loadImage(contentViewHolder.imageView.context, contentViewHolder.imageView, contentDataEntity.imgUrl)
+                com.ifmvo.togetherad.core.TogetherAd.mImageLoader?.loadImage(contentViewHolder.imageView.context, contentViewHolder.imageView, contentDataEntity.imgUrl)
                 contentViewHolder.textView.text = contentDataEntity.title
             }
             ITEM_VIEW_TYPE_AD -> {

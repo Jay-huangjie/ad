@@ -5,11 +5,11 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import com.zlfcapp.ad.core.helper.AdHelperBanner
-import com.zlfcapp.ad.core.listener.BannerListener
-import com.zlfcapp.ad.core.utils.ScreenUtil
-import com.zlfcapp.ad.core.utils.px2dp
-import com.zlfcapp.ad.csj.provider.CsjProvider
+import com.ifmvo.togetherad.core.helper.AdHelperBanner
+import com.ifmvo.togetherad.core.listener.BannerListener
+import com.ifmvo.togetherad.core.utils.ScreenUtil
+import com.ifmvo.togetherad.core.utils.px2dp
+import com.ifmvo.togetherad.csj.provider.CsjProvider
 import com.zlfcapp.ad.app.AdProviderType
 import com.zlfcapp.ad.app.TogetherAdAlias
 import com.zlfcapp.batterymanager.R
@@ -55,7 +55,8 @@ class BannerActivity : AppCompatActivity() {
         //设置 穿山甲 Banner 尺寸
         CsjProvider.Banner.setExpressViewAcceptedSize(px2dp(this, ScreenUtil.getDisplayMetricsWidth(this)), px2dp(this, ScreenUtil.getDisplayMetricsWidth(this) / 8))
 
-        AdHelperBanner.show(activity = this, alias = TogetherAdAlias.AD_BANNER, container = adContainer, /*ratioMap = ratioMapBanner,*/ listener = object : BannerListener {
+        AdHelperBanner.show(activity = this, alias = TogetherAdAlias.AD_BANNER, container = adContainer, /*ratioMap = ratioMapBanner,*/ listener = object :
+            BannerListener {
             override fun onAdStartRequest(providerType: String) {
                 //在开始请求之前会回调此方法，失败切换的情况会回调多次
                 addLog("\n开始请求了，$providerType")

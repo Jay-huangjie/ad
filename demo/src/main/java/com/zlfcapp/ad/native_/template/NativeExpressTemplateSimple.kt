@@ -1,10 +1,11 @@
 package com.zlfcapp.ad.native_.template
 
-import com.zlfcapp.ad.core.custom.express.BaseNativeExpressTemplate
-import com.zlfcapp.ad.core.custom.express.BaseNativeExpressView
-import com.zlfcapp.ad.csj.native_.express.NativeExpressViewCsj
+import com.ifmvo.togetherad.core.custom.express.BaseNativeExpressTemplate
+import com.ifmvo.togetherad.core.custom.express.BaseNativeExpressView
+import com.ifmvo.togetherad.csj.native_.express.NativeExpressViewCsj
+import com.ifmvo.togetherad.gdt.native_.express.NativeExpressViewGdt
 import com.zlfcapp.ad.app.AdProviderType
-import com.zlfcapp.ad.gdt.native_.express.NativeExpressViewGdt
+
 
 /**
  *

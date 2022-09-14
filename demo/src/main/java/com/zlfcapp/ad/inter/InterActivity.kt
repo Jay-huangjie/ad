@@ -5,8 +5,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import com.zlfcapp.ad.core.helper.AdHelperInter
-import com.zlfcapp.ad.core.listener.InterListener
+import com.ifmvo.togetherad.core.helper.AdHelperInter
+import com.ifmvo.togetherad.core.listener.InterListener
 import com.zlfcapp.ad.app.AdProviderType
 import com.zlfcapp.ad.app.TogetherAdAlias
 import com.zlfcapp.batterymanager.R
@@ -39,7 +39,8 @@ class InterActivity : AppCompatActivity() {
                 AdProviderType.CSJ.type to 1,
                 AdProviderType.HUAWEI.type to 0
         )
-        adHelperInter = AdHelperInter(activity = this, alias = TogetherAdAlias.AD_INTER, /*ratioMap = ratioMapInter,*/ listener = object : InterListener {
+        adHelperInter = AdHelperInter(activity = this, alias = TogetherAdAlias.AD_INTER, /*ratioMap = ratioMapInter,*/ listener = object :
+            InterListener {
             override fun onAdStartRequest(providerType: String) {
                 //在开始请求之前会回调此方法，失败切换的情况会回调多次
                 addLog("\n开始请求了，$providerType")

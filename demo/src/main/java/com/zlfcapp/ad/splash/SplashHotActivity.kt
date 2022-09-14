@@ -5,14 +5,14 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import com.zlfcapp.ad.core.custom.splashSkip.SplashSkipViewSimple2
-import com.zlfcapp.ad.core.helper.AdHelperSplash
-import com.zlfcapp.ad.core.listener.SplashListener
-import com.zlfcapp.ad.core.utils.ScreenUtil
-import com.zlfcapp.ad.core.utils.dp
-import com.zlfcapp.ad.core.utils.loge
-import com.zlfcapp.ad.core.utils.logi
-import com.zlfcapp.ad.csj.provider.CsjProvider
+import com.ifmvo.togetherad.core.custom.splashSkip.SplashSkipViewSimple2
+import com.ifmvo.togetherad.core.helper.AdHelperSplash
+import com.ifmvo.togetherad.core.listener.SplashListener
+import com.ifmvo.togetherad.core.utils.ScreenUtil
+import com.ifmvo.togetherad.core.utils.dp
+import com.ifmvo.togetherad.core.utils.loge
+import com.ifmvo.togetherad.core.utils.logi
+import com.ifmvo.togetherad.csj.provider.CsjProvider
 import com.zlfcapp.ad.app.AdProviderType
 import com.zlfcapp.ad.app.TogetherAdAlias
 import com.zlfcapp.batterymanager.R
@@ -82,7 +82,8 @@ class SplashHotActivity : AppCompatActivity() {
          * container: 必传。请求到广告之后会自动添加到 container 这个布局中展示。
          * listener: 非必传。如果你不需要监听结果可以不传或传空。各个回调方法也可以选择性添加
          */
-        AdHelperSplash.show(activity = this, alias = TogetherAdAlias.AD_SPLASH, /*ratioMap = ratioMapSplash,*/ container = adContainer, listener = object : SplashListener {
+        AdHelperSplash.show(activity = this, alias = TogetherAdAlias.AD_SPLASH, /*ratioMap = ratioMapSplash,*/ container = adContainer, listener = object :
+            SplashListener {
 
             override fun onAdStartRequest(providerType: String) {
                 //在开始请求之前会回调此方法，失败切换的情况会回调多次

@@ -35,7 +35,7 @@ afterEvaluate {
                 from components.release
                 groupId = 'com.github.Jay-huangjie' //groupId 随便取
                 artifactId = 'core'  //artifactId 随便取
-                version = '1.2.2'
+                version = '1.2.3'
             }
         }
     }

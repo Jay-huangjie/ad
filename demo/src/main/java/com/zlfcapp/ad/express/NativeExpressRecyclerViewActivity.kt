@@ -5,8 +5,8 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.zlfcapp.ad.core.helper.AdHelperNativeExpress
-import com.zlfcapp.ad.core.listener.NativeExpressListener
+import com.ifmvo.togetherad.core.helper.AdHelperNativeExpress
+import com.ifmvo.togetherad.core.listener.NativeExpressListener
 import com.zlfcapp.ad.app.AdProviderType
 import com.zlfcapp.ad.app.TogetherAdAlias
 import com.zlfcapp.ad.other.ContentDataEntity
