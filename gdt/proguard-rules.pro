@@ -61,7 +61,7 @@ native <methods>;
 -keep class * extends com.qq.e.mediation.interfaces.BaseRewardAd { *; }
 
 
--keep class com.zlfcapp.batterymanager.gdt.** { *; }
+-keep class com.zlfcapp.ad.gdt.** { *; }
 
 -keep class com.qq.e.** {
     public protected *;

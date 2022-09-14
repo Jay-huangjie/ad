@@ -4,7 +4,7 @@
     package="com.zlfcapp.batterymanager">
 
     <application
-        android:name=".app.App"
+        android:name="com.zlfcapp.ad.app.App"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -17,7 +17,7 @@
             开屏界面
         -->
         <activity
-            android:name=".splash.SplashActivity"
+            android:name="com.zlfcapp.ad.splash.SplashActivity"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -28,85 +28,85 @@
         <!--
             主页
         -->
-        <activity android:name=".MainActivity" />
+        <activity android:name="com.zlfcapp.ad.MainActivity" />
 
         <!--
             开屏界面 （ 请求与展示分开 ）
         -->
         <activity
-            android:name=".splash.SplashProActivity"
+            android:name="com.zlfcapp.ad.splash.SplashProActivity"
             android:theme="@style/SplashTheme" />
 
         <!--
             热启动的开屏界面
         -->
         <activity
-            android:name=".splash.SplashHotActivity"
+            android:name="com.zlfcapp.ad.splash.SplashHotActivity"
             android:theme="@style/SplashTheme" />
 
         <!--
             开屏 & 原生 混合使用
         -->
         <activity
-            android:name=".hybrid.SplashHybridActivity"
+            android:name="com.zlfcapp.ad.hybrid.SplashHybridActivity"
             android:theme="@style/SplashTheme" />
 
         <!--
             原生模板的简单用法
         -->
-        <activity android:name=".express.NativeExpressSimpleActivity" />
+        <activity android:name="com.zlfcapp.ad.express.NativeExpressSimpleActivity" />
 
         <!--
             原生模板1.0 在 RecyclerView 中的用法
         -->
-        <activity android:name=".express.NativeExpressRecyclerViewActivity" />
+        <activity android:name="com.zlfcapp.ad.express.NativeExpressRecyclerViewActivity" />
 
         <!--
             原生信息流的简单用法
         -->
-        <activity android:name=".native_.NativeSimpleActivity" />
+        <activity android:name="com.zlfcapp.ad.native_.NativeSimpleActivity" />
 
         <!--
             原生信息流在 RecyclerView 中的用法
         -->
-        <activity android:name=".native_.NativeRecyclerViewActivity" />
+        <activity android:name="com.zlfcapp.ad.native_.NativeRecyclerViewActivity" />
 
         <!--
             激励广告
         -->
-        <activity android:name=".reward.RewardActivity" />
+        <activity android:name="com.zlfcapp.ad.reward.RewardActivity" />
 
         <!--
             激励广告(请求并展示)
         -->
-        <activity android:name=".reward.RewardProActivity" />
+        <activity android:name="com.zlfcapp.ad.reward.RewardProActivity" />
 
         <!--
             踩坑指南
         -->
-        <activity android:name=".other.HelpActivity" />
+        <activity android:name="com.zlfcapp.ad.other.HelpActivity" />
 
         <!--
             Banner 横幅广告
         -->
-        <activity android:name=".banner.BannerActivity" />
+        <activity android:name="com.zlfcapp.ad.banner.BannerActivity" />
 
         <!--
             Interstitial 插屏广告
         -->
-        <activity android:name=".inter.InterActivity" />
+        <activity android:name="com.zlfcapp.ad.inter.InterActivity" />
 
         <!--
             全屏视频广告
         -->
         <activity
-            android:name=".fullvideo.FullVideoActivity"
+            android:name="com.zlfcapp.ad.fullvideo.FullVideoActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize" />
 
         <!--
             全屏竖屏前贴广告（ 激励、全屏视频、原生自渲染混合使用 ）
         -->
-        <activity android:name=".hybrid.VerticalPreMovieHybridActivity" />
+        <activity android:name="com.zlfcapp.ad.hybrid.VerticalPreMovieHybridActivity" />
 
     </application>
 

@@ -34,7 +34,7 @@
 
 -keep class com.bykv.vk.** {*;}
 
--keep class com.zlfcapp.batterymanager.csj.** { *; }
+-keep class com.zlfcapp.ad.csj.** { *; }
 #----------------------新增------------------------------#
 -keepclassmembers class * {
     *** getContext(...);
