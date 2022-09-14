@@ -116,7 +116,7 @@ class App : Application() {
         //初始化广点通
         TogetherAdGdt.init(context = this, adProviderType = AdProviderType.GDT.type, gdtAdAppId = "1101152570")
         //初始化百青藤
-        TogetherAdBaidu.init(context = this, adProviderType = AdProviderType.BAIDU.type, baiduAdAppId = "e866cfb0")
+        TogetherAdBaidu.init(context = this, adProviderType = AdProviderType.HUAWEI.type, baiduAdAppId = "e866cfb0")
         //初始化快手
         TogetherAdKs.init(context = this, adProviderType = AdProviderType.KS.type, ksAdAppId = "90009")
 

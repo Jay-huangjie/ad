@@ -45,7 +45,7 @@ class CustomCsjProvider : CsjProvider() {
         var slideIntervalTime = 30 * 1000
     }
 
-    override fun showBannerAd(activity: Activity, adProviderType: String, alias: String, container: ViewGroup, listener: BannerListener) {
+    override fun showBannerAd(activity: FragmentActivity, adProviderType: String, alias: String, container: ViewGroup, listener: BannerListener) {
         callbackBannerStartRequest(adProviderType, alias, listener)
 
         destroyBannerAd()
@@ -126,9 +126,9 @@ TogetherAdCsj.init(context = this, adProviderType = AdProviderType.CSJ.type, csj
  */
 class XiaomiProvider: BaseAdProvider() {
 
-    override fun showSplashAd(activity: Activity, adProviderType: String, alias: String, container: ViewGroup, listener: SplashListener) {}
+    override fun showSplashAd(activity: FragmentActivity, adProviderType: String, alias: String, container: ViewGroup, listener: SplashListener) {}
 
-    override fun showBannerAd(activity: Activity, adProviderType: String, alias: String, container: ViewGroup, listener: BannerListener) {}
+    override fun showBannerAd(activity: FragmentActivity, adProviderType: String, alias: String, container: ViewGroup, listener: BannerListener) {}
 
     override fun destroyBannerAd() {}
 

@@ -1,0 +1,95 @@
+package com.zlfcapp.batterymanager.core.helper
+
+import android.app.Activity
+import android.view.ViewGroup
+import androidx.fragment.app.FragmentActivity
+import com.zlfcapp.batterymanager.core.R
+import com.zlfcapp.batterymanager.core.TogetherAd
+import com.zlfcapp.batterymanager.core.config.AdProviderLoader
+import com.zlfcapp.batterymanager.core.listener.BannerListener
+import com.zlfcapp.batterymanager.core.provider.BaseAdProvider
+import com.zlfcapp.batterymanager.core.utils.DispatchUtil
+import com.zlfcapp.batterymanager.core.utils.loge
+import org.jetbrains.annotations.NotNull
+
+/**
+ * Banner 横幅广告
+ *
+ * Created by Matthew Chen on 2020/5/25.
+ */
+object AdHelperBanner : BaseHelper() {
+
+    private var adProvider: BaseAdProvider? = null
+
+    //为了照顾 Java 调用的同学
+    fun show(@NotNull activity: FragmentActivity, @NotNull alias: String, @NotNull container: ViewGroup, listener: BannerListener? = null) {
+        show(activity, alias, null, container, listener)
+    }
+
+    fun show(@NotNull activity: FragmentActivity, @NotNull alias: String, ratioMap: LinkedHashMap<String, Int>? = null, @NotNull container: ViewGroup, listener: BannerListener? = null) {
+        startTimer(listener)
+        realShow(activity, alias, ratioMap, container, listener)
+    }
+
+    private fun realShow(@NotNull activity: FragmentActivity, @NotNull alias: String, ratioMap: LinkedHashMap<String, Int>? = null, @NotNull container: ViewGroup, listener: BannerListener? = null) {
+
+        val currentRatioMap = if (ratioMap?.isEmpty() != false) TogetherAd.getPublicProviderRatio() else ratioMap
+
+        val adProviderType = DispatchUtil.getAdProvider(alias, currentRatioMap)
+
+        if (adProviderType?.isEmpty() != false) {
+            cancelTimer()
+            listener?.onAdFailedAll(FailedAllMsg.failedAll_noDispatch)
+            return
+        }
+
+        adProvider = AdProviderLoader.loadAdProvider(adProviderType)
+
+        if (adProvider == null) {
+            "$adProviderType ${activity.getString(R.string.no_init)}".loge()
+            val newRatioMap = filterType(currentRatioMap, adProviderType)
+            realShow(activity, alias, newRatioMap, container, listener)
+            return
+        }
+
+        adProvider?.showBannerAd(activity = activity, adProviderType = adProviderType, alias = alias, container = container, listener = object : BannerListener {
+            override fun onAdStartRequest(providerType: String) {
+                listener?.onAdStartRequest(adProviderType)
+            }
+
+            override fun onAdLoaded(providerType: String) {
+                if (isFetchOverTime) return
+
+                cancelTimer()
+                listener?.onAdLoaded(providerType)
+            }
+
+            override fun onAdFailed(providerType: String, failedMsg: String?) {
+                if (isFetchOverTime) return
+
+                val newRatioMap = filterType(currentRatioMap, adProviderType)
+                realShow(activity, alias, newRatioMap, container, listener)
+
+                listener?.onAdFailed(providerType, failedMsg)
+
+            }
+
+            override fun onAdClicked(providerType: String) {
+                listener?.onAdClicked(providerType)
+            }
+
+            override fun onAdExpose(providerType: String) {
+                listener?.onAdExpose(providerType)
+            }
+
+            override fun onAdClose(providerType: String) {
+                listener?.onAdClose(providerType)
+            }
+        })
+    }
+
+    fun destroy() {
+        adProvider?.destroyBannerAd()
+        adProvider = null
+    }
+}

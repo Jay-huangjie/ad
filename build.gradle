@@ -20,7 +20,7 @@ allprojects {
     repositories {
         google()
         maven { url 'https://jitpack.io' }
-
+        jcenter()
         mavenCentral()
         // 配置HUAWEI Ads SDK的Maven仓地址
         maven { url 'https://developer.huawei.com/repo/' }

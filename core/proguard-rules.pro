@@ -20,4 +20,4 @@
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
 
--keep class com.ifmvo.togetherad.core.** { *; }
+-keep class com.zlfcapp.batterymanager.core.** { *; }

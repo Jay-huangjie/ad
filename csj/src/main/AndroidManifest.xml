@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.ifmvo.togetherad.csj">
+    package="com.zlfcapp.batterymanager.csj">
 
     <!--必要权限-->
     <uses-permission android:name="android.permission.INTERNET" />

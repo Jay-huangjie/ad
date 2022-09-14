@@ -31,7 +31,6 @@ dependencies {
     compileOnly fileTree(dir: 'libs', include: ['*.aar'])
     embed(name: 'GDTSDK.unionNormal.4.482.1352', ext: 'aar')
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-
     api project(':core')
 }
 

@@ -20,6 +20,6 @@
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
 
--keep class com.ifmvo.togetherad.huawei.** { *; }
+-keep class com.zlfcapp.batterymanager.huawei.** { *; }
 -keep class com.huawei.openalliance.ad.** { *; }
 -keep class com.huawei.hms.ads.** { *; }
