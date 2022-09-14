@@ -1,13 +1,10 @@
 package com.zlfcapp.batterymanager.app
 
 import android.util.Log
-import com.zlfcapp.batterymanager.core.TogetherAd
-import com.zlfcapp.batterymanager.csj.TogetherAdCsj
-import com.zlfcapp.batterymanager.gdt.TogetherAdGdt
-import com.zlfcapp.batterymanager.huawei.TogetherAdHw
 import com.huawei.hms.ads.identifier.AdvertisingIdClient
 import com.zlfcapp.batterymanager.BuildConfig
 import com.zlfcapp.batterymanager.R
+import com.zlfcapp.batterymanager.csj.TogetherAdCsj
 import java.lang.Exception
 
 

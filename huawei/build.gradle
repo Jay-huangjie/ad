@@ -29,8 +29,8 @@ dependencies {
     api fileTree(dir: 'libs', include: ['*.jar'])
     compileOnly fileTree(dir: 'libs', include: ['*.aar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    embed 'com.huawei.hms.agd:agdpro-embed:2.1.2.300'
-//    api 'com.huawei.hms.agd:agdpro-embed:2.1.2.300'
+//    embed 'com.huawei.hms.agd:agdpro-embed:2.1.2.300'
+    api 'com.huawei.hms.agd:agdpro-embed:2.1.2.300'
     api project(':core')
 }
 

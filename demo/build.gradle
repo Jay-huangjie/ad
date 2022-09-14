@@ -76,9 +76,11 @@ dependencies {
     implementation 'com.huawei.hms:ads-installreferrer:3.4.39.302'
 
     //TogetherAd
-    implementation project(':csj')
-    implementation project(':gdt')
-    implementation project(':huawei')
+//    implementation project(':csj')
+//    implementation project(':gdt')
+//    implementation project(':huawei')
+//    implementation 'com.github.Jay-huangjie.ad:huawei:1.2.0'
+    implementation 'com.github.Jay-huangjie:ad:1.2.0'
 
 //    //核心库（ 必要 ）
 //    implementation 'com.github.ifmvo.TogetherAd:core:5.2.1'
