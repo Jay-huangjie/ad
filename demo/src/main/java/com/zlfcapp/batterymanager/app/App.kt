@@ -1,7 +1,6 @@
 package com.zlfcapp.batterymanager.app
 
 import android.util.Log
-import com.huawei.appgallery.agd.core.api.InitCallback
 import com.zlfcapp.batterymanager.core.TogetherAd
 import com.zlfcapp.batterymanager.csj.TogetherAdCsj
 import com.zlfcapp.batterymanager.gdt.TogetherAdGdt
@@ -135,7 +134,7 @@ class App : ActLifecycleAppBase() {
         TogetherAdHw.idMapKs = mutableMapOf(
             TogetherAdAlias.AD_SPLASH to "4dZ4W0VCAP7",
             TogetherAdAlias.AD_BANNER to "TWqN9F8cS42",
-            TogetherAdAlias.AD_INTER to "4dZ4W0VCAP7",
+            TogetherAdAlias.AD_INTER to "0MSRQPqYjnA",
             TogetherAdAlias.AD_REWARD to "eQgYZeJ3om2"
         )
 
