@@ -73,6 +73,7 @@ abstract class HwProviderSplash : BaseAdProvider(), LifecycleEventObserver {
 
                         override fun onAdSkip() {
                             ad.destroy()
+                            callbackSplashDismiss(adProviderType, listener)
                         }
 
                         override fun onAdTimeOver() {
@@ -95,7 +96,6 @@ abstract class HwProviderSplash : BaseAdProvider(), LifecycleEventObserver {
         val obj2 = JSONObject()
         obj2.put("personalize", TogetherAdHw.personalize)
         obj.put("personalize", obj2)
-        Log.e("HJ", obj.toString())
         return obj
     }
 
