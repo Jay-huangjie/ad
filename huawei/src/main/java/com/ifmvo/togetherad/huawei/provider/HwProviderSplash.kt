@@ -1,5 +1,6 @@
 package com.ifmvo.togetherad.huawei.provider
 
+import android.content.Context
 import android.util.Log
 import android.view.View
 import android.view.ViewGroup
@@ -140,6 +141,15 @@ abstract class HwProviderSplash : BaseAdProvider(), LifecycleEventObserver {
             "初始化失败"
         }
         else -> ""
+    }
+
+    fun checkHuaweiShopApp(context:Context):Boolean{
+        return try {
+            val packageInfo = context.packageManager.getPackageInfo("com.huawei.appmarket", 0)
+            packageInfo != null
+        }catch (e:Exception){
+            false
+        }
     }
 
     override fun showSplashAd(container: ViewGroup): Boolean {
