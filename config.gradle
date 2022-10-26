@@ -7,6 +7,6 @@ ext {
 
             versionCode      : 20220118,
             versionName      : '5.2.1',
-            adVersion        : '1.2.7',
+            adVersion        : '1.2.8',
     ]
 }
