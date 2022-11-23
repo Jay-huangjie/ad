@@ -42,17 +42,22 @@ public class TogetherAdBeizi {
 
     public void init(@NonNull Context context,
                      @NonNull String adProviderType,
-                     @NonNull String bzAppId) {
-        init(context, adProviderType, bzAppId, null);
+                     @NonNull String bzAppId,
+                     Map<String, String> map) {
+        init(context, adProviderType, bzAppId, map, null);
     }
 
     public void init(
             @NonNull Context context,
             @NonNull String adProviderType,
             @NonNull String bzAppId,
+            Map<String, String> map,
             String providerClassPath) {
         if (TextUtils.isEmpty(providerClassPath)) {
             providerClassPath = BeiziProvider.class.getName();
+        }
+        if (map != null) {
+            idMaps.putAll(map);
         }
         TogetherAd.INSTANCE.addProvider(new AdProviderEntity(adProviderType, providerClassPath, providerClassPath));
         BeiZis.init(context, bzAppId, new BeiZiCustomController() {
