@@ -7,9 +7,11 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.ifmvo.togetherad.core.helper.AdHelperSplash
 import com.ifmvo.togetherad.core.listener.SplashListener
+import com.ifmvo.togetherad.core.utils.ScreenUtil
 import com.ifmvo.togetherad.core.utils.loge
 import com.ifmvo.togetherad.core.utils.logi
 import com.zlfcapp.ad.MainActivity
+import com.zlfcapp.ad.app.AdProviderType
 import com.zlfcapp.ad.app.TogetherAdAlias
 import com.zlfcapp.batterymanager.R
 import kotlinx.android.synthetic.main.activity_splash.*
@@ -73,12 +75,12 @@ class SplashActivity : AppCompatActivity() {
         //CsjProvider.Splash.maxFetchDelay = 3000
 
         //使用 Map<String, Int> 配置广告商 权重，通俗的讲就是 随机请求的概率占比
-//        val ratioMapSplash = linkedMapOf(
-//                AdProviderType.GDT.type to 1,
-//                AdProviderType.CSJ.type to 1,
-//                AdProviderType.KS.type to 1,
-//                AdProviderType.HUAWEI.type to 1
-//        )
+        val ratioMapSplash = linkedMapOf<String, Int>(
+            AdProviderType.GDT.type to 0,
+            AdProviderType.CSJ.type to 0,
+            AdProviderType.HUAWEI.type to 0,
+            AdProviderType.BEIZI.type to 1,
+        )
 
         /**
          * activity: 必传。这里不是 Context，因为广点通必须传 Activity，所以统一传 Activity。
@@ -87,11 +89,12 @@ class SplashActivity : AppCompatActivity() {
          * container: 必传。请求到广告之后会自动添加到 container 这个布局中展示。
          * listener: 非必传。如果你不需要监听结果可以不传或传空。各个回调方法也可以选择性添加
          */
-//        HuaweiProvider.Splash.width = ScreenUtil.getDisplayMetricsWidth(this)
-//        HuaweiProvider.Splash.height = ScreenUtil.getDisplayMetricsHeight(this) - 100
+//        BeiziProvider.Splash.mWidth = ScreenUtil.getDisplayMetricsWidth(this)
+//        BeiziProvider.Splash.mHeight = ScreenUtil.getDisplayMetricsHeight(this) - 100
+
         AdHelperSplash.show(
             activity = this,
-            alias = TogetherAdAlias.AD_SPLASH, /*ratioMap = ratioMapSplash,*/
+            alias = TogetherAdAlias.AD_SPLASH, ratioMapSplash,/*ratioMap = ratioMapSplash,*/
             container = adContainer,
             listener = object : SplashListener {
 

@@ -1,5 +1,6 @@
 package com.ifmvo.togetherad.csj.provider
 
+import android.content.Context
 import android.os.CountDownTimer
 import android.util.Log
 import android.view.View
@@ -473,5 +474,8 @@ abstract class CsjProviderSplash : CsjProviderReward() {
                     splashAd.splashClickEyeAnimationFinish()
                 }
             })
+    }
+
+    override fun destroySplashAd(context: Context) {
     }
 }

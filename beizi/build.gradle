@@ -1,0 +1,48 @@
+apply plugin: 'com.android.library'
+apply plugin: 'maven-publish'
+apply plugin: 'com.kezong.fat-aar'
+
+android {
+    compileSdkVersion rootProject.ext.android.compileSdkVersion
+    defaultConfig {
+        minSdkVersion rootProject.ext.android.minSdkVersion
+        targetSdkVersion rootProject.ext.android.targetSdkVersion
+        versionCode rootProject.ext.android.versionCode
+        versionName rootProject.ext.android.versionName
+    }
+
+    lintOptions {
+        abortOnError false
+    }
+
+    buildTypes {
+        release {
+            consumerProguardFiles 'proguard-rules.pro'
+        }
+    }
+
+    repositories { flatDir { dirs 'libs' } }
+}
+
+dependencies {
+    api fileTree(dir: 'libs', include: ['*.jar'])
+    compileOnly fileTree(dir: 'libs', include: ['*.aar'])
+    embed(name: 'beizi_ad_sdk_3.4.20.15', ext: 'aar')
+    embed(name: 'beizi_fusion_sdk_4.90.1.19', ext: 'aar')
+    api 'com.android.support:support-v4:26.1.0'
+    api 'com.android.support:recyclerview-v7:26.1.0'
+    api project(':core')
+}
+
+afterEvaluate {
+    publishing {
+        publications {
+            release(MavenPublication) {
+                from components.release
+                groupId = 'com.github.Jay-huangjie' //groupId 随便取
+                artifactId = 'beizi'  //artifactId 随便取
+                version = rootProject.ext.android.adVersion
+            }
+        }
+    }
+}

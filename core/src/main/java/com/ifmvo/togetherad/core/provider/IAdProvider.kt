@@ -1,5 +1,6 @@
 package com.ifmvo.togetherad.core.provider
 
+import android.content.Context
 import android.view.ViewGroup
 import androidx.fragment.app.FragmentActivity
 import com.ifmvo.togetherad.core.listener.*
@@ -47,6 +48,8 @@ interface IAdProvider {
     fun showSplashAd(
         @NotNull container: ViewGroup
     ): Boolean
+
+    fun destroySplashAd(@NotNull context: Context)
 
     /**
      * -----------------------------------Banner 广告-----------------------------------

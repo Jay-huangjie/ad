@@ -3,9 +3,10 @@ package com.zlfcapp.ad.app
 import android.util.Log
 import com.huawei.appgallery.agd.core.api.InitCallback
 import com.ifmvo.togetherad.core.TogetherAd
-import com.ifmvo.togetherad.csj.TogetherAdCsj
-import com.ifmvo.togetherad.gdt.TogetherAdGdt
-import com.ifmvo.togetherad.huawei.TogetherAdHw
+import com.zlfcad.beizi.TogetherAdBeizi
+//import com.ifmvo.togetherad.csj.TogetherAdCsj
+//import com.ifmvo.togetherad.gdt.TogetherAdGdt
+//import com.ifmvo.togetherad.huawei.TogetherAdHw
 import com.zlfcapp.batterymanager.BuildConfig
 import com.zlfcapp.batterymanager.R
 
@@ -69,73 +70,81 @@ class App : ActLifecycleAppBase() {
 //        TogetherAdGdt.downloadConfirmListener = DownloadConfirmHelper.DOWNLOAD_CONFIRM_LISTENER
 
         //初始化穿山甲
-        TogetherAdCsj.init(
-            context = this,
-            adProviderType = AdProviderType.CSJ.type,
-            csjAdAppId = "5001121",
-            appName = this.getString(R.string.app_name)
-        )
-        //初始化广点通
-        TogetherAdGdt.init(
-            context = this,
-            adProviderType = AdProviderType.GDT.type,
-            gdtAdAppId = "1101152570"
-        )
-        //初始化华为
-        TogetherAdHw.init(
-            context = this,
-            adProviderType = AdProviderType.HUAWEI.type,
-            object : InitCallback {
-                override fun onInitSuccess() {
-                    Log.e("HJ", "初始化成功")
-                }
+//        TogetherAdCsj.init(
+//            context = this,
+//            adProviderType = AdProviderType.CSJ.type,
+//            csjAdAppId = "5001121",
+//            appName = this.getString(R.string.app_name)
+//        )
+//        //初始化广点通
+//        TogetherAdGdt.init(
+//            context = this,
+//            adProviderType = AdProviderType.GDT.type,
+//            gdtAdAppId = "1101152570"
+//        )
+//        //初始化华为
+//        TogetherAdHw.init(
+//            context = this,
+//            adProviderType = AdProviderType.HUAWEI.type,
+//            object : InitCallback {
+//                override fun onInitSuccess() {
+//                    Log.e("HJ", "初始化成功")
+//                }
+//
+//                override fun onInitFail(p0: Int, p1: String?) {
+//                    Log.e("HJ", "Code:$p0---Message:$p1")
+//                }
+//
+//            })
 
-                override fun onInitFail(p0: Int, p1: String?) {
-                    Log.e("HJ", "Code:$p0---Message:$p1")
-                }
 
-            })
+        TogetherAdBeizi.getInstance().idMaps[TogetherAdAlias.AD_SPLASH] = "104835"
+        TogetherAdBeizi.getInstance().init(
+            this, AdProviderType.BEIZI.type,
+            "20826"
+        )
+
 
         /**
          * 配置所有广告位ID
          * 如果你的ID是服务器下发，也可以把配置ID放在其他位置，但是必须要在请求广告之前完成配置，否则无法加载广告
          */
-        TogetherAdCsj.idMapCsj = mutableMapOf(
-            TogetherAdAlias.AD_SPLASH to "801121648",
-            TogetherAdAlias.AD_NATIVE_EXPRESS_SIMPLE to "901121134",//不支持
-            TogetherAdAlias.AD_NATIVE_EXPRESS_RECYCLERVIEW to "901121125",//不支持
-            TogetherAdAlias.AD_NATIVE_SIMPLE to "901121737",
-            TogetherAdAlias.AD_NATIVE_RECYCLERVIEW to "901121737",
-            TogetherAdAlias.AD_BANNER to "901121246",
-            TogetherAdAlias.AD_INTER to "945509693",
-            TogetherAdAlias.AD_REWARD to "901121365",
-            TogetherAdAlias.AD_FULL_VIDEO to "901121073",
-            TogetherAdAlias.AD_HYBRID_SPLASH to "901121737",//id是原生类型
-            TogetherAdAlias.AD_HYBRID_EXPRESS to "901121134",//id是原生模板2.0
-            TogetherAdAlias.AD_HYBRID_VERTICAL_PREMOVIE to "901121073"//id是全屏视频
-        )
-
-        TogetherAdGdt.idMapGDT = mutableMapOf(
-            TogetherAdAlias.AD_SPLASH to "8863364436303842593",
-            TogetherAdAlias.AD_NATIVE_EXPRESS_SIMPLE to "9061615683013706",
-            TogetherAdAlias.AD_NATIVE_EXPRESS_RECYCLERVIEW to "9061615683013706",
-            TogetherAdAlias.AD_NATIVE_SIMPLE to "6040749702835933",
-            TogetherAdAlias.AD_NATIVE_RECYCLERVIEW to "6040749702835933",
-            TogetherAdAlias.AD_BANNER to "4080052898050840",
-            TogetherAdAlias.AD_INTER to "1050691202717808",
-            TogetherAdAlias.AD_REWARD to "2090845242931421",
-            TogetherAdAlias.AD_FULL_VIDEO to "9051949928507973",
-            TogetherAdAlias.AD_HYBRID_SPLASH to "8863364436303842593",//id是开屏类型
-            TogetherAdAlias.AD_HYBRID_EXPRESS to "5060295460765937",//id是原生模板1.0
-            TogetherAdAlias.AD_HYBRID_VERTICAL_PREMOVIE to "6040749702835933"
-        )
-
-        TogetherAdHw.idMapKs = mutableMapOf(
-            TogetherAdAlias.AD_SPLASH to "4dZ4W0VCAP7",
-            TogetherAdAlias.AD_BANNER to "TWqN9F8cS42",
-            TogetherAdAlias.AD_INTER to "0MSRQPqYjnA",
-            TogetherAdAlias.AD_REWARD to "eQgYZeJ3om2"
-        )
+//        TogetherAdCsj.idMapCsj = mutableMapOf(
+//            TogetherAdAlias.AD_SPLASH to "801121648",
+//            TogetherAdAlias.AD_NATIVE_EXPRESS_SIMPLE to "901121134",//不支持
+//            TogetherAdAlias.AD_NATIVE_EXPRESS_RECYCLERVIEW to "901121125",//不支持
+//            TogetherAdAlias.AD_NATIVE_SIMPLE to "901121737",
+//            TogetherAdAlias.AD_NATIVE_RECYCLERVIEW to "901121737",
+//            TogetherAdAlias.AD_BANNER to "901121246",
+//            TogetherAdAlias.AD_INTER to "945509693",
+//            TogetherAdAlias.AD_REWARD to "901121365",
+//            TogetherAdAlias.AD_FULL_VIDEO to "901121073",
+//            TogetherAdAlias.AD_HYBRID_SPLASH to "901121737",//id是原生类型
+//            TogetherAdAlias.AD_HYBRID_EXPRESS to "901121134",//id是原生模板2.0
+//            TogetherAdAlias.AD_HYBRID_VERTICAL_PREMOVIE to "901121073"//id是全屏视频
+//        )
+//
+//        TogetherAdGdt.idMapGDT = mutableMapOf(
+//            TogetherAdAlias.AD_SPLASH to "8863364436303842593",
+//            TogetherAdAlias.AD_NATIVE_EXPRESS_SIMPLE to "9061615683013706",
+//            TogetherAdAlias.AD_NATIVE_EXPRESS_RECYCLERVIEW to "9061615683013706",
+//            TogetherAdAlias.AD_NATIVE_SIMPLE to "6040749702835933",
+//            TogetherAdAlias.AD_NATIVE_RECYCLERVIEW to "6040749702835933",
+//            TogetherAdAlias.AD_BANNER to "4080052898050840",
+//            TogetherAdAlias.AD_INTER to "1050691202717808",
+//            TogetherAdAlias.AD_REWARD to "2090845242931421",
+//            TogetherAdAlias.AD_FULL_VIDEO to "9051949928507973",
+//            TogetherAdAlias.AD_HYBRID_SPLASH to "8863364436303842593",//id是开屏类型
+//            TogetherAdAlias.AD_HYBRID_EXPRESS to "5060295460765937",//id是原生模板1.0
+//            TogetherAdAlias.AD_HYBRID_VERTICAL_PREMOVIE to "6040749702835933"
+//        )
+//
+//        TogetherAdHw.idMapKs = mutableMapOf(
+//            TogetherAdAlias.AD_SPLASH to "4dZ4W0VCAP7",
+//            TogetherAdAlias.AD_BANNER to "TWqN9F8cS42",
+//            TogetherAdAlias.AD_INTER to "0MSRQPqYjnA",
+//            TogetherAdAlias.AD_REWARD to "eQgYZeJ3om2"
+//        )
 
         /**
          * 配置全局的广告商权重。
@@ -144,11 +153,12 @@ class App : ActLifecycleAppBase() {
          *
          * 也可以在请求广告前设置，实时生效
          */
-        com.ifmvo.togetherad.core.TogetherAd.setPublicProviderRatio(
+        TogetherAd.setPublicProviderRatio(
             linkedMapOf(
                 AdProviderType.GDT.type to 0,
                 AdProviderType.CSJ.type to 0,
-                AdProviderType.HUAWEI.type to 1,
+                AdProviderType.HUAWEI.type to 0,
+                AdProviderType.BEIZI.type to 1
             )
         )
 

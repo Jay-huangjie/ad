@@ -1,6 +1,7 @@
 package com.ifmvo.togetherad.gdt.provider
 
 import android.app.Activity
+import android.content.Context
 import android.os.SystemClock
 import android.util.Log
 import android.view.View
@@ -298,6 +299,9 @@ abstract class GdtProviderSplash : GdtProviderReward() {
                     zoomAd.zoomOutAnimationFinish()
                 }
             })
+    }
+
+    override fun destroySplashAd(context: Context) {
     }
 
 }

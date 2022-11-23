@@ -13,4 +13,6 @@ enum class AdProviderType(val type: String) {
     CSJ("csj"),
     //华为
     HUAWEI("huawei"),
+
+    BEIZI("beizi"),
 }

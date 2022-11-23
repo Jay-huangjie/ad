@@ -152,6 +152,9 @@ abstract class HwProviderSplash : BaseAdProvider(), LifecycleEventObserver {
         }
     }
 
+    override fun destroySplashAd(context: Context) {
+    }
+
     override fun showSplashAd(container: ViewGroup): Boolean {
         return false
     }
