@@ -37,8 +37,8 @@ public class TogetherAdBeizi {
     public boolean isCanUseLocation = true;
     public boolean isCanUseWifiState = true;
     public boolean isCanUsePhoneState = true;
-    public boolean isCanUseOaid = false;
-    public boolean isCanUseGaid = false;
+    public boolean isCanUseOaid = true;
+    public boolean isCanUseGaid = true;
 
     public void init(@NonNull Context context,
                      @NonNull String adProviderType,
