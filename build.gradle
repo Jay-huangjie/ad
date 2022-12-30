@@ -7,6 +7,7 @@ buildscript {
         jcenter()
         // 配置HUAWEI Ads SDK的Maven仓地址
         maven { url 'https://developer.huawei.com/repo/' }
+        maven { url "https://artifact.bytedance.com/repository/pangle"}
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:7.0.4'
@@ -24,6 +25,7 @@ allprojects {
         mavenCentral()
         // 配置HUAWEI Ads SDK的Maven仓地址
         maven { url 'https://developer.huawei.com/repo/' }
+        maven { url "https://artifact.bytedance.com/repository/pangle" }
     }
 }
 
