@@ -1,7 +1,6 @@
 package com.zlfc.test
 
 import android.app.Application
-import com.beizi.fusion.BeiZis
 
 /*
  * Created by Matthew Chen on 2020-04-16.
@@ -14,8 +13,6 @@ class App : Application() {
          * 初始化聚合广告
          */
         initTogetherAd()
-
-        BeiZis.init(this, GlobalConstant.ADHUB_APP_ID)
     }
 
 

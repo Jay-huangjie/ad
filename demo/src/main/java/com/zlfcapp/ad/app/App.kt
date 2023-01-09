@@ -98,11 +98,11 @@ class App : ActLifecycleAppBase() {
 //            })
 
 
-        TogetherAdBeizi.getInstance().idMaps[TogetherAdAlias.AD_SPLASH] = "104835"
-        TogetherAdBeizi.getInstance().init(
-            this, AdProviderType.BEIZI.type,
-            "20826"
-        )
+//        TogetherAdBeizi.getInstance().idMaps[TogetherAdAlias.AD_SPLASH] = "104835"
+//        TogetherAdBeizi.getInstance().init(
+//            this, AdProviderType.BEIZI.type,
+//            "20826"
+//        )
 
 
         /**

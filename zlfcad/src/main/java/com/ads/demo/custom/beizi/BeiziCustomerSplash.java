@@ -4,7 +4,7 @@ import android.content.Context;
 import android.util.Log;
 import android.view.ViewGroup;
 
-import com.ads.demo.util.ThreadUtils;
+import com.ads.demo.custom.beizi.util.ThreadUtils;
 import com.beizi.fusion.AdListener;
 import com.beizi.fusion.SplashAd;
 import com.bytedance.msdk.api.v2.GMAdConstant;

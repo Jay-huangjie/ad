@@ -3,7 +3,7 @@ package com.ads.demo.custom.beizi;
 import android.content.Context;
 import android.os.Handler;
 
-import com.ads.demo.util.ThreadUtils;
+import com.ads.demo.custom.beizi.util.ThreadUtils;
 import com.beizi.fusion.BeiZiCustomController;
 import com.beizi.fusion.BeiZis;
 import com.bytedance.msdk.api.v2.ad.custom.bean.GMCustomInitConfig;
