@@ -35,7 +35,7 @@ dependencies {
     api "com.gromore.cn:gromore-sdk:3.9.0.2"
     api "com.gromore.cn:gdt-adapter:4.500.1370.0"
     api "com.gromore.cn:pangle-adapter:5.0.0.4.0"
-    compileOnly project(':beiziaar')
+    api project(':beiziaar')
 }
 
 afterEvaluate {
