@@ -14,6 +14,7 @@ import com.bytedance.msdk.api.v2.GMGdtOption;
 import com.bytedance.msdk.api.v2.GMMediationAdSdk;
 import com.bytedance.msdk.api.v2.GMPangleOption;
 import com.bytedance.msdk.api.v2.GMPrivacyConfig;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -117,10 +118,11 @@ public class AdCustomManager {
         });
     }
 
-
     public static void initGroMore(Context context) {
-        GMMediationAdSdk.initialize(context, buildV2Config(context));
-        groMoreInit = true;
+        if (!groMoreInit) {
+            GMMediationAdSdk.initialize(context, buildV2Config(context));
+            groMoreInit = true;
+        }
     }
 
     private static GMAdConfig buildV2Config(Context context) {
