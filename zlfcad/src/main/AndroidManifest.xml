@@ -21,7 +21,6 @@
     <uses-permission android:name="${applicationId}.openadsdk.permission.TT_PANGOLIN" />
 
     <application
-        tools:replace="android:allowBackup"
         >
 
         <!--
