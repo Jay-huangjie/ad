@@ -22,15 +22,15 @@ android {
         }
     }
 
-    repositories { flatDir { dirs 'libs' } }
+    repositories { flatDir { dirs '../libs_csj' } }
 
 }
 //本地编译检测  gradlew publishToMavenLocal
 dependencies {
     api fileTree(dir: 'libs', include: ['*.jar'])
-    compileOnly fileTree(dir: 'libs', include: ['*.aar'])
+    compileOnly fileTree(dir: '../libs_csj', include: ['*.aar'])
     //上传需要把这个加入才可以把lib里的aar打入到新生成的aar
-    embed(name: 'open_ad_sdk_5.0.0.4', ext: 'aar')
+    embed(name: rootProject.ext.sdk.csjSdkName, ext: 'aar')
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
     api project(':core')

@@ -22,17 +22,22 @@ android {
         }
     }
 
-    repositories { flatDir { dirs 'libs' } }
+    repositories {
+        flatDir name: 'libs',dirs: '../libs_csj'
+        flatDir dirs:['../libs_gdt','../libs_csj']
+    }
+
 }
 
 dependencies {
     implementation 'androidx.appcompat:appcompat:1.3.1'
-    compileOnly fileTree(dir: 'libs', include: ['*.aar'])
-    embed(name: 'GDTSDK.unionNormal.4.500.1370', ext: 'aar')
-    embed(name: 'open_ad_sdk_5.0.0.4', ext: 'aar')
-    api "com.gromore.cn:gromore-sdk:3.9.0.2"
-    api "com.gromore.cn:gdt-adapter:4.500.1370.0"
-    api "com.gromore.cn:pangle-adapter:5.0.0.4.0"
+    compileOnly fileTree(dir: '../libs_csj', include: ['*.aar'])
+    compileOnly fileTree(dir: '../libs_gdt', include: ['*.aar'])
+    embed(name: rootProject.ext.sdk.gdtSdkName, ext: 'aar')
+    embed(name: rootProject.ext.sdk.csjSdkName, ext: 'aar')
+    api "com.gromore.cn:gdt-adapter:$rootProject.ext.sdk.gdtAdapter"
+    api "com.gromore.cn:gromore-sdk:$rootProject.ext.sdk.gromoreSdk"
+    api "com.gromore.cn:pangle-adapter:$rootProject.ext.sdk.pangleAdapter"
 }
 
 afterEvaluate {

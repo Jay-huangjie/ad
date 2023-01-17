@@ -7,6 +7,14 @@ ext {
 
             versionCode      : 20220118,
             versionName      : '5.2.1',
-            adVersion        : '1.3.7',
+            adVersion        : '1.3.8',
+    ]
+
+    sdk = [
+            gromoreSdk   : '3.9.0.2',
+            gdtSdkName   : 'GDTSDK.unionNormal.4.500.1370',
+            csjSdkName   : 'open_ad_sdk_5.0.0.4',
+            gdtAdapter   : '4.500.1370.0',
+            pangleAdapter: '5.0.0.4.0',
     ]
 }

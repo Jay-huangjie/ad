@@ -70,17 +70,16 @@ dependencies {
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.4'
 
     //多量CPL激励式游戏广告平台
-    implementation(name: 'dy-task-sdk-2.1.8', ext: 'aar')
 
 //    implementation 'com.huawei.hms:ads-identifier:3.4.39.302'
 //    implementation 'com.huawei.hms:ads-installreferrer:3.4.39.302'
 
     //TogetherAd
-//    implementation project(':csj')
+    implementation project(':gromore')
 //    implementation project(':gdt')
 //    implementation project(':huawei')
-    implementation project(':beizi')
-    implementation 'com.huawei.hms.agd:agdpro-embed:2.1.2.300'
+//    implementation project(':beizi')
+//    implementation 'com.huawei.hms.agd:agdpro-embed:2.1.2.300'
 //    implementation 'com.github.Jay-huangjie.ad:huawei:1.2.2'
 //    implementation 'com.github.Jay-huangjie.ad:huawei:1.2.0'
 //    implementation 'com.github.Jay-huangjie:ad:1.2.0'

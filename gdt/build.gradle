@@ -22,14 +22,14 @@ android {
         }
     }
 
-    repositories { flatDir { dirs 'libs' } }
+    repositories { flatDir { dirs '../libs_gdt' } }
 
 }
 /*需要看一下混淆文件有没有新的添加*/
 dependencies {
     api fileTree(dir: 'libs', include: ['*.jar'])
-    compileOnly fileTree(dir: 'libs', include: ['*.aar'])
-    embed(name: 'GDTSDK.unionNormal.4.500.1370', ext: 'aar')
+    compileOnly fileTree(dir: '../libs_gdt', include: ['*.aar'])
+    embed(name: rootProject.ext.sdk.gdtSdkName, ext: 'aar')
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     api project(':core')
 }

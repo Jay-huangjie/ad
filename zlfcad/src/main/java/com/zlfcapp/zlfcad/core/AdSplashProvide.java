@@ -83,7 +83,7 @@ public class AdSplashProvide {
                         AdCustomManager.getConfig().getmAdNetworkSlotId()), new GMSplashAdLoadCallback() {
             @Override
             public void onAdLoadTimeout() {
-                adListener.onAdFailed(-1, "广告超时");
+
             }
 
             @Override
