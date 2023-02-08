@@ -42,10 +42,14 @@ public class GdtCustomerReward extends GMCustomRewardAdapter {
         if (mRewardVideoAD != null) {
             Map<String, Object> reasonMap = new HashMap<>();
             if (win) {
-                reasonMap.put(IBidding.EXPECT_COST_PRICE, Integer.parseInt(String.valueOf(winnerPrice)));
+                if (winnerPrice != -1) {
+                    reasonMap.put(IBidding.EXPECT_COST_PRICE, winnerPrice);
+                }
                 mRewardVideoAD.sendWinNotification(reasonMap);
             } else {
-                reasonMap.put(IBidding.WIN_PRICE, Integer.parseInt(String.valueOf(winnerPrice)));
+                if (winnerPrice != -1) {
+                    reasonMap.put(IBidding.WIN_PRICE, winnerPrice);
+                }
                 reasonMap.put(IBidding.LOSS_REASON, loseReason);
                 if (customServiceConfig != null) {
                     reasonMap.put(IBidding.ADN_ID, customServiceConfig.getADNNetworkSlotId());
