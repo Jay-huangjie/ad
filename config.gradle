@@ -9,7 +9,7 @@ ext {
             versionName      : '5.2.1',
             adVersion        : '1.3.9',
     ]
-
+    //gradlew publishToMavenLocal
     sdk = [
             gromoreSdk   : '4.0.0.1',
             gdtSdkName   : 'GDTSDK.unionNormal.4.510.1380',
