@@ -15,7 +15,11 @@ import com.bytedance.msdk.api.v2.ad.custom.bean.GMCustomServiceConfig;
 import com.bytedance.msdk.api.v2.slot.GMAdSlotBanner;
 import com.qq.e.ads.banner2.UnifiedBannerADListener;
 import com.qq.e.ads.banner2.UnifiedBannerView;
+import com.qq.e.comm.pi.IBidding;
 import com.qq.e.comm.util.AdError;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * YLH Banner自定义Adapter
@@ -26,8 +30,30 @@ public class GdtCustomerBanner extends GMCustomBannerAdapter {
 
     private UnifiedBannerView mUnifiedBannerView;
 
+    private GMCustomServiceConfig customServiceConfig;
+
+    @Override
+    public void receiveBidResult(boolean win, double winnerPrice, int loseReason, Map<String, Object> map) {
+        if (mUnifiedBannerView != null) {
+            Map<String, Object> reasonMap = new HashMap<>();
+            if (win) {
+                reasonMap.put(IBidding.EXPECT_COST_PRICE, Integer.parseInt(String.valueOf(winnerPrice)));
+                mUnifiedBannerView.sendWinNotification(reasonMap);
+            } else {
+                reasonMap.put(IBidding.WIN_PRICE, Integer.parseInt(String.valueOf(winnerPrice)));
+                reasonMap.put(IBidding.LOSS_REASON, loseReason);
+                if (customServiceConfig != null) {
+                    reasonMap.put(IBidding.ADN_ID, customServiceConfig.getADNNetworkSlotId());
+                }
+                mUnifiedBannerView.sendLossNotification(reasonMap);
+            }
+        }
+        super.receiveBidResult(win, winnerPrice, loseReason, map);
+    }
+
     @Override
     public void load(Context context, GMAdSlotBanner adSlot, GMCustomServiceConfig serviceConfig) {
+        this.customServiceConfig = serviceConfig;
         /**
          * 在子线程中进行广告加载
          */

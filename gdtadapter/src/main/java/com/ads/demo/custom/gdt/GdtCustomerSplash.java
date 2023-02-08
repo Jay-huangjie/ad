@@ -14,8 +14,11 @@ import com.bytedance.msdk.api.v2.ad.custom.splash.GMCustomSplashAdapter;
 import com.bytedance.msdk.api.v2.slot.GMAdSlotSplash;
 import com.qq.e.ads.splash.SplashAD;
 import com.qq.e.ads.splash.SplashADListener;
+import com.qq.e.comm.pi.IBidding;
 import com.qq.e.comm.util.AdError;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.Callable;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
@@ -28,10 +31,30 @@ public class GdtCustomerSplash extends GMCustomSplashAdapter {
     private static final String TAG = GdtCustomerSplash.class.getSimpleName();
     private volatile SplashAD mSplashAD;
     private boolean isLoadSuccess;
+    private GMCustomServiceConfig customServiceConfig;
 
+    @Override
+    public void receiveBidResult(boolean win, double winnerPrice, int loseReason, Map<String, Object> map) {
+        if (mSplashAD != null) {
+            Map<String, Object> reasonMap = new HashMap<>();
+            if (win) {
+                reasonMap.put(IBidding.EXPECT_COST_PRICE, Integer.parseInt(String.valueOf(winnerPrice)));
+                mSplashAD.sendWinNotification(reasonMap);
+            } else {
+                reasonMap.put(IBidding.WIN_PRICE, Integer.parseInt(String.valueOf(winnerPrice)));
+                reasonMap.put(IBidding.LOSS_REASON, loseReason);
+                if (customServiceConfig != null) {
+                    reasonMap.put(IBidding.ADN_ID, customServiceConfig.getADNNetworkSlotId());
+                }
+                mSplashAD.sendLossNotification(reasonMap);
+            }
+        }
+        super.receiveBidResult(win, winnerPrice, loseReason, map);
+    }
 
     @Override
     public void load(Context context, GMAdSlotSplash adSlot, GMCustomServiceConfig serviceConfig) {
+        customServiceConfig = serviceConfig;
         /**
          * 在子线程中进行广告加载
          */

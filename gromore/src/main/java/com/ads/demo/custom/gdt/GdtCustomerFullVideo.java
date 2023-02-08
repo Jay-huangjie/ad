@@ -17,8 +17,10 @@ import com.qq.e.ads.interstitial2.ADRewardListener;
 import com.qq.e.ads.interstitial2.UnifiedInterstitialAD;
 import com.qq.e.ads.interstitial2.UnifiedInterstitialADListener;
 import com.qq.e.ads.interstitial2.UnifiedInterstitialMediaListener;
+import com.qq.e.comm.pi.IBidding;
 import com.qq.e.comm.util.AdError;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Callable;
 import java.util.concurrent.Future;
@@ -33,9 +35,30 @@ public class GdtCustomerFullVideo extends GMCustomFullVideoAdapter {
 
     private volatile UnifiedInterstitialAD mUnifiedInterstitialAD;
     private boolean isLoadSuccess;
+    private GMCustomServiceConfig customServiceConfig;
+
+    @Override
+    public void receiveBidResult(boolean win, double winnerPrice, int loseReason, Map<String, Object> map) {
+        if (mUnifiedInterstitialAD != null) {
+            Map<String, Object> reasonMap = new HashMap<>();
+            if (win) {
+                reasonMap.put(IBidding.EXPECT_COST_PRICE, Integer.parseInt(String.valueOf(winnerPrice)));
+                mUnifiedInterstitialAD.sendWinNotification(reasonMap);
+            } else {
+                reasonMap.put(IBidding.WIN_PRICE, Integer.parseInt(String.valueOf(winnerPrice)));
+                reasonMap.put(IBidding.LOSS_REASON, loseReason);
+                if (customServiceConfig != null) {
+                    reasonMap.put(IBidding.ADN_ID, customServiceConfig.getADNNetworkSlotId());
+                }
+                mUnifiedInterstitialAD.sendLossNotification(reasonMap);
+            }
+        }
+        super.receiveBidResult(win, winnerPrice, loseReason, map);
+    }
 
     @Override
     public void load(Context context, GMAdSlotFullVideo adSlot, GMCustomServiceConfig serviceConfig) {
+        customServiceConfig = serviceConfig;
         /**
          * 在子线程中进行广告加载
          */

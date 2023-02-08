@@ -35,8 +35,8 @@ dependencies {
     embed(name: 'beizi_ad_sdk_3.4.20.17', ext: 'aar')
     embed(name: 'beizi_fusion_sdk_4.90.1.24', ext: 'aar')
     embed(name: 'oaid_sdk_1.0.25', ext: 'aar')
-    api "com.gromore.cn:gromore-sdk:$rootProject.ext.sdk.gromoreSdk"
-    api "com.gromore.cn:pangle-adapter:$rootProject.ext.sdk.pangleAdapter"
+    api "by.gm_mediation.com:gromore-sdk:$rootProject.ext.sdk.gromoreSdk"
+    api "by.gm_mediation.com:pangle-adapter:$rootProject.ext.sdk.pangleAdapter"
 }
 
 afterEvaluate {
