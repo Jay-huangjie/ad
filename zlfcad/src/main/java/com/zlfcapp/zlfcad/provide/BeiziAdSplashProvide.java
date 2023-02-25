@@ -12,11 +12,12 @@ import com.beizi.fusion.SplashAd;
 public class BeiziAdSplashProvide {
     private SplashAd splashAd;
     private Activity activity;
+    public static final long AD_TIME_OUT = 5000;
 
     public BeiziAdSplashProvide(Activity activity,
                                 String adId, AdListener listener) {
         this.activity = activity;
-        splashAd = new SplashAd(activity, null, adId, listener, 1500);
+        splashAd = new SplashAd(activity, null, adId, listener, AD_TIME_OUT);
     }
 
     public void loadAd(int width, int height) {

@@ -24,6 +24,8 @@ public class AdCustomConfig {
     private String groMoreSplashAdId;
     //穿山甲保底id
     private String mAdNetworkSlotId;
+    //BeiZi 竞价
+    private double mBindingPrice;
 
     private AdCustomConfig(Builder builder) {
         bzAppId = builder.bzAppId;
@@ -32,6 +34,11 @@ public class AdCustomConfig {
         bzSplashAdId = builder.bzSplashAdId;
         groMoreSplashAdId = builder.groMoreSplashAdId;
         mAdNetworkSlotId = builder.mAdNetworkSlotId;
+        if (builder.mBindingPrice == 0) {
+            mBindingPrice = 1500;
+        }else {
+            mBindingPrice = builder.mBindingPrice;
+        }
         if (builder.userInfo == null) {
             userInfo = new GMConfigUserInfoForSegment();
             userInfo.setUserId("user" + new Random().nextInt());
@@ -73,6 +80,10 @@ public class AdCustomConfig {
         return mAdNetworkSlotId;
     }
 
+    public double getmBindingPrice() {
+        return mBindingPrice;
+    }
+
     public static class Builder {
         private String bzAppId;
         private GMConfigUserInfoForSegment userInfo;
@@ -81,6 +92,7 @@ public class AdCustomConfig {
         private String groMoreSplashAdId;
         private String mAdNetworkSlotId;
         private String bzSplashAdId;
+        private double mBindingPrice;
 
         public Builder() {
         }
@@ -122,6 +134,10 @@ public class AdCustomConfig {
         public Builder setmAdNetworkSlotId(String mAdNetworkSlotId) {
             this.mAdNetworkSlotId = mAdNetworkSlotId;
             return this;
+        }
+
+        public void setBindingPrice(double mBindingPrice) {
+            this.mBindingPrice = mBindingPrice;
         }
     }
 

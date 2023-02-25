@@ -12,6 +12,9 @@ import com.bytedance.msdk.api.v2.ad.custom.GMCustomAdError;
 import com.bytedance.msdk.api.v2.ad.custom.bean.GMCustomServiceConfig;
 import com.bytedance.msdk.api.v2.ad.custom.splash.GMCustomSplashAdapter;
 import com.bytedance.msdk.api.v2.slot.GMAdSlotSplash;
+import com.zlfcapp.zlfcad.AdCustomConfig;
+import com.zlfcapp.zlfcad.AdCustomManager;
+import com.zlfcapp.zlfcad.provide.BeiziAdSplashProvide;
 import com.zlfcapp.zlfcad.utils.UIUtils;
 
 import java.util.concurrent.Callable;
@@ -40,7 +43,12 @@ public class BeiziCustomerSplash extends GMCustomSplashAdapter {
                     public void onAdLoaded() {
                         isLoadSuccess = true;
                         if (isBidding()) {//bidding类型广告
-                            callLoadSuccess(1500);  //bidding广告成功回调，回传竞价广告价格
+                            double price = 1500;
+                            AdCustomConfig config = AdCustomManager.getConfig();
+                            if (config != null) {
+                                price = config.getmBindingPrice();
+                            }
+                            callLoadSuccess(price);  //bidding广告成功回调，回传竞价广告价格
                         } else { //普通类型广告
                             callLoadSuccess();
                         }
@@ -71,7 +79,7 @@ public class BeiziCustomerSplash extends GMCustomSplashAdapter {
                     public void onAdClicked() {
                         callSplashAdClicked();
                     }
-                }, 1500);
+                }, BeiziAdSplashProvide.AD_TIME_OUT);
                 splashAd.loadAd(UIUtils.getScreenWidthInPx(context),
                         UIUtils.getScreenHeight(context));
             }
