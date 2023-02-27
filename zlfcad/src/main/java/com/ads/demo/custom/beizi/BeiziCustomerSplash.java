@@ -14,6 +14,7 @@ import com.bytedance.msdk.api.v2.ad.custom.splash.GMCustomSplashAdapter;
 import com.bytedance.msdk.api.v2.slot.GMAdSlotSplash;
 import com.zlfcapp.zlfcad.AdCustomConfig;
 import com.zlfcapp.zlfcad.AdCustomManager;
+import com.zlfcapp.zlfcad.core.AdSplashProvide;
 import com.zlfcapp.zlfcad.provide.BeiziAdSplashProvide;
 import com.zlfcapp.zlfcad.utils.UIUtils;
 
@@ -79,7 +80,7 @@ public class BeiziCustomerSplash extends GMCustomSplashAdapter {
                     public void onAdClicked() {
                         callSplashAdClicked();
                     }
-                }, BeiziAdSplashProvide.AD_TIME_OUT);
+                }, AdSplashProvide.TIME_OUT);
                 splashAd.loadAd(UIUtils.getScreenWidthInPx(context),
                         UIUtils.getScreenHeight(context));
             }

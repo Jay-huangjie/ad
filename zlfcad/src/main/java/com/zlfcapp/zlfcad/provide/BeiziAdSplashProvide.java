@@ -5,6 +5,7 @@ import android.view.ViewGroup;
 
 import com.beizi.fusion.AdListener;
 import com.beizi.fusion.SplashAd;
+import com.zlfcapp.zlfcad.core.AdSplashProvide;
 
 /**
  * create by hj on 2023/1/6
@@ -12,12 +13,11 @@ import com.beizi.fusion.SplashAd;
 public class BeiziAdSplashProvide {
     private SplashAd splashAd;
     private Activity activity;
-    public static final long AD_TIME_OUT = 5000;
 
     public BeiziAdSplashProvide(Activity activity,
                                 String adId, AdListener listener) {
         this.activity = activity;
-        splashAd = new SplashAd(activity, null, adId, listener, AD_TIME_OUT);
+        splashAd = new SplashAd(activity, null, adId, listener, AdSplashProvide.TIME_OUT);
     }
 
     public void loadAd(int width, int height) {

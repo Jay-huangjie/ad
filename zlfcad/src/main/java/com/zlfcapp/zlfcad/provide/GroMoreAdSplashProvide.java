@@ -11,6 +11,7 @@ import com.bytedance.msdk.api.v2.ad.splash.GMSplashAd;
 import com.bytedance.msdk.api.v2.ad.splash.GMSplashAdListener;
 import com.bytedance.msdk.api.v2.ad.splash.GMSplashAdLoadCallback;
 import com.bytedance.msdk.api.v2.slot.GMAdSlotSplash;
+import com.zlfcapp.zlfcad.core.AdSplashProvide;
 
 /**
  * 开屏管理类。
@@ -25,8 +26,6 @@ public class GroMoreAdSplashProvide {
      */
     private GMSplashAd mSplashAd;
     private Activity mActivity;
-    //开屏广告加载超时时间,建议大于1000,这里为了冷启动第一次加载到广告并且展示,示例设置了2000ms
-    private int ad_time_out = 4000;
     /**
      * 开屏加载广告回调
      * 请在加载广告成功后展示广告
@@ -59,13 +58,6 @@ public class GroMoreAdSplashProvide {
         mSplashAdListener = splashAdListener;
     }
 
-    /**
-     * 设置广告超时时间
-     * @param ad_time_out
-     */
-    public void setAd_time_out(int ad_time_out) {
-        this.ad_time_out = ad_time_out;
-    }
 
     /**
      * 获取开屏广告对象
@@ -88,7 +80,7 @@ public class GroMoreAdSplashProvide {
          */
         GMAdSlotSplash adSlot = new GMAdSlotSplash.Builder()
                 .setImageAdSize(UIUtils.getScreenWidth(mActivity), UIUtils.getScreenHeight(mActivity)) // 单位px
-                .setTimeOut(ad_time_out)//设置超时
+                .setTimeOut(AdSplashProvide.TIME_OUT)//设置超时
                 .setSplashButtonType(GMAdConstant.SPLASH_BUTTON_TYPE_FULL_SCREEN)
                 .setDownloadType(GMAdConstant.DOWNLOAD_TYPE_POPUP)
                 .setForceLoadBottom(false) //强制加载兜底开屏广告，只能在GroMore提供的demo中使用，其他情况设置无效

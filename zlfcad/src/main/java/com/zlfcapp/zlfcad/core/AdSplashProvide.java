@@ -27,13 +27,20 @@ public class AdSplashProvide {
     private BeiziAdSplashProvide beiziProvide;
     private Activity activity;
     private boolean adOpen;
+    public static int TIME_OUT;
 
     public AdSplashProvide(Activity activity,
                            SplashAdListener adListener) {
+        this(activity, adListener, 5000);
+    }
+
+    public AdSplashProvide(Activity activity,
+                           SplashAdListener adListener, int time_out) {
         this.activity = activity;
+        TIME_OUT = time_out;
         adOpen = AdCustomManager.isAdOpen();
         if (adOpen) {
-            loadGroMoreAd(activity,adListener);
+            loadGroMoreAd(activity, adListener);
         } else {
             loadBeiziAd(activity, adListener);
         }
