@@ -11,10 +11,10 @@ ext {
     ]
     //gradlew publishToMavenLocal
     sdk = [
-            gromoreSdk   : '4.0.0.1',
-            gdtSdkName   : 'GDTSDK.unionNormal.4.510.1380',
+            gromoreSdk   : '4.1.0.0',
+            gdtSdkName   : 'GDTSDK.unionNormal.4.514.1384',
             csjSdkName   : 'open_ad_sdk_5.1.0.2',
-            gdtAdapter   : '4.510.1380.0',
-            pangleAdapter: '5.1.0.2.0',
+            gdtAdapter   : '4.511.1381.0',
+            pangleAdapter: '5.1.0.2.1',
     ]
 }
