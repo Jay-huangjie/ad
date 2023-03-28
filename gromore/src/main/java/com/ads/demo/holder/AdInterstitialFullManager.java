@@ -2,8 +2,6 @@ package com.ads.demo.holder;
 
 import android.app.Activity;
 import android.util.Log;
-
-import com.ads.demo.AppConst;
 import com.bytedance.msdk.api.v2.GMAdConstant;
 import com.bytedance.msdk.api.v2.GMMediationAdSdk;
 import com.bytedance.msdk.api.v2.GMSettingConfigCallback;
@@ -20,7 +18,7 @@ import java.util.Map;
  * 只需要复制粘贴到项目中，通过回调处理相应的业务逻辑即可使用完成广告加载&展示
  */
 public class AdInterstitialFullManager {
-    private static final String TAG = AppConst.TAG_PRE;
+    private static final String TAG = AdInterstitialFullManager.class.getSimpleName();
     /**
      * 插全屏对应的广告对象
      * 每次加载全屏视频广告的时候需要新建一个GMInterstitialFullAd，否则可能会出现广告填充问题
@@ -40,7 +38,8 @@ public class AdInterstitialFullManager {
 
     /**
      * 管理类构造函数
-     * @param activity 全屏展示的Activity
+     *
+     * @param activity                       全屏展示的Activity
      * @param interstitialFullAdLoadCallback 插全屏加载广告回调
      */
     public AdInterstitialFullManager(Activity activity, GMInterstitialFullAdLoadCallback interstitialFullAdLoadCallback) {
@@ -57,7 +56,8 @@ public class AdInterstitialFullManager {
 
     /**
      * 加载插全屏广告，如果没有config配置会等到加载完config配置后才去请求广告
-     * @param adUnitId  广告位ID
+     *
+     * @param adUnitId 广告位ID
      */
     public void loadAdWithCallback(final String adUnitId) {
         this.mAdUnitId = adUnitId;
@@ -71,7 +71,8 @@ public class AdInterstitialFullManager {
 
     /**
      * 加载插全屏广告，如果没有config配置会等到加载完config配置后才去请求广告
-     * @param adUnitId  广告位ID
+     *
+     * @param adUnitId 广告位ID
      */
     private void loadAd(String adUnitId) {
         //Context 必须传activity
