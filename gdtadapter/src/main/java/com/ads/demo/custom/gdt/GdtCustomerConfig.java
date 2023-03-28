@@ -29,7 +29,7 @@ public class GdtCustomerConfig extends GMCustomAdapterConfiguration {
             @Override
             public void run() {
                 GDTAdSdk.init(context, gmCustomConfig.getAppId());
-                GlobalSetting.setPersonalizedState(1);//优量汇个性化推荐广告开关，0为开启个性化推荐广告，1为屏蔽个性化推荐广告
+                GlobalSetting.setPersonalizedState(0);//优量汇个性化推荐广告开关，0为开启个性化推荐广告，1为屏蔽个性化推荐广告
                 //初始化成功回调
                 callInitSuccess();
             }
