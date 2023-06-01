@@ -29,7 +29,7 @@ dependencies {
     compileOnly fileTree(dir: '../libs_gdt', include: ['*.aar'])
     embed(name: rootProject.ext.sdk.gdtSdkName, ext: 'aar')
     api "com.pangle.cn:mediation-gdt-adapter:$rootProject.ext.sdk.gdtAdapter"
-    api "com.pangle.cn:mediation-sdk:$rootProject.ext.sdk.gromoreSdk"
+    compileOnly "com.pangle.cn:mediation-sdk:$rootProject.ext.sdk.gromoreSdk"
 }
 
 afterEvaluate {
