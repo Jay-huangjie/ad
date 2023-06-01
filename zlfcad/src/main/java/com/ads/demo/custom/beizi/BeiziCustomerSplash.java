@@ -7,39 +7,50 @@ import android.view.ViewGroup;
 import com.ads.demo.custom.beizi.util.ThreadUtils;
 import com.beizi.fusion.AdListener;
 import com.beizi.fusion.SplashAd;
-import com.bytedance.msdk.api.v2.GMAdConstant;
-import com.bytedance.msdk.api.v2.ad.custom.GMCustomAdError;
-import com.bytedance.msdk.api.v2.ad.custom.bean.GMCustomServiceConfig;
-import com.bytedance.msdk.api.v2.ad.custom.splash.GMCustomSplashAdapter;
-import com.bytedance.msdk.api.v2.slot.GMAdSlotSplash;
+import com.bytedance.sdk.openadsdk.AdSlot;
+import com.bytedance.sdk.openadsdk.mediation.MediationConstant;
+import com.bytedance.sdk.openadsdk.mediation.bridge.custom.splash.MediationCustomSplashLoader;
+import com.bytedance.sdk.openadsdk.mediation.custom.MediationCustomServiceConfig;
 import com.zlfcapp.zlfcad.AdCustomConfig;
 import com.zlfcapp.zlfcad.AdCustomManager;
 import com.zlfcapp.zlfcad.core.AdSplashProvide;
-import com.zlfcapp.zlfcad.provide.BeiziAdSplashProvide;
 import com.zlfcapp.zlfcad.utils.UIUtils;
-
-import java.util.concurrent.Callable;
-import java.util.concurrent.Future;
-import java.util.concurrent.TimeUnit;
 
 /**
  * YLH 开屏广告自定义Adapter
  */
-public class BeiziCustomerSplash extends GMCustomSplashAdapter {
+public class BeiziCustomerSplash extends MediationCustomSplashLoader {
 
     private static final String TAG = BeiziCustomerSplash.class.getSimpleName();
     private SplashAd splashAd;
     private boolean isLoadSuccess;
 
+
     @Override
-    public void load(Context context, GMAdSlotSplash adSlot, GMCustomServiceConfig serviceConfig) {
+    public void showAd(ViewGroup container) {
+        /**
+         * 先切子线程，再在子线程中切主线程进行广告展示
+         */
+        ThreadUtils.runOnUIThreadByThreadPool(new Runnable() {
+            @Override
+            public void run() {
+                if (splashAd != null && container != null) {
+                    container.removeAllViews();
+                    splashAd.show(container);
+                }
+            }
+        });
+    }
+
+    @Override
+    public void load(Context context, AdSlot adSlot, MediationCustomServiceConfig mediationCustomServiceConfig) {
         /**
          * 在子线程中进行广告加载
          */
         ThreadUtils.runOnUIThread(new Runnable() {
             @Override
             public void run() {
-                splashAd = new SplashAd(context, null, serviceConfig.getADNNetworkSlotId(), new AdListener() {
+                splashAd = new SplashAd(context, null, mediationCustomServiceConfig.getADNNetworkSlotId(), new AdListener() {
                     @Override
                     public void onAdLoaded() {
                         isLoadSuccess = true;
@@ -63,7 +74,7 @@ public class BeiziCustomerSplash extends GMCustomSplashAdapter {
                     @Override
                     public void onAdFailedToLoad(int errorCode) {
                         isLoadSuccess = false;
-                        callLoadFail(new GMCustomAdError(errorCode, "Code码详见：http://sdkdoc.beizi.biz/#/zh-cn/android/4xx/ErrorCode"));
+                        callLoadFail(errorCode,"Code码详见：http://sdkdoc.beizi.biz/#/zh-cn/android/4xx/ErrorCode");
                     }
 
                     @Override
@@ -83,23 +94,6 @@ public class BeiziCustomerSplash extends GMCustomSplashAdapter {
                 }, AdSplashProvide.TIME_OUT);
                 splashAd.loadAd(UIUtils.getScreenWidthInPx(context),
                         UIUtils.getScreenHeight(context));
-            }
-        });
-
-    }
-
-    @Override
-    public void showAd(ViewGroup container) {
-        /**
-         * 先切子线程，再在子线程中切主线程进行广告展示
-         */
-        ThreadUtils.runOnUIThreadByThreadPool(new Runnable() {
-            @Override
-            public void run() {
-                if (splashAd != null && container != null) {
-                    container.removeAllViews();
-                    splashAd.show(container);
-                }
             }
         });
     }
@@ -123,42 +117,12 @@ public class BeiziCustomerSplash extends GMCustomSplashAdapter {
         splashAd = null;
     }
 
-
-    @Override
-    public GMAdConstant.AdIsReadyStatus isReadyStatus() {
-        Log.e(TAG, "isReadyStatus");
-        /**
-         * 在子线程中进行广告是否可用的判断
-         */
-        Future<GMAdConstant.AdIsReadyStatus> future = ThreadUtils.runOnThreadPool(new Callable<GMAdConstant.AdIsReadyStatus>() {
-            @Override
-            public GMAdConstant.AdIsReadyStatus call() throws Exception {
-                if (splashAd != null && isLoadSuccess) {
-                    return GMAdConstant.AdIsReadyStatus.AD_IS_READY;
-                } else {
-                    return GMAdConstant.AdIsReadyStatus.AD_IS_NOT_READY;
-                }
-            }
-        });
-        try {
-            GMAdConstant.AdIsReadyStatus result = future.get(500, TimeUnit.MILLISECONDS);//设置500毫秒的总超时，避免线程阻塞
-            if (result != null) {
-                return result;
-            } else {
-                return GMAdConstant.AdIsReadyStatus.AD_IS_NOT_READY;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return GMAdConstant.AdIsReadyStatus.AD_IS_NOT_READY;
-    }
-
     /**
      * 是否是Bidding广告
      *
      * @return
      */
     public boolean isBidding() {
-        return getBiddingType() == GMAdConstant.AD_TYPE_CLIENT_BIDING;
+        return getBiddingType() == MediationConstant.AD_TYPE_CLIENT_BIDING;
     }
 }

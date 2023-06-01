@@ -3,110 +3,50 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.zlfcapp.batterymanager">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.PACKAGE_USAGE_STATS" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.READ_LOGS" />
+    <uses-permission android:name="android.permission.CHANGE_CONFIGURATION" />
+    <uses-permission android:name="android.permission.START_FOREGROUND_SERVICES_FROM_BACKGROUND" />
+    <uses-permission android:name="android.permission.GRANT_RUNTIME_PERMISSIONS" />
+    <uses-permission android:name="com.zlfcapp.batterymanager.permission.MANAGER" />
+    <uses-permission android:name="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE" />
+    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
+
     <application
-        android:name="com.zlfcapp.ad.app.App"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:allowBackup"
-        tools:ignore="GoogleAppIndexingWarning">
+        tools:ignore="GoogleAppIndexingWarning"
+        android:name="com.zlfcapp.ad.App"
+        >
 
         <!--
             开屏界面
         -->
         <activity
-            android:name="com.zlfcapp.ad.splash.SplashActivity"
+            android:name="com.zlfcapp.batterymanager.SplashActivity"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <!--
-            主页
-        -->
-        <activity android:name="com.zlfcapp.ad.MainActivity" />
-
-        <!--
-            开屏界面 （ 请求与展示分开 ）
-        -->
-        <activity
-            android:name="com.zlfcapp.ad.splash.SplashProActivity"
-            android:theme="@style/SplashTheme" />
-
-        <!--
-            热启动的开屏界面
-        -->
-        <activity
-            android:name="com.zlfcapp.ad.splash.SplashHotActivity"
-            android:theme="@style/SplashTheme" />
-
-        <!--
-            开屏 & 原生 混合使用
-        -->
-        <activity
-            android:name="com.zlfcapp.ad.hybrid.SplashHybridActivity"
-            android:theme="@style/SplashTheme" />
-
-        <!--
-            原生模板的简单用法
-        -->
-        <activity android:name="com.zlfcapp.ad.express.NativeExpressSimpleActivity" />
-
-        <!--
-            原生模板1.0 在 RecyclerView 中的用法
-        -->
-        <activity android:name="com.zlfcapp.ad.express.NativeExpressRecyclerViewActivity" />
-
-        <!--
-            原生信息流的简单用法
-        -->
-        <activity android:name="com.zlfcapp.ad.native_.NativeSimpleActivity" />
-
-        <!--
-            原生信息流在 RecyclerView 中的用法
-        -->
-        <activity android:name="com.zlfcapp.ad.native_.NativeRecyclerViewActivity" />
-
-        <!--
-            激励广告
-        -->
-        <activity android:name="com.zlfcapp.ad.reward.RewardActivity" />
-
-        <!--
-            激励广告(请求并展示)
-        -->
-        <activity android:name="com.zlfcapp.ad.reward.RewardProActivity" />
-
-        <!--
-            踩坑指南
-        -->
-        <activity android:name="com.zlfcapp.ad.other.HelpActivity" />
-
-        <!--
-            Banner 横幅广告
-        -->
-        <activity android:name="com.zlfcapp.ad.banner.BannerActivity" />
-
-        <!--
-            Interstitial 插屏广告
-        -->
-        <activity android:name="com.zlfcapp.ad.inter.InterActivity" />
-
-        <!--
-            全屏视频广告
-        -->
-        <activity
-            android:name="com.zlfcapp.ad.fullvideo.FullVideoActivity"
-            android:configChanges="keyboard|keyboardHidden|orientation|screenSize" />
-
-        <!--
-            全屏竖屏前贴广告（ 激励、全屏视频、原生自渲染混合使用 ）
-        -->
-        <activity android:name="com.zlfcapp.ad.hybrid.VerticalPreMovieHybridActivity" />
+       
         <activity android:name="com.zlfcapp.ad.WelcomeActivity" />
 
     </application>

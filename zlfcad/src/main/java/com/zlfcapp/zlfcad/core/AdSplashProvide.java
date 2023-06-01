@@ -1,15 +1,13 @@
 package com.zlfcapp.zlfcad.core;
 
 import android.app.Activity;
+import android.os.Handler;
+import android.util.Log;
 import android.view.ViewGroup;
 
-import androidx.annotation.NonNull;
-
 import com.beizi.fusion.AdListener;
-import com.bytedance.msdk.adapter.pangle.PangleNetworkRequestInfo;
-import com.bytedance.msdk.api.AdError;
-import com.bytedance.msdk.api.v2.ad.splash.GMSplashAdListener;
-import com.bytedance.msdk.api.v2.ad.splash.GMSplashAdLoadCallback;
+import com.bytedance.sdk.openadsdk.mediation.MediationConstant;
+import com.bytedance.sdk.openadsdk.mediation.ad.MediationSplashRequestInfo;
 import com.zlfcapp.zlfcad.AdCustomManager;
 import com.zlfcapp.zlfcad.listener.SplashAdListener;
 import com.zlfcapp.zlfcad.provide.BeiziAdSplashProvide;
@@ -28,6 +26,8 @@ public class AdSplashProvide {
     private Activity activity;
     private boolean adOpen;
     public static int TIME_OUT;
+
+    private AdCustomManager.InitCallback callback;
 
     public AdSplashProvide(Activity activity,
                            SplashAdListener adListener) {
@@ -85,53 +85,12 @@ public class AdSplashProvide {
     private void loadGroMoreAd(Activity activity,
                                SplashAdListener adListener) {
         groMoreProvide = new GroMoreAdSplashProvide(activity,
-                new PangleNetworkRequestInfo(AdCustomManager
-                        .getConfig().getGroMoreAppId(),
-                        AdCustomManager.getConfig().getmAdNetworkSlotId()), new GMSplashAdLoadCallback() {
-            @Override
-            public void onAdLoadTimeout() {
-
-            }
-
-            @Override
-            public void onSplashAdLoadFail(@NonNull AdError adError) {
-                adListener.onAdFailed(adError.code, adError.message);
-            }
-
-            @Override
-            public void onSplashAdLoadSuccess() {
-//                groMoreProvide.printInfo();
-                adListener.onAdLoaded();
-            }
-        }, new GMSplashAdListener() {
-            @Override
-            public void onAdClicked() {
-                adListener.onAdClicked();
-            }
-
-            @Override
-            public void onAdDismiss() {
-                adListener.onAdDismissed();
-            }
-
-            @Override
-            public void onAdShow() {
-                adListener.onAdExposure();
-            }
-
-            @Override
-            public void onAdShowFail(@NonNull AdError adError) {
-                if (groMoreProvide != null) {
-                    groMoreProvide.loadSplashAd(AdCustomManager
-                            .getConfig().getGroMoreSplashAdId());
-                }
-            }
-
-            @Override
-            public void onAdSkip() {
-                adListener.onAdDismissed();
-            }
-        });
+                new MediationSplashRequestInfo(MediationConstant.ADN_PANGLE,
+                        AdCustomManager.getConfig().getmAdNetworkSlotId(),
+                        AdCustomManager
+                                .getConfig().getCsjAppId()
+                        , "") {
+                }, adListener);
     }
 
 
@@ -140,7 +99,18 @@ public class AdSplashProvide {
      */
     private void loadSplashAd() {
         if (adOpen) {
-            groMoreProvide.loadSplashAd(AdCustomManager.getConfig().getGroMoreSplashAdId());
+            if (AdCustomManager.isGroMoreInit()) {
+                groMoreProvide.loadSplashAd(AdCustomManager.getConfig().getGroMoreSplashAdId());
+            } else {
+                //sdk还没加载完成，等初始化完在加载广告
+                callback = new AdCustomManager.InitCallback() {
+                    @Override
+                    public void onSuccess() {
+                        groMoreProvide.loadSplashAd(AdCustomManager.getConfig().getGroMoreSplashAdId());
+                    }
+                };
+                AdCustomManager.addInitCallback(callback);
+            }
         } else {
             beiziProvide.loadAd(UIUtils.getScreenWidthInPx(activity),
                     UIUtils.getScreenHeight(activity));
@@ -149,7 +119,7 @@ public class AdSplashProvide {
 
     public void showAd(ViewGroup contain) {
         if (adOpen) {
-            groMoreProvide.getSplashAd().showAd(contain);
+            contain.addView(groMoreProvide.getSplashAd().getSplashView());
         } else {
             beiziProvide.showAd(contain);
         }
@@ -162,6 +132,9 @@ public class AdSplashProvide {
     public void destroy() {
         if (adOpen) {
             groMoreProvide.destroy();
+            if (callback != null) {
+                AdCustomManager.removeInitCallback(callback);
+            }
         } else {
             beiziProvide.destroy();
         }

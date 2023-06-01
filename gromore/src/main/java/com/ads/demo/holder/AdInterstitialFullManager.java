@@ -2,14 +2,6 @@ package com.ads.demo.holder;
 
 import android.app.Activity;
 import android.util.Log;
-import com.bytedance.msdk.api.v2.GMAdConstant;
-import com.bytedance.msdk.api.v2.GMMediationAdSdk;
-import com.bytedance.msdk.api.v2.GMSettingConfigCallback;
-import com.bytedance.msdk.api.v2.ad.interstitialFull.GMInterstitialFullAd;
-import com.bytedance.msdk.api.v2.ad.interstitialFull.GMInterstitialFullAdLoadCallback;
-import com.bytedance.msdk.api.v2.slot.GMAdOptionUtil;
-import com.bytedance.msdk.api.v2.slot.GMAdSlotInterstitialFull;
-
 import java.util.HashMap;
 import java.util.Map;
 

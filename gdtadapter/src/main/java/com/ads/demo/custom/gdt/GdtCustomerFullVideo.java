@@ -4,23 +4,17 @@ import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
 
-import com.ads.demo.AppConst;
-import com.ads.demo.custom.Const;
 import com.ads.demo.util.ThreadUtils;
-import com.bytedance.msdk.api.reward.RewardItem;
-import com.bytedance.msdk.api.v2.GMAdConstant;
-import com.bytedance.msdk.api.v2.ad.custom.GMCustomAdError;
-import com.bytedance.msdk.api.v2.ad.custom.bean.GMCustomServiceConfig;
-import com.bytedance.msdk.api.v2.ad.custom.fullvideo.GMCustomFullVideoAdapter;
-import com.bytedance.msdk.api.v2.slot.GMAdSlotFullVideo;
+import com.bytedance.sdk.openadsdk.AdSlot;
+import com.bytedance.sdk.openadsdk.mediation.MediationConstant;
+import com.bytedance.sdk.openadsdk.mediation.bridge.custom.fullvideo.MediationCustomFullVideoLoader;
+import com.bytedance.sdk.openadsdk.mediation.custom.MediationCustomServiceConfig;
+import com.bytedance.sdk.openadsdk.mediation.custom.MediationRewardItem;
 import com.qq.e.ads.interstitial2.ADRewardListener;
 import com.qq.e.ads.interstitial2.UnifiedInterstitialAD;
 import com.qq.e.ads.interstitial2.UnifiedInterstitialADListener;
 import com.qq.e.ads.interstitial2.UnifiedInterstitialMediaListener;
-import com.qq.e.comm.pi.IBidding;
 import com.qq.e.comm.util.AdError;
-
-import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Callable;
 import java.util.concurrent.Future;
@@ -29,40 +23,15 @@ import java.util.concurrent.TimeUnit;
 /**
  * YLH 全屏广告自定义Adapter
  */
-public class GdtCustomerFullVideo extends GMCustomFullVideoAdapter {
+public class GdtCustomerFullVideo extends MediationCustomFullVideoLoader {
 
-    private static final String TAG = AppConst.TAG_PRE + GdtCustomerFullVideo.class.getSimpleName();
+    private static final String TAG = GdtCustomerFullVideo.class.getSimpleName();
 
     private volatile UnifiedInterstitialAD mUnifiedInterstitialAD;
     private boolean isLoadSuccess;
-    private GMCustomServiceConfig customServiceConfig;
 
     @Override
-    public void receiveBidResult(boolean win, double winnerPrice, int loseReason, Map<String, Object> map) {
-        if (mUnifiedInterstitialAD != null) {
-            Map<String, Object> reasonMap = new HashMap<>();
-            if (win) {
-                if (winnerPrice != -1) {
-                    reasonMap.put(IBidding.EXPECT_COST_PRICE, winnerPrice);
-                }
-                mUnifiedInterstitialAD.sendWinNotification(reasonMap);
-            } else {
-                if (winnerPrice != -1) {
-                    reasonMap.put(IBidding.WIN_PRICE, winnerPrice);
-                }
-                reasonMap.put(IBidding.LOSS_REASON, loseReason);
-                if (customServiceConfig != null) {
-                    reasonMap.put(IBidding.ADN_ID, customServiceConfig.getADNNetworkSlotId());
-                }
-                mUnifiedInterstitialAD.sendLossNotification(reasonMap);
-            }
-        }
-        super.receiveBidResult(win, winnerPrice, loseReason, map);
-    }
-
-    @Override
-    public void load(Context context, GMAdSlotFullVideo adSlot, GMCustomServiceConfig serviceConfig) {
-        customServiceConfig = serviceConfig;
+    public void load(Context context, AdSlot adSlot, MediationCustomServiceConfig serviceConfig) {
         /**
          * 在子线程中进行广告加载
          */
@@ -75,7 +44,7 @@ public class GdtCustomerFullVideo extends GMCustomFullVideoAdapter {
                         public void onADReceive() {
                             isLoadSuccess = true;
                             Log.i(TAG, "onADReceive");
-                            if (isBidding()) {//bidding类型广告
+                            if (isClientBidding()) {//bidding类型广告
                                 double ecpm = mUnifiedInterstitialAD.getECPM(); //当无权限调用该接口时，SDK会返回错误码-1
                                 if (ecpm < 0) {
                                     ecpm = 0;
@@ -98,9 +67,9 @@ public class GdtCustomerFullVideo extends GMCustomFullVideoAdapter {
                             isLoadSuccess = false;
                             if (adError != null) {
                                 Log.i(TAG, "onNoAD errorCode = " + adError.getErrorCode() + " errorMessage = " + adError.getErrorMsg());
-                                callLoadFail(new GMCustomAdError(adError.getErrorCode(), adError.getErrorMsg()));
+                                callLoadFail(adError.getErrorCode(), adError.getErrorMsg());
                             } else {
-                                callLoadFail(new GMCustomAdError(Const.LOAD_ERROR, "no ad"));
+                                callLoadFail(40000, "no ad");
                             }
                         }
 
@@ -194,7 +163,11 @@ public class GdtCustomerFullVideo extends GMCustomFullVideoAdapter {
                         @Override
                         public void onReward(Map<String, Object> map) {
                             Log.e(TAG, "onReward");
-                            callFullVideoRewardVerify(new RewardItem() {
+                            float amount = 0f;
+                            String name = "";
+                            float finalAmount = amount;
+                            String finalName = name;
+                            callFullVideoRewardVerify(new MediationRewardItem() {
                                 @Override
                                 public boolean rewardVerify() {
                                     return true;
@@ -202,18 +175,12 @@ public class GdtCustomerFullVideo extends GMCustomFullVideoAdapter {
 
                                 @Override
                                 public float getAmount() {
-                                    if (adSlot != null) {
-                                        return adSlot.getRewardAmount();
-                                    }
-                                    return 0;
+                                    return finalAmount;
                                 }
 
                                 @Override
                                 public String getRewardName() {
-                                    if (adSlot != null) {
-                                        return adSlot.getRewardName();
-                                    }
-                                    return "";
+                                    return finalName;
                                 }
 
                                 @Override
@@ -225,7 +192,7 @@ public class GdtCustomerFullVideo extends GMCustomFullVideoAdapter {
                     });
                     mUnifiedInterstitialAD.loadFullScreenAD();
                 } else {
-                    callLoadFail(new GMCustomAdError(Const.LOAD_ERROR, "context is not Activity"));
+                    callLoadFail(40000, "context is not Activity");
                 }
             }
         });
@@ -249,31 +216,31 @@ public class GdtCustomerFullVideo extends GMCustomFullVideoAdapter {
     }
 
     @Override
-    public GMAdConstant.AdIsReadyStatus isReadyStatus() {
+    public MediationConstant.AdIsReadyStatus isReadyCondition() {
         /**
          * 在子线程中进行广告是否可用的判断
          */
-        Future<GMAdConstant.AdIsReadyStatus> future = ThreadUtils.runOnThreadPool(new Callable<GMAdConstant.AdIsReadyStatus>() {
+        Future<MediationConstant.AdIsReadyStatus> future = ThreadUtils.runOnThreadPool(new Callable<MediationConstant.AdIsReadyStatus>() {
             @Override
-            public GMAdConstant.AdIsReadyStatus call() throws Exception {
+            public MediationConstant.AdIsReadyStatus call() throws Exception {
                 if (mUnifiedInterstitialAD != null && mUnifiedInterstitialAD.isValid()) {
-                    return GMAdConstant.AdIsReadyStatus.AD_IS_READY;
+                    return MediationConstant.AdIsReadyStatus.AD_IS_READY;
                 } else {
-                    return GMAdConstant.AdIsReadyStatus.AD_IS_NOT_READY;
+                    return MediationConstant.AdIsReadyStatus.AD_IS_NOT_READY;
                 }
             }
         });
         try {
-            GMAdConstant.AdIsReadyStatus result = future.get(500, TimeUnit.MILLISECONDS); //设置500毫秒的总超时，避免线程阻塞
+            MediationConstant.AdIsReadyStatus result = future.get(500, TimeUnit.MILLISECONDS); //设置500毫秒的总超时，避免线程阻塞
             if (result != null) {
                 return result;
             } else {
-                return GMAdConstant.AdIsReadyStatus.AD_IS_NOT_READY;
+                return MediationConstant.AdIsReadyStatus.AD_IS_NOT_READY;
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return GMAdConstant.AdIsReadyStatus.AD_IS_NOT_READY;
+        return MediationConstant.AdIsReadyStatus.AD_IS_NOT_READY;
     }
 
     @Override
@@ -308,11 +275,11 @@ public class GdtCustomerFullVideo extends GMCustomFullVideoAdapter {
     }
 
     /**
-     * 是否是Bidding广告
+     * 是否是ClientBidding广告
      *
      * @return
      */
-    public boolean isBidding() {
-        return getBiddingType() == GMAdConstant.AD_TYPE_CLIENT_BIDING;
+    public boolean isClientBidding() {
+        return getBiddingType() == MediationConstant.AD_TYPE_CLIENT_BIDING;
     }
 }

@@ -1,24 +1,20 @@
 package com.ads.demo.custom.gdt;
 
+import android.app.Activity;
 import android.content.Context;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 
-import com.ads.demo.AppConst;
-import com.ads.demo.custom.Const;
 import com.ads.demo.util.ThreadUtils;
-import com.bytedance.msdk.api.format.TTMediaView;
-import com.bytedance.msdk.api.format.TTNativeAdView;
-import com.bytedance.msdk.api.v2.GMAdConstant;
-import com.bytedance.msdk.api.v2.ad.custom.GMCustomAdError;
-import com.bytedance.msdk.api.v2.ad.custom.nativeAd.GMCustomNativeAd;
-import com.bytedance.msdk.api.v2.ad.nativeAd.GMNativeAdAppInfo;
-import com.bytedance.msdk.api.v2.ad.nativeAd.GMViewBinder;
-import com.bytedance.msdk.api.v2.slot.GMAdSlotNative;
-import com.bytedance.msdk.api.v2.slot.paltform.GMAdSlotGDTOption;
-import com.qq.e.ads.cfg.VideoOption;
+import com.bytedance.sdk.openadsdk.AdSlot;
+import com.bytedance.sdk.openadsdk.TTAdConstant;
+import com.bytedance.sdk.openadsdk.mediation.MediationConstant;
+import com.bytedance.sdk.openadsdk.mediation.ad.MediationNativeAdAppInfo;
+import com.bytedance.sdk.openadsdk.mediation.ad.MediationViewBinder;
+import com.bytedance.sdk.openadsdk.mediation.bridge.custom.native_ad.MediationCustomNativeAd;
 import com.qq.e.ads.nativ.MediaView;
 import com.qq.e.ads.nativ.NativeADEventListener;
 import com.qq.e.ads.nativ.NativeADMediaListener;
@@ -27,28 +23,31 @@ import com.qq.e.ads.nativ.NativeUnifiedADData;
 import com.qq.e.ads.nativ.widget.NativeAdContainer;
 import com.qq.e.comm.constants.AdPatternType;
 import com.qq.e.comm.util.AdError;
-
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
 
 /**
  * YLH 信息流 开发者自渲染（自渲染）广告对象
  */
-public class GdtNativeAd extends GMCustomNativeAd {
+public class GdtNativeAd extends MediationCustomNativeAd {
 
-    private static final String TAG = AppConst.TAG_PRE + GdtNativeAd.class.getSimpleName();
+    private static final String TAG = GdtNativeAd.class.getSimpleName();
 
     private NativeUnifiedADData mNativeUnifiedADData;
-    private GMAdSlotNative mGMAdSlotNative;
+    private AdSlot mAdSlot;
     private Context mContext;
     private String VIEW_TAG = "view_tag";
+    private boolean statusFlag = true; //app下载状态记录标识
 
-    public GdtNativeAd(Context context, NativeUnifiedADData feedAd, GMAdSlotNative adSlot) {
+    public GdtNativeAd(Context context, NativeUnifiedADData feedAd, AdSlot adSlot) {
         mContext = context;
         mNativeUnifiedADData = feedAd;
-        mGMAdSlotNative = adSlot;
+        mAdSlot = adSlot;
         NativeUnifiedADAppMiitInfo info = mNativeUnifiedADData.getAppMiitInfo();
-        GMNativeAdAppInfo nativeAdAppInfo = new GMNativeAdAppInfo();
+        MediationNativeAdAppInfo nativeAdAppInfo = new MediationNativeAdAppInfo();
         if (info != null) {
             nativeAdAppInfo.setAppName(info.getAppName());
             nativeAdAppInfo.setAuthorName(info.getAuthorName());
@@ -70,31 +69,41 @@ public class GdtNativeAd extends GMCustomNativeAd {
         setSource(mNativeUnifiedADData.getTitle());
 
         if (mNativeUnifiedADData.getAdPatternType() == AdPatternType.NATIVE_VIDEO) {
-            setAdImageMode(GMAdConstant.IMAGE_MODE_VIDEO);
+            setAdImageMode(TTAdConstant.IMAGE_MODE_VIDEO);
         } else if (mNativeUnifiedADData.getAdPatternType() == AdPatternType.NATIVE_1IMAGE_2TEXT
                 || mNativeUnifiedADData.getAdPatternType() == AdPatternType.NATIVE_2IMAGE_2TEXT) {
-            setAdImageMode(GMAdConstant.IMAGE_MODE_LARGE_IMG);
+            setAdImageMode(TTAdConstant.IMAGE_MODE_LARGE_IMG);
         } else if (mNativeUnifiedADData.getAdPatternType() == AdPatternType.NATIVE_3IMAGE) {
-            setAdImageMode(GMAdConstant.IMAGE_MODE_GROUP_IMG);
+            setAdImageMode(TTAdConstant.IMAGE_MODE_GROUP_IMG);
         }
 
         if (mNativeUnifiedADData.isAppAd()) {
-            setInteractionType(GMAdConstant.INTERACTION_TYPE_DOWNLOAD);
+            setInteractionType(TTAdConstant.INTERACTION_TYPE_DOWNLOAD);
         } else {
-            setInteractionType(GMAdConstant.INTERACTION_TYPE_LANDING_PAGE);
+            setInteractionType(TTAdConstant.INTERACTION_TYPE_LANDING_PAGE);
         }
     }
 
+
     @Override
-    public void registerViewForInteraction(ViewGroup container, List<View> clickViews, List<View> creativeViews, GMViewBinder viewBinder) {
+    public void registerView(Activity activity,
+                             ViewGroup container,
+                             List<View> clickViews,
+                             List<View> creativeViews,
+                             List<View> directDownloadViews,
+                             MediationViewBinder viewBinder) {
         /**
          * 先切子线程，再在子线程中切主线程进行广告展示
          */
         ThreadUtils.runOnUIThreadByThreadPool(new Runnable() {
             @Override
             public void run() {
-                if (mNativeUnifiedADData != null && container instanceof TTNativeAdView) {
-                    TTNativeAdView nativeAdView = (TTNativeAdView) container;
+                if (isServerBidding()) { //曝光扣费, 单位分，若优量汇竞胜，在广告曝光时回传，必传
+                    mNativeUnifiedADData.setBidECPM(mNativeUnifiedADData.getECPM());
+                }
+
+                if (mNativeUnifiedADData != null && container instanceof FrameLayout) {
+                    FrameLayout nativeAdView = (FrameLayout) container;
                     NativeAdContainer nativeAdContainer;
 
                     if (nativeAdView.getChildAt(0) instanceof NativeAdContainer) {
@@ -127,31 +136,21 @@ public class GdtNativeAd extends GMCustomNativeAd {
                         nativeAdView.addView(nativeAdContainer, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
                     }
 
-                    if (creativeViews != null && getDirectDownloadViews() != null) { //若传入的参数中有directView，需要做处理
-                        creativeViews.addAll(getDirectDownloadViews());
+                    if (creativeViews != null && directDownloadViews != null) { //若传入的参数中有directView，需要做处理
+                        creativeViews.addAll(directDownloadViews);
                     }
 
-                    if(getActivity() != null){
-                        /**
-                         * 如果GMNativeAd调用的是
-                         * void registerView(@NonNull Activity activity, @NonNull ViewGroup container, @NonNull List<View> clickViews, @Nullable List<View> creativeViews, GMViewBinder viewBinder);
-                         * 需要使用getActivity()获取传入的Activity
-                         * 如果GMNativeAd调用的是
-                         * void registerView(@NonNull ViewGroup container, @NonNull List<View> clickViews, @Nullable List<View> creativeViews, GMViewBinder viewBinder);
-                         * getActivity()的值为null
-                         */
-                        mNativeUnifiedADData.bindAdToView(getActivity(), nativeAdContainer, mGMAdSlotNative.getGMAdSlotGDTOption().getNativeAdLogoParams(), clickViews, creativeViews);
-                    } else {
-                        mNativeUnifiedADData.bindAdToView(mContext, nativeAdContainer, mGMAdSlotNative.getGMAdSlotGDTOption().getNativeAdLogoParams(), clickViews, creativeViews);
-                    }
 
-                    TTMediaView ttMediaView = nativeAdView.findViewById(viewBinder.mediaViewId);
+                    mNativeUnifiedADData.bindAdToView(activity, nativeAdContainer, GdtUtils.getNativeAdLogoParams(mAdSlot), clickViews, creativeViews);
 
-                    if (ttMediaView != null && getAdImageMode() == GMAdConstant.IMAGE_MODE_VIDEO) {
+
+                    FrameLayout ttMediaView = nativeAdView.findViewById(viewBinder.mediaViewId);
+
+                    if (ttMediaView != null && mNativeUnifiedADData.getAdPatternType() == AdPatternType.NATIVE_VIDEO) {
                         MediaView gdtMediaView = new MediaView(mContext);
                         ttMediaView.removeAllViews();
                         ttMediaView.addView(gdtMediaView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-                        mNativeUnifiedADData.bindMediaView(gdtMediaView, getGMVideoOption(mGMAdSlotNative.getGMAdSlotGDTOption()), new NativeADMediaListener() {
+                        mNativeUnifiedADData.bindMediaView(gdtMediaView,GdtUtils.getGMVideoOption(mAdSlot), new NativeADMediaListener() {
                             @Override
                             public void onVideoInit() {
                                 Log.d(TAG, "onVideoInit");
@@ -175,34 +174,34 @@ public class GdtNativeAd extends GMCustomNativeAd {
                             @Override
                             public void onVideoStart() {
                                 Log.d(TAG, "onVideoStart");
-                                callNativeVideoStart();
+                                callVideoStart();
                             }
 
                             @Override
                             public void onVideoPause() {
                                 Log.d(TAG, "onVideoPause");
-                                callNativeVideoPause();
+                                callVideoPause();
                             }
 
                             @Override
                             public void onVideoResume() {
                                 Log.d(TAG, "onVideoResume");
-                                callNativeVideoResume();
+                                callVideoResume();
                             }
 
                             @Override
                             public void onVideoCompleted() {
                                 Log.d(TAG, "onVideoCompleted");
-                                callNativeVideoCompleted();
+                                callVideoCompleted();
                             }
 
                             @Override
                             public void onVideoError(AdError adError) {
                                 if (adError != null) {
                                     Log.i(TAG, "onVideoError errorCode = " + adError.getErrorCode() + " errorMessage = " + adError.getErrorMsg());
-                                    callNativeVideoError(new GMCustomAdError(adError.getErrorCode(), adError.getErrorMsg()));
+                                    callVideoError(adError.getErrorCode(), adError.getErrorMsg());
                                 } else {
-                                    callNativeVideoError(new GMCustomAdError(Const.VIDEO_ERROR, "video error"));
+                                    callVideoError(99999, "video error");
                                 }
                             }
 
@@ -214,7 +213,7 @@ public class GdtNativeAd extends GMCustomNativeAd {
                             @Override
                             public void onVideoClicked() {
                                 Log.d(TAG, "onVideoClicked");
-                                callNativeAdClick();
+                                callAdClick();
                             }
                         });
                     }
@@ -228,13 +227,13 @@ public class GdtNativeAd extends GMCustomNativeAd {
                         @Override
                         public void onADExposed() {
                             Log.d(TAG, "onADExposed");
-                            callNativeAdShow();
+                            callAdShow();
                         }
 
                         @Override
                         public void onADClicked() {
                             Log.d(TAG, "onADClicked");
-                            callNativeAdClick();
+                            callAdClick();
                         }
 
                         @Override
@@ -250,18 +249,6 @@ public class GdtNativeAd extends GMCustomNativeAd {
                 }
             }
         });
-    }
-
-    public VideoOption getGMVideoOption(GMAdSlotGDTOption gdtOption) {
-        VideoOption.Builder builder = new VideoOption.Builder();
-        if (gdtOption != null) {
-            builder.setAutoPlayPolicy(gdtOption.getGDTAutoPlayPolicy());
-            builder.setAutoPlayMuted(gdtOption.isGDTAutoPlayMuted());
-            builder.setDetailPageMuted(gdtOption.isGDTDetailPageMuted());
-            builder.setEnableDetailPage(gdtOption.isGDTEnableDetailPage());
-            builder.setEnableUserControl(gdtOption.isGDTEnableUserControl());
-        }
-        return builder.build();
     }
 
     @Override
@@ -316,12 +303,32 @@ public class GdtNativeAd extends GMCustomNativeAd {
         });
     }
 
+
     @Override
-    public GMAdConstant.AdIsReadyStatus isReadyStatus() {
-        if (mNativeUnifiedADData != null && mNativeUnifiedADData.isValid()) {
-            return GMAdConstant.AdIsReadyStatus.AD_IS_READY;
-        } else {
-            return GMAdConstant.AdIsReadyStatus.AD_IS_NOT_READY;
+    public MediationConstant.AdIsReadyStatus isReadyCondition() {
+        /**
+         * 在子线程中进行广告是否可用的判断
+         */
+        Future<MediationConstant.AdIsReadyStatus> future = ThreadUtils.runOnThreadPool(new Callable<MediationConstant.AdIsReadyStatus>() {
+            @Override
+            public MediationConstant.AdIsReadyStatus call() throws Exception {
+                if (mNativeUnifiedADData != null && mNativeUnifiedADData.isValid()) {
+                    return MediationConstant.AdIsReadyStatus.AD_IS_READY;
+                } else {
+                    return MediationConstant.AdIsReadyStatus.AD_IS_NOT_READY;
+                }
+            }
+        });
+        try {
+            MediationConstant.AdIsReadyStatus result = future.get(500, TimeUnit.MILLISECONDS);//设置500毫秒的总超时，避免线程阻塞
+            if (result != null) {
+                return result;
+            } else {
+                return MediationConstant.AdIsReadyStatus.AD_IS_NOT_READY;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+        return MediationConstant.AdIsReadyStatus.AD_IS_NOT_READY;
     }
 }

@@ -3,17 +3,15 @@ package com.zlfcapp.zlfcad;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 
 import com.beizi.fusion.BeiZiCustomController;
 import com.beizi.fusion.BeiZis;
-import com.bytedance.msdk.api.v2.GMAdConfig;
-import com.bytedance.msdk.api.v2.GMAdConstant;
-import com.bytedance.msdk.api.v2.GMGdtOption;
-import com.bytedance.msdk.api.v2.GMMediationAdSdk;
-import com.bytedance.msdk.api.v2.GMPangleOption;
-import com.bytedance.msdk.api.v2.GMPrivacyConfig;
+import com.bytedance.sdk.openadsdk.TTAdConfig;
+import com.bytedance.sdk.openadsdk.TTAdSdk;
+import com.bytedance.sdk.openadsdk.mediation.init.MediationConfig;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -22,6 +20,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * create by hj on 2023/1/6
@@ -33,6 +33,7 @@ public class AdCustomManager {
     private static AdCustomConfig config;
     //groMore是否初始化
     private static boolean groMoreInit = false;
+    private static List<InitCallback> callbacks;
 
     public static void setAdOpen(boolean adOpen) {
         AdCustomManager.adOpen = adOpen;
@@ -46,6 +47,21 @@ public class AdCustomManager {
         AdCustomManager.adOpen = isOpenAd;
         AdCustomManager.config = config;
         doInit(context);
+    }
+
+    //监听sdk是否初始化成功
+    public static void addInitCallback(InitCallback callback) {
+        if (callbacks == null) {
+            callbacks = new ArrayList<>();
+        }
+        callbacks.add(callback);
+    }
+
+    public static void removeInitCallback(InitCallback callback) {
+        if (callbacks == null) {
+            callbacks = new ArrayList<>();
+        }
+        callbacks.remove(callback);
     }
 
     public static AdCustomConfig getConfig() {
@@ -120,83 +136,45 @@ public class AdCustomManager {
 
     public static void initGroMore(Context context) {
         if (!groMoreInit) {
-            GMMediationAdSdk.initialize(context, buildV2Config(context));
-            groMoreInit = true;
+            TTAdSdk.init(context, buildConfig(context), new TTAdSdk.InitCallback() {
+                @Override
+                public void success() {
+                    groMoreInit = true;
+                    if (callbacks != null) {
+                        for (InitCallback c : callbacks) {
+                            c.onSuccess();
+                        }
+                    }
+                }
+
+                @Override
+                public void fail(int code, String msg) {
+                    groMoreInit = false;
+                }
+            });
         }
     }
 
-    private static GMAdConfig buildV2Config(Context context) {
-        JSONObject jsonObject = null;
-        try {
-            jsonObject = new JSONObject(getJson("androidlocalconfig.json", context));
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return new GMAdConfig.Builder()
-                .setAppId(config.getGroMoreAppId())
-                .setAppName(getAppName(context))
-                .setDebug(BuildConfig.DEBUG)
-                .setPublisherDid(config.getPublisherDid())
-                .setOpenAdnTest(false)
-                .setConfigUserInfoForSegment(config.getUserInfo())
-                .setPangleOption(new GMPangleOption.Builder()
-                        .setIsPaid(false)
-                        .setTitleBarTheme(GMAdConstant.TITLE_BAR_THEME_DARK)
-                        .setAllowShowNotify(true)
-                        .setAllowShowPageWhenScreenLock(true)
-                        .setDirectDownloadNetworkType(GMAdConstant.NETWORK_STATE_WIFI, GMAdConstant.NETWORK_STATE_3G)
-                        .setIsUseTextureView(true)
-                        .setNeedClearTaskReset()
-                        .setKeywords("")
-                        .build())
-                .setGdtOption(new GMGdtOption.Builder()
-                        .setWxInstalled(false)
-                        .setOpensdkVer(null)
-                        .setSupportH265(false)
-                        .setSupportSplashZoomout(false)
-                        .build())
-                /**
-                 * 隐私协议设置，详见GMPrivacyConfig
-                 */
-                .setPrivacyConfig(new GMPrivacyConfig() {
-                    // 重写相应的函数，设置需要设置的权限开关，不重写的将采用默认值
-                    // 例如，重写isCanUsePhoneState函数返回true，表示允许使用ReadPhoneState权限。
-                    @Override
-                    public boolean isCanUsePhoneState() {
-                        return true;
-                    }
+    public interface InitCallback {
+        void onSuccess();
+    }
 
-                    //当isCanUseWifiState=false时，可传入Mac地址信息，穿山甲sdk使用您传入的Mac地址信息
-                    @Override
-                    public String getMacAddress() {
-                        return "";
-                    }
+    public static boolean isGroMoreInit() {
+        return groMoreInit;
+    }
 
-                    // 设置青少年合规，默认值GMAdConstant.ADULT_STATE.AGE_ADULT为成年人
-                    @Override
-                    public GMAdConstant.ADULT_STATE getAgeGroup() {
-                        return GMAdConstant.ADULT_STATE.AGE_ADULT;
-                    }
-                })
-                .setCustomLocalConfig(jsonObject)
+    private static TTAdConfig buildConfig(Context context) {
+        return new TTAdConfig.Builder()
+                .appId(config.getCsjAppId())
+                .appName(getAppName(context))
+                .debug(BuildConfig.DEBUG)
+                .useMediation(true)
+                .setMediationConfig(new MediationConfig.Builder() //可设置聚合特有参数详细设置请参考该api
+                        .setMediationConfigUserInfoForSegment(config.getUserInfo())//如果您需要配置流量分组信息请参考该api
+                        .build())
                 .build();
     }
 
-
-    private static String getJson(String fileName, Context context) {
-        StringBuilder stringBuilder = new StringBuilder();
-        try {
-            InputStream is = context.getAssets().open(fileName);
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(is));
-            String line;
-            while ((line = bufferedReader.readLine()) != null) {
-                stringBuilder.append(line);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return stringBuilder.toString();
-    }
 
     private static String getAppName(Context context) {
         String name = "";

@@ -22,19 +22,20 @@ android {
         }
     }
 
-    repositories {
-        flatDir name: 'libs',dirs: 'libs'
-        flatDir dirs:['libs','../libs_csj']
-    }
+//    repositories {
+//        flatDir name: 'libs',dirs: 'libs'
+//        flatDir dirs:['libs','../libs_gromore']
+//    }
 
 }
 
 dependencies {
     implementation 'androidx.appcompat:appcompat:1.3.1'
-    compileOnly fileTree(dir: '../libs_csj', include: ['*.aar'])
-    embed(name: rootProject.ext.sdk.csjSdkName, ext: 'aar')
-    api "by.gm_mediation.com:gromore-sdk:$rootProject.ext.sdk.gromoreSdk"
-    api "by.gm_mediation.com:pangle-adapter:$rootProject.ext.sdk.pangleAdapter"
+//    compileOnly fileTree(dir: '../libs_gromore', include: ['*.aar'])
+//    embed(name: rootProject.ext.sdk.csjSdkName, ext: 'aar')
+//    api "by.gm_mediation.com:gromore-sdk:$rootProject.ext.sdk.gromoreSdk"
+//    api "by.gm_mediation.com:pangle-adapter:$rootProject.ext.sdk.pangleAdapter"
+    api "com.pangle.cn:mediation-sdk:$rootProject.ext.sdk.gromoreSdk"
 }
 
 afterEvaluate {

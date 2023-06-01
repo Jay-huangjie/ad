@@ -4,21 +4,15 @@ import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
 
-import com.ads.demo.AppConst;
-import com.ads.demo.custom.Const;
 import com.ads.demo.util.ThreadUtils;
-import com.bytedance.msdk.api.reward.RewardItem;
-import com.bytedance.msdk.api.v2.GMAdConstant;
-import com.bytedance.msdk.api.v2.ad.custom.GMCustomAdError;
-import com.bytedance.msdk.api.v2.ad.custom.bean.GMCustomServiceConfig;
-import com.bytedance.msdk.api.v2.ad.custom.reward.GMCustomRewardAdapter;
-import com.bytedance.msdk.api.v2.slot.GMAdSlotRewardVideo;
+import com.bytedance.sdk.openadsdk.AdSlot;
+import com.bytedance.sdk.openadsdk.mediation.MediationConstant;
+import com.bytedance.sdk.openadsdk.mediation.bridge.custom.reward.MediationCustomRewardVideoLoader;
+import com.bytedance.sdk.openadsdk.mediation.custom.MediationCustomServiceConfig;
+import com.bytedance.sdk.openadsdk.mediation.custom.MediationRewardItem;
 import com.qq.e.ads.rewardvideo.RewardVideoAD;
 import com.qq.e.ads.rewardvideo.RewardVideoADListener;
-import com.qq.e.comm.pi.IBidding;
 import com.qq.e.comm.util.AdError;
-
-import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Callable;
 import java.util.concurrent.Future;
@@ -27,54 +21,28 @@ import java.util.concurrent.TimeUnit;
 /**
  * YLH 激励视频广告自定义Adapter
  */
-public class GdtCustomerReward extends GMCustomRewardAdapter {
+public class GdtCustomerReward extends MediationCustomRewardVideoLoader {
 
-    private static final String TAG = AppConst.TAG_PRE + GdtCustomerReward.class.getSimpleName();
+    private static final String TAG = "TTMediationSDK_" + GdtCustomerReward.class.getSimpleName();
 
     private volatile RewardVideoAD mRewardVideoAD;
     private boolean isLoadSuccess;
 
-    private GMCustomServiceConfig customServiceConfig;
-
-
     @Override
-    public void receiveBidResult(boolean win, double winnerPrice, int loseReason, Map<String, Object> map) {
-        if (mRewardVideoAD != null) {
-            Map<String, Object> reasonMap = new HashMap<>();
-            if (win) {
-                if (winnerPrice != -1) {
-                    reasonMap.put(IBidding.EXPECT_COST_PRICE, winnerPrice);
-                }
-                mRewardVideoAD.sendWinNotification(reasonMap);
-            } else {
-                if (winnerPrice != -1) {
-                    reasonMap.put(IBidding.WIN_PRICE, winnerPrice);
-                }
-                reasonMap.put(IBidding.LOSS_REASON, loseReason);
-                if (customServiceConfig != null) {
-                    reasonMap.put(IBidding.ADN_ID, customServiceConfig.getADNNetworkSlotId());
-                }
-                mRewardVideoAD.sendLossNotification(reasonMap);
-            }
-        }
-        super.receiveBidResult(win, winnerPrice, loseReason, map);
-    }
+    public void load(Context context, AdSlot adSlot, MediationCustomServiceConfig serviceConfig) {
 
-    @Override
-    public void load(Context context, GMAdSlotRewardVideo adSlot, GMCustomServiceConfig serviceConfig) {
-        customServiceConfig = serviceConfig;
         /**
          * 在子线程中进行广告加载
          */
         ThreadUtils.runOnThreadPool(new Runnable() {
             @Override
             public void run() {
-                mRewardVideoAD = new RewardVideoAD(context, serviceConfig.getADNNetworkSlotId(), new RewardVideoADListener() {
+                RewardVideoADListener rewardVideoADListener = new RewardVideoADListener() {
                     @Override
                     public void onADLoad() {
                         isLoadSuccess = true;
                         Log.i(TAG, "onADLoad");
-                        if (isBidding()) {//bidding类型广告
+                        if (isClientBidding()) {//bidding类型广告
                             double ecpm = mRewardVideoAD.getECPM(); //当无权限调用该接口时，SDK会返回错误码-1
                             if (ecpm < 0) {
                                 ecpm = 0;
@@ -95,7 +63,7 @@ public class GdtCustomerReward extends GMCustomRewardAdapter {
                     @Override
                     public void onADShow() {
                         Log.i(TAG, "onADShow");
-                        callRewardedAdShow();
+                        callRewardVideoAdShow();
                     }
 
                     @Override
@@ -106,7 +74,7 @@ public class GdtCustomerReward extends GMCustomRewardAdapter {
                     @Override
                     public void onReward(Map<String, Object> map) {
                         Log.i(TAG, "onReward");
-                        callRewardVerify(new RewardItem() {
+                        callRewardVideoRewardVerify(new MediationRewardItem() {
                             @Override
                             public boolean rewardVerify() {
                                 return true;
@@ -114,18 +82,12 @@ public class GdtCustomerReward extends GMCustomRewardAdapter {
 
                             @Override
                             public float getAmount() {
-                                if (adSlot != null) {
-                                    return adSlot.getRewardAmount();
-                                }
                                 return 0;
                             }
 
                             @Override
                             public String getRewardName() {
-                                if (adSlot != null) {
-                                    return adSlot.getRewardName();
-                                }
-                                return "";
+                                return null;
                             }
 
                             @Override
@@ -138,7 +100,7 @@ public class GdtCustomerReward extends GMCustomRewardAdapter {
                     @Override
                     public void onADClick() {
                         Log.i(TAG, "onADClick");
-                        callRewardClick();
+                        callRewardVideoAdClick();
                     }
 
                     @Override
@@ -150,7 +112,7 @@ public class GdtCustomerReward extends GMCustomRewardAdapter {
                     @Override
                     public void onADClose() {
                         Log.i(TAG, "onADClose");
-                        callRewardedAdClosed();
+                        callRewardVideoAdClosed();
                     }
 
                     @Override
@@ -158,12 +120,19 @@ public class GdtCustomerReward extends GMCustomRewardAdapter {
                         isLoadSuccess = false;
                         if (adError != null) {
                             Log.i(TAG, "onNoAD errorCode = " + adError.getErrorCode() + " errorMessage = " + adError.getErrorMsg());
-                            callLoadFail(new GMCustomAdError(adError.getErrorCode(), adError.getErrorMsg()));
+                            callLoadFail(adError.getErrorCode(), adError.getErrorMsg());
                         } else {
-                            callLoadFail(new GMCustomAdError(Const.LOAD_ERROR, "no ad"));
+                            callLoadFail(40000, "no ad");
                         }
                     }
-                }, !adSlot.isMuted());
+                };
+
+                boolean isMuted = adSlot.getMediationAdSlot() == null ? false : adSlot.getMediationAdSlot().isMuted();
+                if (isServerBidding()) {
+                    mRewardVideoAD = new RewardVideoAD(context, serviceConfig.getADNNetworkSlotId(), rewardVideoADListener, !isMuted, getAdm());
+                } else {
+                    mRewardVideoAD = new RewardVideoAD(context, serviceConfig.getADNNetworkSlotId(), rewardVideoADListener, !isMuted);
+                }
                 mRewardVideoAD.loadAD();
             }
         });
@@ -179,6 +148,9 @@ public class GdtCustomerReward extends GMCustomRewardAdapter {
             @Override
             public void run() {
                 if (mRewardVideoAD != null) {
+                    if (isServerBidding()) {
+                        mRewardVideoAD.setBidECPM(mRewardVideoAD.getECPM());
+                    }
                     mRewardVideoAD.showAD(activity);
                 }
             }
@@ -187,31 +159,31 @@ public class GdtCustomerReward extends GMCustomRewardAdapter {
     }
 
     @Override
-    public GMAdConstant.AdIsReadyStatus isReadyStatus() {
+    public MediationConstant.AdIsReadyStatus isReadyCondition() {
         /**
          * 在子线程中进行广告是否可用的判断
          */
-        Future<GMAdConstant.AdIsReadyStatus> future = ThreadUtils.runOnThreadPool(new Callable<GMAdConstant.AdIsReadyStatus>() {
+        Future<MediationConstant.AdIsReadyStatus> future = ThreadUtils.runOnThreadPool(new Callable<MediationConstant.AdIsReadyStatus>() {
             @Override
-            public GMAdConstant.AdIsReadyStatus call() throws Exception {
+            public MediationConstant.AdIsReadyStatus call() throws Exception {
                 if (mRewardVideoAD != null && mRewardVideoAD.isValid()) {
-                    return GMAdConstant.AdIsReadyStatus.AD_IS_READY;
+                    return MediationConstant.AdIsReadyStatus.AD_IS_READY;
                 } else {
-                    return GMAdConstant.AdIsReadyStatus.AD_IS_NOT_READY;
+                    return MediationConstant.AdIsReadyStatus.AD_IS_NOT_READY;
                 }
             }
         });
         try {
-            GMAdConstant.AdIsReadyStatus result = future.get(500, TimeUnit.MILLISECONDS);//设置500毫秒的总超时，避免线程阻塞
+            MediationConstant.AdIsReadyStatus result = future.get(500, TimeUnit.MILLISECONDS);//设置500毫秒的总超时，避免线程阻塞
             if (result != null) {
                 return result;
             } else {
-                return GMAdConstant.AdIsReadyStatus.AD_IS_NOT_READY;
+                return MediationConstant.AdIsReadyStatus.AD_IS_NOT_READY;
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return GMAdConstant.AdIsReadyStatus.AD_IS_NOT_READY;
+        return MediationConstant.AdIsReadyStatus.AD_IS_NOT_READY;
     }
 
     @Override
@@ -234,12 +206,25 @@ public class GdtCustomerReward extends GMCustomRewardAdapter {
     }
 
     /**
-     * 是否是Bidding广告
+     * 是否clientBidding广告
      *
      * @return
      */
-    public boolean isBidding() {
-        return getBiddingType() == GMAdConstant.AD_TYPE_CLIENT_BIDING;
+    public boolean isClientBidding() {
+        return getBiddingType() == MediationConstant.AD_TYPE_CLIENT_BIDING;
     }
 
+    /**
+     * 是否serverBidding广告
+     *
+     * @return
+     */
+    public boolean isServerBidding() {
+        return getBiddingType() == MediationConstant.AD_TYPE_SERVER_BIDING;
+    }
+
+    @Override
+    public void receiveBidResult(boolean win, double winnerPrice, int loseReason, Map<String, Object> extra) {
+        super.receiveBidResult(win, winnerPrice, loseReason, extra);
+    }
 }

@@ -28,8 +28,8 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.3.1'
     compileOnly fileTree(dir: '../libs_gdt', include: ['*.aar'])
     embed(name: rootProject.ext.sdk.gdtSdkName, ext: 'aar')
-    api "by.gm_mediation.com:gdt-adapter:$rootProject.ext.sdk.gdtAdapter"
-    compileOnly "by.gm_mediation.com:gromore-sdk:$rootProject.ext.sdk.gromoreSdk"
+    api "com.pangle.cn:mediation-gdt-adapter:$rootProject.ext.sdk.gdtAdapter"
+    api "com.pangle.cn:mediation-sdk:$rootProject.ext.sdk.gromoreSdk"
 }
 
 afterEvaluate {

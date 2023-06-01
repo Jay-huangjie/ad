@@ -6,23 +6,24 @@ import android.os.Handler;
 import com.ads.demo.custom.beizi.util.ThreadUtils;
 import com.beizi.fusion.BeiZiCustomController;
 import com.beizi.fusion.BeiZis;
-import com.bytedance.msdk.api.v2.ad.custom.bean.GMCustomInitConfig;
-import com.bytedance.msdk.api.v2.ad.custom.init.GMCustomAdapterConfiguration;
+import com.bytedance.sdk.openadsdk.mediation.bridge.custom.MediationCustomInitLoader;
+import com.bytedance.sdk.openadsdk.mediation.custom.MediationCustomInitConfig;
+
 import java.util.Map;
 
 /**
  * YLH 自定义初始化类
  */
-public class BeiziCustomerConfig extends GMCustomAdapterConfiguration {
+public class BeiziCustomerConfig extends MediationCustomInitLoader {
 
     private static final String TAG = BeiziCustomerConfig.class.getSimpleName();
 
     @Override
-    public void initializeADN(Context context, GMCustomInitConfig gmCustomConfig, Map<String, Object> localExtra) {
+    public void initializeADN(Context context, MediationCustomInitConfig mediationCustomInitConfig, Map<String, Object> map) {
         ThreadUtils.runOnUIThread(new Runnable() {
             @Override
             public void run() {
-                BeiZis.init(context, gmCustomConfig.getAppId(), new BeiZiCustomController() {
+                BeiZis.init(context, mediationCustomInitConfig.getAppId(), new BeiZiCustomController() {
                     /**
                      * 是否允许SDK主动使用地理位置信息
                      *
@@ -86,11 +87,6 @@ public class BeiziCustomerConfig extends GMCustomAdapterConfiguration {
     @Override
     public String getNetworkSdkVersion() {
         return BeiZis.getSdkVersion();
-    }
-
-    @Override
-    public String getAdapterSdkVersion() {
-        return "1.0.0";
     }
 
 }

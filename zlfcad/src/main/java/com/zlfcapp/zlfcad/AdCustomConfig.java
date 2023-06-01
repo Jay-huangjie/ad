@@ -1,9 +1,5 @@
 package com.zlfcapp.zlfcad;
-
-import com.bytedance.msdk.api.UserInfoForSegment;
-import com.bytedance.msdk.api.v2.GMConfigUserInfoForSegment;
-
-import java.util.Random;
+import com.bytedance.sdk.openadsdk.mediation.init.MediationConfigUserInfoForSegment;
 
 /**
  * create by hj on 2023/1/6
@@ -18,19 +14,20 @@ public class AdCustomConfig {
      * gromore配置参数
      **/
     // 流量分组的信息
-    private GMConfigUserInfoForSegment userInfo;
+    private MediationConfigUserInfoForSegment userInfo;
     private String publisherDid;
-    private String groMoreAppId;
+    private String csjAppId;
     private String groMoreSplashAdId;
     //穿山甲保底id
     private String mAdNetworkSlotId;
     //BeiZi 竞价
     private double mBindingPrice;
 
+
     private AdCustomConfig(Builder builder) {
         bzAppId = builder.bzAppId;
         publisherDid = builder.publisherDid;
-        groMoreAppId = builder.groMoreAppId;
+        csjAppId = builder.csjAppId;
         bzSplashAdId = builder.bzSplashAdId;
         groMoreSplashAdId = builder.groMoreSplashAdId;
         mAdNetworkSlotId = builder.mAdNetworkSlotId;
@@ -40,10 +37,10 @@ public class AdCustomConfig {
             mBindingPrice = builder.mBindingPrice;
         }
         if (builder.userInfo == null) {
-            userInfo = new GMConfigUserInfoForSegment();
-            userInfo.setUserId("user" + new Random().nextInt());
-            userInfo.setGender(UserInfoForSegment.GENDER_MALE);
-            userInfo.setChannel("channel");
+            MediationConfigUserInfoForSegment userInfo = new MediationConfigUserInfoForSegment();
+            userInfo.setUserId("msdk-demo");
+            userInfo.setGender(MediationConfigUserInfoForSegment.GENDER_MALE);
+            userInfo.setChannel("msdk-channel");
             userInfo.setSubChannel("msdk-sub-channel");
             userInfo.setAge(999);
             userInfo.setUserValueGroup("msdk-demo-user-value-group");
@@ -56,7 +53,7 @@ public class AdCustomConfig {
         return bzAppId;
     }
 
-    public GMConfigUserInfoForSegment getUserInfo() {
+    public MediationConfigUserInfoForSegment getUserInfo() {
         return userInfo;
     }
 
@@ -64,8 +61,8 @@ public class AdCustomConfig {
         return publisherDid;
     }
 
-    public String getGroMoreAppId() {
-        return groMoreAppId;
+    public String getCsjAppId() {
+        return csjAppId;
     }
 
     public String getBzSplashAdId() {
@@ -86,9 +83,9 @@ public class AdCustomConfig {
 
     public static class Builder {
         private String bzAppId;
-        private GMConfigUserInfoForSegment userInfo;
+        private MediationConfigUserInfoForSegment userInfo;
         private String publisherDid;
-        private String groMoreAppId;
+        private String csjAppId;
         private String groMoreSplashAdId;
         private String mAdNetworkSlotId;
         private String bzSplashAdId;
@@ -106,7 +103,7 @@ public class AdCustomConfig {
             return this;
         }
 
-        public Builder setUserInfo(GMConfigUserInfoForSegment userInfo) {
+        public Builder setUserInfo(MediationConfigUserInfoForSegment userInfo) {
             this.userInfo = userInfo;
             return this;
         }
@@ -116,8 +113,8 @@ public class AdCustomConfig {
             return this;
         }
 
-        public Builder setGroMoreAppId(String groMoreAppId) {
-            this.groMoreAppId = groMoreAppId;
+        public Builder setCsjAppId(String csjAppId) {
+            this.csjAppId = csjAppId;
             return this;
         }
 

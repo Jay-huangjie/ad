@@ -2,16 +2,18 @@ package com.zlfcapp.zlfcad.provide;
 
 import android.app.Activity;
 import android.util.Log;
+import android.view.View;
 
-import com.bytedance.msdk.adapter.util.UIUtils;
-import com.bytedance.msdk.api.GMAdEcpmInfo;
-import com.bytedance.msdk.api.v2.GMAdConstant;
-import com.bytedance.msdk.api.v2.GMNetworkRequestInfo;
-import com.bytedance.msdk.api.v2.ad.splash.GMSplashAd;
-import com.bytedance.msdk.api.v2.ad.splash.GMSplashAdListener;
-import com.bytedance.msdk.api.v2.ad.splash.GMSplashAdLoadCallback;
-import com.bytedance.msdk.api.v2.slot.GMAdSlotSplash;
+import com.bytedance.sdk.openadsdk.AdSlot;
+import com.bytedance.sdk.openadsdk.TTAdNative;
+import com.bytedance.sdk.openadsdk.TTAdSdk;
+import com.bytedance.sdk.openadsdk.TTSplashAd;
+import com.bytedance.sdk.openadsdk.mediation.ad.MediationAdSlot;
+import com.bytedance.sdk.openadsdk.mediation.ad.MediationSplashRequestInfo;
+import com.zlfcapp.zlfcad.R;
 import com.zlfcapp.zlfcad.core.AdSplashProvide;
+import com.zlfcapp.zlfcad.listener.SplashAdListener;
+import com.zlfcapp.zlfcad.utils.UIUtils;
 
 /**
  * 开屏管理类。
@@ -20,49 +22,23 @@ import com.zlfcapp.zlfcad.core.AdSplashProvide;
 public class GroMoreAdSplashProvide {
     private static final String TAG = GroMoreAdSplashProvide.class.getSimpleName();
 
-    /**
-     * 开屏对应的广告对象
-     * 每次加载全屏视频广告的时候需要新建一个GMSplashAd，否则可能会出现广告填充问题
-     */
-    private GMSplashAd mSplashAd;
+    private TTSplashAd mSplashAd;
     private Activity mActivity;
-    /**
-     * 开屏加载广告回调
-     * 请在加载广告成功后展示广告
-     */
-    private GMSplashAdLoadCallback mGMSplashAdLoadCallback;
-    /**
-     * 开屏广告监听回调
-     */
-    private GMSplashAdListener mSplashAdListener;
 
-    private final GMNetworkRequestInfo requestInfo;
-
-    /**
-     * ------------------------- 以下是必要实现，如果不实现会导致加载广告失败  --------------------------------------
-     */
+    private final MediationSplashRequestInfo requestInfo;
+    private final SplashAdListener mSplashAdLoadCallback;
 
     /**
      * 管理类构造函数
-     *
-     * @param activity             开屏展示的Activity
-     * @param splashAdLoadCallback 开屏加载广告回调
-     * @param splashAdListener     开屏广告监听回调
      */
-    public GroMoreAdSplashProvide(Activity activity, GMNetworkRequestInfo requestInfo,
-                                  GMSplashAdLoadCallback splashAdLoadCallback,
-                                  GMSplashAdListener splashAdListener) {
+    public GroMoreAdSplashProvide(Activity activity, MediationSplashRequestInfo requestInfo,
+                                  SplashAdListener splashAdListener) {
         mActivity = activity;
         this.requestInfo = requestInfo;
-        mGMSplashAdLoadCallback = splashAdLoadCallback;
-        mSplashAdListener = splashAdListener;
+        mSplashAdLoadCallback = splashAdListener;
     }
 
-
-    /**
-     * 获取开屏广告对象
-     */
-    public GMSplashAd getSplashAd() {
+    public TTSplashAd getSplashAd() {
         return mSplashAd;
     }
 
@@ -72,51 +48,58 @@ public class GroMoreAdSplashProvide {
      * @param adUnitId 广告位ID
      */
     public void loadSplashAd(String adUnitId) {
-        mSplashAd = new GMSplashAd(mActivity, adUnitId);
-        mSplashAd.setAdSplashListener(mSplashAdListener);
-
-        /**
-         * 创建开屏广告请求类型参数GMAdSlotSplash,具体参数含义参考文档
-         */
-        GMAdSlotSplash adSlot = new GMAdSlotSplash.Builder()
-                .setImageAdSize(UIUtils.getScreenWidth(mActivity), UIUtils.getScreenHeight(mActivity)) // 单位px
-                .setTimeOut(AdSplashProvide.TIME_OUT)//设置超时
-                .setSplashButtonType(GMAdConstant.SPLASH_BUTTON_TYPE_FULL_SCREEN)
-                .setDownloadType(GMAdConstant.DOWNLOAD_TYPE_POPUP)
-                .setForceLoadBottom(false) //强制加载兜底开屏广告，只能在GroMore提供的demo中使用，其他情况设置无效
-                .setBidNotify(true)//开启bidding比价结果通知，默认值为false
-                .setSplashShakeButton(true) //开屏摇一摇开关，默认开启，目前只有gdt支持
+        TTAdNative adNative = TTAdSdk.getAdManager().createAdNative(mActivity);
+        AdSlot adslot = new AdSlot.Builder().
+                setCodeId(adUnitId)
+                .setImageAcceptedSize(UIUtils.getScreenWidthInPx(mActivity), UIUtils.getScreenHeightInPx(mActivity))
+                .setMediationAdSlot(
+                        new MediationAdSlot.Builder()
+                                .setMediationSplashRequestInfo(requestInfo)
+                                .build()
+                )
                 .build();
-
-        //自定义兜底方案 选择使用
-        GMNetworkRequestInfo networkRequestInfo = requestInfo;
-
-        mSplashAd.loadAd(adSlot, networkRequestInfo, mGMSplashAdLoadCallback);
-    }
-
-
-    /**
-     * ------------------------- 以下是非必要功能请选择性使用  --------------------------------------
-     */
-
-    /**
-     * 打印其他加载信息
-     */
-    public void printInfo() {
-        if (mSplashAd != null) {
-            /**
-             * 获取获展示广告的部信息
-             */
-            GMAdEcpmInfo showGMAdEcpmInfo = mSplashAd.getShowEcpm();
-
-            if (showGMAdEcpmInfo != null) {
-                Log.d(TAG, "Info:" + showGMAdEcpmInfo.getAdNetworkRitId()
-                        + "----adnName:" + showGMAdEcpmInfo.getAdnName() + "---preEcpm:" + showGMAdEcpmInfo.getPreEcpm());
+        adNative.loadSplashAd(adslot, new TTAdNative.SplashAdListener() {
+            @Override
+            public void onError(int i, String s) {
+                mSplashAdLoadCallback.onAdFailed(i, s);
             }
-            // 获取本次waterfall加载中，加载失败的adn错误信息。
-            if (mSplashAd != null)
-                Log.d(TAG, "ad load infos: " + mSplashAd.getAdLoadInfoList());
-        }
+
+            @Override
+            public void onTimeout() {
+                mSplashAdLoadCallback.onAdFailed(0, "请求超时了");
+            }
+
+            @Override
+            public void onSplashAdLoad(TTSplashAd ttSplashAd) {
+                if (ttSplashAd != null) {
+                    mSplashAd = ttSplashAd;
+                    mSplashAdLoadCallback.onAdLoaded();
+                    ttSplashAd.setSplashInteractionListener(new TTSplashAd.AdInteractionListener() {
+                        @Override
+                        public void onAdClicked(View view, int i) {
+                            mSplashAdLoadCallback.onAdClicked();
+                        }
+
+                        @Override
+                        public void onAdShow(View view, int i) {
+                            mSplashAdLoadCallback.onAdExposure();
+                        }
+
+                        @Override
+                        public void onAdSkip() {
+                            mSplashAdLoadCallback.onAdDismissed();
+                        }
+
+                        @Override
+                        public void onAdTimeOver() {
+                            mSplashAdLoadCallback.onAdDismissed();
+                        }
+                    });
+                } else {
+                    mSplashAdLoadCallback.onAdFailed(0, "请求成功，但是返回的广告为null");
+                }
+            }
+        });
     }
 
 
@@ -124,12 +107,8 @@ public class GroMoreAdSplashProvide {
      * 在Activity onDestroy中需要调用清理资源
      */
     public void destroy() {
-        if (mSplashAd != null) {
-            mSplashAd.destroy();
-        }
+        mSplashAd = null;
         mActivity = null;
-        mGMSplashAdLoadCallback = null;
-        mSplashAdListener = null;
     }
 
 }
