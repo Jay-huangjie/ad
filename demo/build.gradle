@@ -5,7 +5,7 @@ apply plugin: 'kotlin-android-extensions'
 android {
     compileSdkVersion rootProject.ext.android.compileSdkVersion
     defaultConfig {
-        applicationId "com.zlfcapp.batterymanager"
+        applicationId "com.cszl.draft"
         minSdkVersion rootProject.ext.android.minSdkVersion
         targetSdkVersion rootProject.ext.android.targetSdkVersion
         versionCode rootProject.ext.android.versionCode
@@ -75,7 +75,7 @@ dependencies {
 //    implementation 'com.huawei.hms:ads-installreferrer:3.4.39.302'
 
     //TogetherAd
-    implementation project(':zlfcad')
+    implementation project(':mediation')
     implementation project(':gdtadapter')
 //    implementation project(':huawei')
 //    implementation project(':beizi')

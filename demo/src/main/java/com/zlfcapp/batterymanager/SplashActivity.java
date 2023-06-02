@@ -9,12 +9,12 @@ import android.widget.FrameLayout;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.zlfcapp.zlfcad.AdCustomConfig;
-import com.zlfcapp.zlfcad.AdCustomManager;
-import com.zlfcapp.zlfcad.core.AdSplashProvide;
-import com.zlfcapp.zlfcad.listener.SplashAdListener;
-
-import java.util.UUID;
+import com.bytedance.sdk.openadsdk.mediation.MediationConstant;
+import com.bytedance.sdk.openadsdk.mediation.ad.MediationSplashRequestInfo;
+import com.mediation.ads.listener.AdListener;
+import com.mediation.ads.provide.AdBannerProvide;
+import com.mediation.ads.provide.AdInterstitialProvide;
+import com.mediation.ads.provide.AdSplashProvide;
 
 /**
  * created by hj on 2023/6/1.
@@ -28,18 +28,44 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         FrameLayout mSplashContainer = findViewById(R.id.adContainer);
-        adSplashProvide = new AdSplashProvide(SplashActivity.this, new SplashAdListener() {
+//        adSplashProvide = new AdSplashProvide(this, mSplashContainer,
+//                new MediationSplashRequestInfo(MediationConstant.ADN_PANGLE, "888309904", "5201281", "") {
+//                }, new AdListener() {
+//            @Override
+//            public void onAdLoaded() {
+//
+//            }
+//
+//            @Override
+//            public void onAdClicked() {
+//
+//            }
+//
+//            @Override
+//            public void onAdExposure() {
+//
+//            }
+//
+//            @Override
+//            public void onAdDismissed() {
+//
+//            }
+//
+//            @Override
+//            public void onAdFailed(int errorCode, String failedMsg) {
+//                Log.e("HJ", "Error:" + errorCode + "---" + failedMsg);
+//            }
+//        });
+//        adSplashProvide.loadAd("102353215");
+        AdBannerProvide provide = new AdBannerProvide(this, mSplashContainer, new AdListener() {
             @Override
             public void onAdLoaded() {
-                Log.e("HJ", "加载成功");
-                if (adSplashProvide != null) {
-                    adSplashProvide.showAd(mSplashContainer);
-                }
+
             }
 
             @Override
             public void onAdClicked() {
-                Log.e("HJ", "onAdClicked");
+
             }
 
             @Override
@@ -54,9 +80,11 @@ public class SplashActivity extends AppCompatActivity {
 
             @Override
             public void onAdFailed(int errorCode, String failedMsg) {
-                Log.e("HJ", "Error:" + errorCode + "---" + failedMsg);
+
             }
         });
+        provide.loadAd("102252615");
     }
+
 }
 

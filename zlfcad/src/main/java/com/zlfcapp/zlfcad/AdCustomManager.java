@@ -3,6 +3,8 @@ package com.zlfcapp.zlfcad;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -34,6 +36,7 @@ public class AdCustomManager {
     //groMore是否初始化
     private static boolean groMoreInit = false;
     private static List<InitCallback> callbacks;
+    private final static Handler mHandler = new Handler(Looper.getMainLooper());
 
     public static void setAdOpen(boolean adOpen) {
         AdCustomManager.adOpen = adOpen;
@@ -140,16 +143,32 @@ public class AdCustomManager {
                 @Override
                 public void success() {
                     groMoreInit = true;
-                    if (callbacks != null) {
-                        for (InitCallback c : callbacks) {
-                            c.onSuccess();
+                    mHandler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (callbacks != null) {
+                                for (InitCallback c : callbacks) {
+                                    c.onSuccess();
+                                }
+                            }
                         }
-                    }
+                    });
+
                 }
 
                 @Override
                 public void fail(int code, String msg) {
                     groMoreInit = false;
+                    mHandler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (callbacks != null) {
+                                for (InitCallback c : callbacks) {
+                                    c.onFair();
+                                }
+                            }
+                        }
+                    });
                 }
             });
         }
@@ -157,6 +176,8 @@ public class AdCustomManager {
 
     public interface InitCallback {
         void onSuccess();
+
+        void onFair();
     }
 
     public static boolean isGroMoreInit() {

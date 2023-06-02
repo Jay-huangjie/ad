@@ -50,12 +50,12 @@ public class GMAdManagerHolder {
          * 2、字符串类型的值只能是大小写字母，数字，下划线，连字符，字符个数100以内 ( [A-Za-z0-9-_]{1,100} ) ，不符合规则的信息将被过滤掉，不起作用。
          */
         GMConfigUserInfoForSegment userInfo = new GMConfigUserInfoForSegment();
-        userInfo.setUserId("msdk-demo");
+        userInfo.setUserId("msdk-mediation");
         userInfo.setGender(UserInfoForSegment.GENDER_MALE);
         userInfo.setChannel("msdk-channel");
         userInfo.setSubChannel("msdk-sub-channel");
         userInfo.setAge(999);
-        userInfo.setUserValueGroup("msdk-demo-user-value-group");
+        userInfo.setUserValueGroup("msdk-mediation-user-value-group");
 
         return new GMAdConfig.Builder()
                 .setAppId(appID)
