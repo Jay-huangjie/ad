@@ -108,6 +108,11 @@ public class AdSplashProvide {
                     public void onSuccess() {
                         groMoreProvide.loadSplashAd(AdCustomManager.getConfig().getGroMoreSplashAdId());
                     }
+
+                    @Override
+                    public void onFair() {
+                        Log.e("Ad", "广告sdk初始化失败");
+                    }
                 };
                 AdCustomManager.addInitCallback(callback);
             }
