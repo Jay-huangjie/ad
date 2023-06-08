@@ -1,4 +1,11 @@
 # ad
+在根build.gradle里添加
+```
+repositories{
+     maven { url "https://artifact.bytedance.com/repository/pangle"}
+ }
+```
+
 ### mediation 框架
 1.初始化
 ```
