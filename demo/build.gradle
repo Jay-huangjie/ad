@@ -67,7 +67,7 @@ dependencies {
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
 
     //内存泄漏检测工具
-//    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.4'
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.4'
 
     //多量CPL激励式游戏广告平台
 
@@ -75,11 +75,10 @@ dependencies {
 //    implementation 'com.huawei.hms:ads-installreferrer:3.4.39.302'
 
     //TogetherAd
-//    implementation project(':mediation')
-//    implementation project(':gdtadapter')
+    implementation project(':mediation')
+    implementation project(':gdtadapter')
 //    implementation project(':huawei')
 //    implementation project(':beizi')
-    implementation project(':zlfcad')
 //    implementation 'com.huawei.hms.agd:agdpro-embed:2.1.2.300'
 //    implementation 'com.github.Jay-huangjie.ad:huawei:1.2.2'
 //    implementation 'com.github.Jay-huangjie.ad:huawei:1.2.0'
