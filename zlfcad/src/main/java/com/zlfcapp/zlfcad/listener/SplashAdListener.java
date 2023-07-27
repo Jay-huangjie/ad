@@ -23,4 +23,9 @@ public interface SplashAdListener extends BaseAdListener {
      * 广告消失了（ 点击跳过或者倒计时结束 ）
      */
     void onAdDismissed();
+
+    /**
+     * 广告加载超时
+     */
+    void onAdTimeout();
 }

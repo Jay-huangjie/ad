@@ -25,19 +25,18 @@ public class AdSplashProvide {
     private BeiziAdSplashProvide beiziProvide;
     private Activity activity;
     private boolean adOpen;
-    public static int TIME_OUT;
+    private Handler mHandler;
 
     private AdCustomManager.InitCallback callback;
 
     public AdSplashProvide(Activity activity,
                            SplashAdListener adListener) {
-        this(activity, adListener, 5000);
+        this(activity, adListener, 10000);
     }
 
     public AdSplashProvide(Activity activity,
                            SplashAdListener adListener, int time_out) {
         this.activity = activity;
-        TIME_OUT = time_out;
         adOpen = AdCustomManager.isAdOpen();
         if (adOpen) {
             loadGroMoreAd(activity, adListener);
@@ -45,6 +44,15 @@ public class AdSplashProvide {
             loadBeiziAd(activity, adListener);
         }
         loadSplashAd();
+        mHandler = new Handler();
+        Runnable mTimeOutCheckRunnable = () -> {
+            if (activity != null && !activity.isFinishing()) {
+                if (adListener != null) {
+                    adListener.onAdTimeout();
+                }
+            }
+        };
+        mHandler.postDelayed(mTimeOutCheckRunnable, time_out);
     }
 
     private void loadBeiziAd(Activity activity, SplashAdListener adListener) {

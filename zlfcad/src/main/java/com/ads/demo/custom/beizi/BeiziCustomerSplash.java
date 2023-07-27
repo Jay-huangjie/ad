@@ -91,7 +91,7 @@ public class BeiziCustomerSplash extends MediationCustomSplashLoader {
                     public void onAdClicked() {
                         callSplashAdClicked();
                     }
-                }, AdSplashProvide.TIME_OUT);
+                },5000);
                 splashAd.loadAd(UIUtils.getScreenWidthInPx(context),
                         UIUtils.getScreenHeight(context));
             }

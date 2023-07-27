@@ -12,7 +12,7 @@ public class App extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        AdInitManager.init(this,"5158498");
+        AdInitManager.init(this,"5100771");
 
 //        AdCustomManager.initAd(this, true, new AdCustomConfig.Builder()
 //                .setBzAppId("21158")

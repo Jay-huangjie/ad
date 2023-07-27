@@ -17,7 +17,7 @@ public class BeiziAdSplashProvide {
     public BeiziAdSplashProvide(Activity activity,
                                 String adId, AdListener listener) {
         this.activity = activity;
-        splashAd = new SplashAd(activity, null, adId, listener, AdSplashProvide.TIME_OUT);
+        splashAd = new SplashAd(activity, null, adId, listener,5000);
     }
 
     public void loadAd(int width, int height) {
