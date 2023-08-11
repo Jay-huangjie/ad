@@ -3,16 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.zlfcapp.zlfcad">
     <!--Beizi-->
-    <uses-sdk tools:overrideLibrary="com.beizi.ad,com.beizi.fusion,com.bun.miitmdid,
-    com.kwad.sdk,pl.droidsonroids.gif,com.huawei.hms.ads.base,com.huawei.hms.ads.reward,
-    com.huawei.hms.ads.splash,com.bytedance.sdk.openadsdk,com.jd.ad.sdk,com.mbridge.msdk,
-    com.mbridge.msdk.splash,com.mbridge.msdk.mbsignalcommon,com.mbridge.msdk.videocommon,com.mbridge.msdk.mbbid"/>
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-sdk tools:overrideLibrary="com.beizi.ad,com.beizi.fusion,com.bun.miitmdid,com.kwad.sdk,pl.droidsonroids.gif,com.bytedance.sdk.openadsdk"/>
+
     <!--穿山甲-->
     <permission
         android:name="${applicationId}.openadsdk.permission.TT_PANGOLIN"
@@ -42,6 +40,16 @@
             android:name="com.bytedance.sdk.openadsdk.multipro.TTMultiProvider"
             android:authorities="${applicationId}.TTMultiProvider"
             android:exported="false" />
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/beizi_file_path" />
+        </provider>
     </application>
 
 </manifest>
