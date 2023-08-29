@@ -7,7 +7,7 @@ ext {
 
             versionCode      : 20220118,
             versionName      : '5.2.1',
-            adVersion        : '1.4.5',
+            adVersion        : '1.5.8',
     ]
     //gradlew publishToMavenLocal
     sdk = [
