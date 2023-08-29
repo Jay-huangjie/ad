@@ -27,8 +27,8 @@ android {
 dependencies {
     api fileTree(dir: 'libs', include: ['*.jar'])
     compileOnly fileTree(dir: 'libs', include: ['*.aar'])
-    embed(name: 'beizi_ad_sdk_3.4.20.34', ext: 'aar')
-    embed(name: 'beizi_fusion_sdk_4.90.2.52', ext: 'aar')
+    embed(name: 'beizi_ad_sdk_3.4.20.35', ext: 'aar')
+    embed(name: 'beizi_fusion_sdk_4.90.2.55', ext: 'aar')
     embed(name: 'oaid_sdk_1.0.25', ext: 'aar')
     api 'com.android.support:support-v4:26.1.0'
     api 'com.android.support:recyclerview-v7:26.1.0'

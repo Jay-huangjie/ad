@@ -32,8 +32,8 @@ dependencies {
     compileOnly fileTree(dir: 'libs', include: ['*.aar'])
 //    compileOnly fileTree(dir: '../libs_csj', include: ['*.aar'])
 //    embed(name: rootProject.ext.sdk.csjSdkName, ext: 'aar')
-    embed(name: 'beizi_ad_sdk_3.4.20.34', ext: 'aar')
-    embed(name: 'beizi_fusion_sdk_4.90.2.52', ext: 'aar')
+    embed(name: 'beizi_ad_sdk_3.4.20.35', ext: 'aar')
+    embed(name: 'beizi_fusion_sdk_4.90.2.55', ext: 'aar')
     embed(name: 'oaid_sdk_1.0.25', ext: 'aar')
     api "com.pangle.cn:mediation-sdk:$rootProject.ext.sdk.gromoreSdk"
 }
