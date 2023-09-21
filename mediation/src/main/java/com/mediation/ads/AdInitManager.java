@@ -42,7 +42,8 @@ public class AdInitManager {
 
     private static void doInit(@NonNull Context context, String appID, MediationConfigUserInfoForSegment info) {
         if (!sInit) {
-            TTAdSdk.init(context, buildConfig(context, appID, info), new TTAdSdk.InitCallback() {
+            TTAdSdk.init(context, buildConfig(context, appID, info));
+            TTAdSdk.start(new TTAdSdk.Callback() {
                 @Override
                 public void success() {
                     initSuccess = true;
@@ -56,7 +57,7 @@ public class AdInitManager {
                 }
 
                 @Override
-                public void fail(int code, String msg) {
+                public void fail(int i, String s) {
                     initSuccess = false;
                     mHandler.post(() -> {
                         if (callbacks != null) {

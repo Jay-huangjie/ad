@@ -11,9 +11,9 @@ ext {
     ]
     //gradlew publishToMavenLocal
     sdk = [
-            gromoreSdk   : '5.3.6.0',
-            gdtSdkName   : 'GDTSDK.unionNormal.4.530.1400',
-            csjSdkName   : 'open_ad_sdk_5.4.1.6',
-            gdtAdapter   : '4.530.1400.2',
+            gromoreSdk   : '5.6.0.8',
+            gdtSdkName   : 'GDTSDK.unionNormal.4.541.1411',
+            csjSdkName   : 'open_ad_sdk_5.6.0.8',
+            gdtAdapter   : '4.540.1410.3',
     ]
 }

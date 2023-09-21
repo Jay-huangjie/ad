@@ -1,11 +1,14 @@
 package com.mediation.ads.provide;
 
 import android.app.Activity;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.bytedance.sdk.openadsdk.AdSlot;
+import com.bytedance.sdk.openadsdk.CSJAdError;
+import com.bytedance.sdk.openadsdk.CSJSplashAd;
 import com.bytedance.sdk.openadsdk.TTAdNative;
 import com.bytedance.sdk.openadsdk.TTAdSdk;
 import com.bytedance.sdk.openadsdk.TTSplashAd;
@@ -18,36 +21,33 @@ import com.mediation.ads.listener.AdListener;
  * 开屏管理类。
  * 只需要复制粘贴到项目中，通过回调处理相应的业务逻辑即可使用完成广告加载&展示
  */
-public class AdSplashProvide extends BaseProvide{
+public class AdSplashProvide extends BaseProvide {
     private static final String TAG = AdSplashProvide.class.getSimpleName();
     private final AdListener mSplashAdLoadCallback;
 
-    private TTSplashAd mSplashAd;
-    private Activity mActivity;
-    //开屏广告加载超时时间,建议大于1000,这里为了冷启动第一次加载到广告并且展示,示例设置了2000ms
-    private static final int AD_TIME_OUT = 4000;
+    private CSJSplashAd mCsjSplashAd;
+    private final int ad_time_out;
     private final MediationSplashRequestInfo requestInfo;
     private ViewGroup adContain;
 
 
     public AdSplashProvide(Activity activity, ViewGroup adContain, MediationSplashRequestInfo requestInfo,
                            AdListener splashAdListener) {
-        mActivity = activity;
+        this(activity, adContain, requestInfo, splashAdListener, 10000);
+    }
+
+    public AdSplashProvide(Activity activity, ViewGroup adContain, MediationSplashRequestInfo requestInfo,
+                           AdListener splashAdListener, int ad_time_out) {
+        super(activity);
+        this.ad_time_out = ad_time_out;
         this.requestInfo = requestInfo;
         mSplashAdLoadCallback = splashAdListener;
         this.adContain = adContain;
     }
 
-    /**
-     * 获取开屏广告对象
-     */
-    public TTSplashAd getSplashAd() {
-        return mSplashAd;
-    }
-
-
     @Override
     protected void init(String id) {
+        Handler mHandler = new Handler();
         TTAdNative adNative = TTAdSdk.getAdManager().createAdNative(mActivity);
         AdSlot adslot = new AdSlot.Builder().
                 setCodeId(id)
@@ -58,61 +58,80 @@ public class AdSplashProvide extends BaseProvide{
                                 .build()
                 )
                 .build();
-        adNative.loadSplashAd(adslot, new TTAdNative.SplashAdListener() {
+        adNative.loadSplashAd(adslot, new TTAdNative.CSJSplashAdListener() {
             @Override
-            public void onError(int i, String s) {
-                mSplashAdLoadCallback.onAdFailed(i, s);
+            public void onSplashLoadSuccess() {
+
             }
 
             @Override
-            public void onTimeout() {
-                mSplashAdLoadCallback.onAdFailed(0, "请求超时了");
+            public void onSplashLoadFail(CSJAdError csjAdError) {
+                mSplashAdLoadCallback.onAdFailed(csjAdError.getCode(), csjAdError.getMsg());
             }
 
             @Override
-            public void onSplashAdLoad(TTSplashAd ttSplashAd) {
-                if (ttSplashAd != null) {
-                    mSplashAd = ttSplashAd;
-                    mSplashAdLoadCallback.onAdLoaded();
-                    showAd();
-                    ttSplashAd.setSplashInteractionListener(new TTSplashAd.AdInteractionListener() {
-                        @Override
-                        public void onAdClicked(View view, int i) {
-                            mSplashAdLoadCallback.onAdClicked();
-                        }
-
-                        @Override
-                        public void onAdShow(View view, int i) {
-                            mSplashAdLoadCallback.onAdExposure();
-                        }
-
-                        @Override
-                        public void onAdSkip() {
-                            mSplashAdLoadCallback.onAdDismissed();
-                        }
-
-                        @Override
-                        public void onAdTimeOver() {
-                            mSplashAdLoadCallback.onAdDismissed();
-                        }
-                    });
-                } else {
+            public void onSplashRenderSuccess(CSJSplashAd ad) {
+                if (ad == null) {
                     mSplashAdLoadCallback.onAdFailed(0, "请求成功，但是返回的广告为null");
+                    return;
+                }
+                if (adContain == null || mActivity == null || mActivity.isFinishing()) {
+                    log("广告加载了但是无展示的容器");
+                    return;
+                }
+                mCsjSplashAd = ad;
+                mSplashAdLoadCallback.onAdLoaded();
+                mCsjSplashAd.setSplashAdListener(new CSJSplashAd.SplashAdListener() {
+                    @Override
+                    public void onSplashAdShow(CSJSplashAd csjSplashAd) {
+                        mSplashAdLoadCallback.onAdExposure();
+                        mHandler.removeCallbacksAndMessages(null);
+                    }
+
+                    @Override
+                    public void onSplashAdClick(CSJSplashAd csjSplashAd) {
+                        mSplashAdLoadCallback.onAdClicked();
+                    }
+
+                    @Override
+                    public void onSplashAdClose(CSJSplashAd csjSplashAd, int i) {
+                        mSplashAdLoadCallback.onAdDismissed();
+                    }
+                });
+                showAd();
+            }
+
+            @Override
+            public void onSplashRenderFail(CSJSplashAd csjSplashAd, CSJAdError csjAdError) {
+                mSplashAdLoadCallback.onAdFailed(csjAdError.getCode(), csjAdError.getMsg());
+            }
+        }, ad_time_out);
+        Runnable mTimeOutCheckRunnable = () -> {
+            if (mActivity != null && !mActivity.isFinishing()) {
+                if (mSplashAdLoadCallback != null) {
+                    mSplashAdLoadCallback.onAdFailed(-1, "广告加载超时");
                 }
             }
-        });
+        };
+        mHandler.postDelayed(mTimeOutCheckRunnable, ad_time_out);
     }
 
     @Override
     protected void onDestroy() {
         adContain.removeAllViews();
-        mSplashAd = null;
+        if (mCsjSplashAd != null && mCsjSplashAd.getMediationManager() != null) {
+            mCsjSplashAd.getMediationManager().destroy();
+        }
+        mCsjSplashAd = null;
         mActivity = null;
     }
 
 
     public void showAd() {
-        adContain.addView(mSplashAd.getSplashView());
+        View splashView = mCsjSplashAd.getSplashView();
+        UIUtils.removeFromParent(splashView);
+        adContain.removeAllViews();
+        adContain.addView(splashView);
     }
 
 }

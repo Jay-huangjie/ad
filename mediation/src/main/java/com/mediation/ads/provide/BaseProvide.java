@@ -1,5 +1,6 @@
 package com.mediation.ads.provide;
 
+import android.app.Activity;
 import android.util.Log;
 
 import com.mediation.ads.AdInitManager;
@@ -9,7 +10,15 @@ import com.mediation.ads.AdInitManager;
  */
 public abstract class BaseProvide {
 
+    public static final String TAG = "BaseProvide";
+
     private AdInitManager.InitCallback mCallBack;
+
+    protected Activity mActivity;
+
+    public BaseProvide(Activity mActivity) {
+        this.mActivity = mActivity;
+    }
 
     //加载广告
     public void loadAd(String id) {
@@ -24,7 +33,7 @@ public abstract class BaseProvide {
 
                 @Override
                 public void onFair() {
-                    Log.e("AD", "广告SDK初始化失败");
+                    Log.e(TAG, "广告SDK初始化失败");
                 }
             };
             AdInitManager.addInitCallback(mCallBack);
@@ -36,9 +45,13 @@ public abstract class BaseProvide {
         if (mCallBack != null) {
             AdInitManager.removeInitCallback(mCallBack);
         }
+        mActivity = null;
         onDestroy();
     }
 
+    public void log(String message){
+        Log.e(TAG, message);
+    }
 
     protected abstract void init(String id);
 

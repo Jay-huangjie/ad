@@ -21,11 +21,10 @@ import com.zlfcapp.zlfcad.utils.UIUtils;
  */
 public class AdSplashProvide {
     private static final String TAG = AdSplashProvide.class.getSimpleName();
-    private GroMoreAdSplashProvide groMoreProvide;
-    private BeiziAdSplashProvide beiziProvide;
-    private Activity activity;
-    private boolean adOpen;
+    private final boolean adOpen;
     private Handler mHandler;
+
+    private final BaseProvide mProvide;
 
     private AdCustomManager.InitCallback callback;
 
@@ -36,16 +35,25 @@ public class AdSplashProvide {
 
     public AdSplashProvide(Activity activity,
                            SplashAdListener adListener, int time_out) {
-        this.activity = activity;
         adOpen = AdCustomManager.isAdOpen();
         if (adOpen) {
-            loadGroMoreAd(activity, adListener);
+            mProvide = new GroMoreAdSplashProvide(activity,
+                    new MediationSplashRequestInfo(MediationConstant.ADN_PANGLE,
+                            AdCustomManager.getConfig().getmAdNetworkSlotId(),
+                            AdCustomManager
+                                    .getConfig().getCsjAppId()
+                            , "") {
+                    }, adListener);
         } else {
-            loadBeiziAd(activity, adListener);
+            mProvide = new BeiziAdSplashProvide(activity,
+                    AdCustomManager.getConfig().getBzSplashAdId(), adListener);
         }
         loadSplashAd();
         mHandler = new Handler();
         Runnable mTimeOutCheckRunnable = () -> {
+            if (mProvide.isAdShow()) {
+                return;
+            }
             if (activity != null && !activity.isFinishing()) {
                 if (adListener != null) {
                     adListener.onAdTimeout();
@@ -55,52 +63,6 @@ public class AdSplashProvide {
         mHandler.postDelayed(mTimeOutCheckRunnable, time_out);
     }
 
-    private void loadBeiziAd(Activity activity, SplashAdListener adListener) {
-        beiziProvide = new BeiziAdSplashProvide(activity, AdCustomManager.getConfig().getBzSplashAdId(), new AdListener() {
-            @Override
-            public void onAdLoaded() {
-                adListener.onAdLoaded();
-            }
-
-            @Override
-            public void onAdShown() {
-                adListener.onAdExposure();
-            }
-
-            @Override
-            public void onAdFailedToLoad(int i) {
-                adListener.onAdFailed(i, "");
-            }
-
-            @Override
-            public void onAdClosed() {
-                adListener.onAdDismissed();
-            }
-
-            @Override
-            public void onAdTick(long l) {
-
-            }
-
-            @Override
-            public void onAdClicked() {
-                adListener.onAdClicked();
-            }
-        });
-    }
-
-
-    private void loadGroMoreAd(Activity activity,
-                               SplashAdListener adListener) {
-        groMoreProvide = new GroMoreAdSplashProvide(activity,
-                new MediationSplashRequestInfo(MediationConstant.ADN_PANGLE,
-                        AdCustomManager.getConfig().getmAdNetworkSlotId(),
-                        AdCustomManager
-                                .getConfig().getCsjAppId()
-                        , "") {
-                }, adListener);
-    }
-
 
     /**
      * 加载开屏广告
@@ -108,13 +70,13 @@ public class AdSplashProvide {
     private void loadSplashAd() {
         if (adOpen) {
             if (AdCustomManager.isGroMoreInit()) {
-                groMoreProvide.loadSplashAd(AdCustomManager.getConfig().getGroMoreSplashAdId());
+                mProvide.loadAd();
             } else {
                 //sdk还没加载完成，等初始化完在加载广告
                 callback = new AdCustomManager.InitCallback() {
                     @Override
                     public void onSuccess() {
-                        groMoreProvide.loadSplashAd(AdCustomManager.getConfig().getGroMoreSplashAdId());
+                        mProvide.loadAd();
                     }
 
                     @Override
@@ -125,17 +87,12 @@ public class AdSplashProvide {
                 AdCustomManager.addInitCallback(callback);
             }
         } else {
-            beiziProvide.loadAd(UIUtils.getScreenWidthInPx(activity),
-                    UIUtils.getScreenHeight(activity));
+            mProvide.loadAd();
         }
     }
 
     public void showAd(ViewGroup contain) {
-        if (adOpen) {
-            contain.addView(groMoreProvide.getSplashAd().getSplashView());
-        } else {
-            beiziProvide.showAd(contain);
-        }
+        mProvide.showAd(contain);
     }
 
 
@@ -143,14 +100,11 @@ public class AdSplashProvide {
      * 在Activity onDestroy中需要调用清理资源
      */
     public void destroy() {
-        if (adOpen) {
-            groMoreProvide.destroy();
-            if (callback != null) {
-                AdCustomManager.removeInitCallback(callback);
-            }
-        } else {
-            beiziProvide.destroy();
+        mProvide.destroy();
+        if (callback != null) {
+            AdCustomManager.removeInitCallback(callback);
         }
+        mHandler.removeCallbacksAndMessages(null);
     }
 
 }

@@ -21,8 +21,6 @@ import java.util.List;
  */
 public class AdBannerProvide extends BaseProvide{
 
-    private Activity mActivity;
-
     private AdListener mListener;
 
     private ViewGroup adContain;
@@ -37,7 +35,7 @@ public class AdBannerProvide extends BaseProvide{
 
     public AdBannerProvide(Activity mActivity, ViewGroup adContain,
                            int width, int height, AdListener adListener) {
-        this.mActivity = mActivity;
+        super(mActivity);
         this.adContain = adContain;
         this.mListener = adListener;
         this.width = width;

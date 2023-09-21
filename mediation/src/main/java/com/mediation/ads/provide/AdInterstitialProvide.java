@@ -16,11 +16,10 @@ import com.mediation.ads.listener.AdListener;
 public class AdInterstitialProvide extends BaseProvide{
 
     private TTFullScreenVideoAd mTTFullScreenVideoAd;
-    private Activity mActivity;
     private AdListener mCallback;
 
     public AdInterstitialProvide(Activity activity, AdListener callback) {
-        mActivity = activity;
+        super(activity);
         mCallback = callback;
     }
 
@@ -108,6 +107,9 @@ public class AdInterstitialProvide extends BaseProvide{
 
     @Override
     protected void onDestroy() {
+        if (mTTFullScreenVideoAd != null && mTTFullScreenVideoAd.getMediationManager() != null) {
+            mTTFullScreenVideoAd.getMediationManager().destroy();
+        }
         mTTFullScreenVideoAd = null;
         mActivity = null;
     }
