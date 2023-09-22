@@ -28,7 +28,6 @@ public class GroMoreAdSplashProvide extends BaseProvide {
     private static final String TAG = GroMoreAdSplashProvide.class.getSimpleName();
 
     private CSJSplashAd mCsjSplashAd;
-    private Activity mActivity;
 
     private final MediationSplashRequestInfo requestInfo;
     private final SplashAdListener mSplashAdLoadCallback;
