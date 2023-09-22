@@ -30,16 +30,6 @@ public class BeiziProvider extends BeiziProviderSplash{
     }
 
     @Override
-    public void loadSplashEye(FragmentActivity activity, String adProviderType, String alias, ViewGroup container, EyesSplashListener listener) {
-
-    }
-
-    @Override
-    public void loadMainSplashEye(FragmentActivity activity, EyesSplashListener listener) {
-
-    }
-
-    @Override
     public boolean showSplashAd(ViewGroup container) {
         return false;
     }

@@ -116,16 +116,4 @@ open class HuaweiProvider : HwProviderNative() {
     override fun showFullVideoAd(activity: FragmentActivity): Boolean {
         return false
     }
-
-    override fun loadSplashEye(
-        activity: FragmentActivity,
-        adProviderType: String,
-        alias: String,
-        container: ViewGroup,
-        listener: EyesSplashListener
-    ) {
-    }
-
-    override fun loadMainSplashEye(activity: FragmentActivity, listener: EyesSplashListener) {
-    }
 }
