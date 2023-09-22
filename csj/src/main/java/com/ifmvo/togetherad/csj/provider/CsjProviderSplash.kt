@@ -139,9 +139,8 @@ abstract class CsjProviderSplash : CsjProviderReward() {
                         )
                         return
                     }
-
                     callbackSplashLoaded(adProviderType, alias, listener)
-
+                    mSplashAd = splashAd
                     showSplashAd(container)
                     splashAd.setSplashAdListener(object : CSJSplashAd.SplashAdListener {
                         override fun onSplashAdShow(p0: CSJSplashAd?) {
@@ -168,5 +167,6 @@ abstract class CsjProviderSplash : CsjProviderReward() {
 
 
     override fun destroySplashAd(context: Context) {
+
     }
 }

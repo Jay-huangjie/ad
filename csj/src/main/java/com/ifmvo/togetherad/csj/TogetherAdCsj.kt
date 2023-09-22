@@ -138,6 +138,7 @@ object TogetherAdCsj {
         ttAdConfig.directDownloadNetworkType(directDownloadNetworkType) //允许直接下载的网络状态集合
         ttAdConfig.supportMultiProcess(supportMultiProcess) //是否支持多进程，true支持
         ttAdConfig.paid(isPaid)
+        ttAdConfig.useMediation(false)
         keywords?.let { ttAdConfig.keywords(it) }
         data?.let { ttAdConfig.data(it) }
         if (pluginUpdateConfig != -1) {
