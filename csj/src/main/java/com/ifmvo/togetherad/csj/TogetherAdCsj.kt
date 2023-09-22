@@ -53,7 +53,7 @@ object TogetherAdCsj {
     var customController: TTCustomController? = null
 
     // 可选参数，异步初始化回调
-    var initCallback: TTAdSdk.InitCallback? = null
+    var initCallback: TTAdSdk.Callback? = null
 
     // 插件更新配置
     var pluginUpdateConfig = -1
@@ -145,6 +145,16 @@ object TogetherAdCsj {
         }
         customController?.let { ttAdConfig.customController(it) }
         //初始化
-        TTAdSdk.init(context, ttAdConfig.build(), initCallback)
+        TTAdSdk.init(context, ttAdConfig.build())
+        TTAdSdk.start(object : TTAdSdk.Callback {
+            override fun success() {
+                initCallback?.success()
+            }
+
+            override fun fail(code: Int, msg: String?) {
+                initCallback?.fail(code, msg)
+            }
+
+        })
     }
 }

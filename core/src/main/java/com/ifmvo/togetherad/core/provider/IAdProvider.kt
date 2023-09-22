@@ -30,19 +30,6 @@ interface IAdProvider {
         @NotNull listener: SplashListener//回调
     )
 
-    //V+ 点睛
-    fun loadSplashEye(
-        @NotNull activity: FragmentActivity,
-        @NotNull adProviderType: String,
-        @NotNull alias: String,//当前广告位的别名
-        @NotNull container: ViewGroup,
-        @NotNull listener: EyesSplashListener//回调
-    )
-
-    fun loadMainSplashEye(
-        @NotNull activity: FragmentActivity,
-        @NotNull listener: EyesSplashListener //回调
-    )
 
     //展示开屏广告
     fun showSplashAd(

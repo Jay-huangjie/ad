@@ -1,8 +1,15 @@
 package com.zlfcapp.ad;
 
+import android.app.Activity;
 import android.app.Application;
 
-import com.mediation.ads.AdInitManager;
+import com.ifmvo.togetherad.core.TogetherAd;
+import com.ifmvo.togetherad.csj.TogetherAdCsj;
+import com.zlfcapp.batterymanager.AdProviderType;
+import com.zlfcapp.batterymanager.TogetherAdAlias;
+
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 /**
  * created by hj on 2023/6/1.
@@ -12,7 +19,7 @@ public class App extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        AdInitManager.init(this,"5100771");
+//        AdInitManager.init(this,"5100771");
 //        AdCustomManager.initAd(this,false, new AdCustomConfig.Builder()
 //                .setBzAppId("21158")
 //                .setBzSplashAdId("105288")
@@ -21,5 +28,16 @@ public class App extends Application {
 //                .setGroMoreSplashAdId("102239173")
 //                .setmAdNetworkSlotId("887371585")
 //                .build());
+        initAd();
+    }
+
+
+    public void initAd() {
+        HashMap<String, String> csjmap = new HashMap<>();
+        csjmap.put(TogetherAdAlias.AD_SPLASH, "102239173");
+        TogetherAdCsj.INSTANCE.init(this, AdProviderType.CSJ.getType(), "5100771", "电池容量检测管理", csjmap);
+        LinkedHashMap<String, Integer> adRadio = new LinkedHashMap<>();
+        adRadio.put(AdProviderType.CSJ.getType(), 1);
+        TogetherAd.INSTANCE.setPublicProviderRatio(adRadio);
     }
 }
