@@ -1,9 +1,14 @@
 package com.zlfcapp.batterymanager;
+
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.FrameLayout;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.zlfcapp.zlfcad.core.AdSplashProvide;
+import com.zlfcapp.zlfcad.listener.SplashAdListener;
 
 
 /**
@@ -12,11 +17,44 @@ import androidx.appcompat.app.AppCompatActivity;
 public class SplashActivity extends AppCompatActivity {
 
 
+    private AdSplashProvide provide;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         FrameLayout mSplashContainer = findViewById(R.id.adContainer);
+        provide = new AdSplashProvide(this, new SplashAdListener() {
+            @Override
+            public void onAdLoaded() {
+                provide.showAd(mSplashContainer);
+            }
+
+            @Override
+            public void onAdClicked() {
+
+            }
+
+            @Override
+            public void onAdExposure() {
+
+            }
+
+            @Override
+            public void onAdDismissed() {
+
+            }
+
+            @Override
+            public void onAdTimeout() {
+
+            }
+
+            @Override
+            public void onAdFailed(int errorCode, String failedMsg) {
+                Log.e("HJ", "Error:" + failedMsg);
+            }
+        });
 
 //        LinkedHashMap<String, Integer> map = new LinkedHashMap<>();
 //        map.put(AdProviderType.CSJ.getType(), 1);

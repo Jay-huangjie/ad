@@ -1,4 +1,4 @@
-package com.zlfcapp.batterymanager;
+package com.zlfcapp.togethread;
 
 public class TogetherAdAlias {
     //开屏

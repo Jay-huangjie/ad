@@ -75,9 +75,9 @@ dependencies {
 //    implementation 'com.huawei.hms:ads-installreferrer:3.4.39.302'
 
     //TogetherAd
-    implementation project(':csj')
+//    implementation project(':csj')
 //    implementation project(':gdtadapter')
-//    implementation project(':zlfcad')
+    implementation project(':zlfcad')
 //    implementation project(':huawei')
 //    implementation project(':beizi')
 //    implementation 'com.huawei.hms.agd:agdpro-embed:2.1.2.300'
