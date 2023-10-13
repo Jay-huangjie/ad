@@ -15,5 +15,8 @@ ext {
             gdtSdkName   : 'GDTSDK.unionNormal.4.541.1411',
             csjSdkName   : 'open_ad_sdk_5.6.0.8',
             gdtAdapter   : '4.540.1410.3',
+            bz_sdk       : 'beizi_ad_sdk_3.4.20.37',
+            bz_fusion_sdk: 'beizi_fusion_sdk_4.90.3.1',
+            oaid_sdk     : 'oaid_sdk_1.0.25'
     ]
 }
