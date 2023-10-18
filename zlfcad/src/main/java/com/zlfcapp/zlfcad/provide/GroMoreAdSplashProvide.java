@@ -102,7 +102,7 @@ public class GroMoreAdSplashProvide extends BaseProvide {
             public void onSplashRenderFail(CSJSplashAd csjSplashAd, CSJAdError csjAdError) {
                 mSplashAdLoadCallback.onAdFailed(csjAdError.getCode(), csjAdError.getMsg());
             }
-        }, 4000);
+        }, 5000);
     }
 
     @Override

@@ -3,10 +3,12 @@ package com.ads.demo.custom.beizi;
 import android.content.Context;
 import android.util.Log;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.ads.demo.custom.beizi.util.ThreadUtils;
 import com.beizi.fusion.AdListener;
 import com.beizi.fusion.SplashAd;
+import com.bytedance.pangle.wrapper.PluginActivityWrapper;
 import com.bytedance.sdk.openadsdk.AdSlot;
 import com.bytedance.sdk.openadsdk.mediation.MediationConstant;
 import com.bytedance.sdk.openadsdk.mediation.bridge.custom.splash.MediationCustomSplashLoader;
@@ -44,13 +46,14 @@ public class BeiziCustomerSplash extends MediationCustomSplashLoader {
 
     @Override
     public void load(Context context, AdSlot adSlot, MediationCustomServiceConfig mediationCustomServiceConfig) {
-        /**
-         * 在子线程中进行广告加载
-         */
-        ThreadUtils.runOnUIThread(new Runnable() {
+        ThreadUtils.runOnUIThreadByThreadPool(new Runnable() {
             @Override
             public void run() {
-                splashAd = new SplashAd(context, null, mediationCustomServiceConfig.getADNNetworkSlotId(), new AdListener() {
+                Context activityContext = context;
+                if (context instanceof PluginActivityWrapper) {
+                    activityContext = ((PluginActivityWrapper) context).mOriginActivity;
+                }
+                splashAd = new SplashAd(activityContext, null,mediationCustomServiceConfig.getADNNetworkSlotId(), new AdListener() {
                     @Override
                     public void onAdLoaded() {
                         isLoadSuccess = true;

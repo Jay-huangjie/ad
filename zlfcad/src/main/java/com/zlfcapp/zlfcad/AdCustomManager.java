@@ -139,7 +139,8 @@ public class AdCustomManager {
 
     public static void initGroMore(Context context) {
         if (!groMoreInit) {
-            TTAdSdk.init(context, buildConfig(context), new TTAdSdk.InitCallback() {
+            TTAdSdk.init(context, buildConfig(context));
+            TTAdSdk.start(new TTAdSdk.Callback() {
                 @Override
                 public void success() {
                     groMoreInit = true;
@@ -153,11 +154,10 @@ public class AdCustomManager {
                             }
                         }
                     });
-
                 }
 
                 @Override
-                public void fail(int code, String msg) {
+                public void fail(int i, String s) {
                     groMoreInit = false;
                     mHandler.post(new Runnable() {
                         @Override
@@ -188,6 +188,7 @@ public class AdCustomManager {
         return new TTAdConfig.Builder()
                 .appId(config.getCsjAppId())
                 .appName(getAppName(context))
+                .supportMultiProcess(true)
                 .debug(BuildConfig.DEBUG)
                 .useMediation(true)
                 .setMediationConfig(new MediationConfig.Builder() //可设置聚合特有参数详细设置请参考该api

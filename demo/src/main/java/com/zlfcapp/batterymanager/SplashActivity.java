@@ -1,8 +1,10 @@
 package com.zlfcapp.batterymanager;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,37 +26,43 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         FrameLayout mSplashContainer = findViewById(R.id.adContainer);
-        provide = new AdSplashProvide(this, new SplashAdListener() {
+        new Handler().postDelayed(new Runnable() {
             @Override
-            public void onAdLoaded() {
-                provide.showAd(mSplashContainer);
+            public void run() {
+                provide = new AdSplashProvide(SplashActivity.this, new SplashAdListener() {
+                    @Override
+                    public void onAdLoaded() {
+                        provide.showAd(mSplashContainer);
+                    }
+
+                    @Override
+                    public void onAdClicked() {
+
+                    }
+
+                    @Override
+                    public void onAdExposure() {
+
+                    }
+
+                    @Override
+                    public void onAdDismissed() {
+
+                    }
+
+                    @Override
+                    public void onAdTimeout() {
+
+                    }
+
+                    @Override
+                    public void onAdFailed(int errorCode, String failedMsg) {
+                        Log.e("HJ", "Error:" + failedMsg);
+                    }
+                });
             }
+        },10000);
 
-            @Override
-            public void onAdClicked() {
-
-            }
-
-            @Override
-            public void onAdExposure() {
-
-            }
-
-            @Override
-            public void onAdDismissed() {
-
-            }
-
-            @Override
-            public void onAdTimeout() {
-
-            }
-
-            @Override
-            public void onAdFailed(int errorCode, String failedMsg) {
-                Log.e("HJ", "Error:" + failedMsg);
-            }
-        });
 
 //        LinkedHashMap<String, Integer> map = new LinkedHashMap<>();
 //        map.put(AdProviderType.CSJ.getType(), 1);

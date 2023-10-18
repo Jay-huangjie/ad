@@ -2,6 +2,8 @@ package com.ads.demo.custom.beizi;
 
 import android.content.Context;
 import android.os.Handler;
+import android.util.Log;
+import android.widget.Toast;
 
 import com.ads.demo.custom.beizi.util.ThreadUtils;
 import com.beizi.fusion.BeiZiCustomController;
@@ -20,68 +22,17 @@ public class BeiziCustomerConfig extends MediationCustomInitLoader {
 
     @Override
     public void initializeADN(Context context, MediationCustomInitConfig mediationCustomInitConfig, Map<String, Object> map) {
+        if (mediationCustomInitConfig == null) {
+            return;
+        }
         ThreadUtils.runOnUIThread(new Runnable() {
             @Override
             public void run() {
-                BeiZis.init(context, mediationCustomInitConfig.getAppId(), new BeiZiCustomController() {
-                    /**
-                     * 是否允许SDK主动使用地理位置信息
-                     *
-                     * @return true可以获取，false禁止获取。默认为true
-                     */
-                    @Override
-                    public boolean isCanUseLocation() {
-                        return true;
-                    }
-
-                    /**
-                     * 是否允许SDK主动使用ACCESS_WIFI_STATE权限
-                     *
-                     * @return true可以使用，false禁止使用。默认为true
-                     */
-                    @Override
-                    public boolean isCanUseWifiState() {
-                        return true;
-                    }
-
-                    /**
-                     * 是否允许SDK主动使用手机硬件参数，如：imei，imsi
-                     *
-                     * @return true可以使用，false禁止使用。默认为true
-                     */
-                    @Override
-                    public boolean isCanUsePhoneState() {
-                        return true;
-                    }
-
-                    /**
-                     * 是否能使用Oaid
-                     *
-                     * @return true可以使用，false禁止使用。默认为true
-                     */
-                    @Override
-                    public boolean isCanUseOaid() {
-                        return true;
-                    }
-
-                    /**
-                     * 是否能使用Gaid
-                     *
-                     * @return true可以使用，false禁止使用。默认为true
-                     */
-                    @Override
-                    public boolean isCanUseGaid() {
-                        return true;
-                    }
-                });
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        callInitSuccess();
-                    }
-                },1000);
+                BeiZis.init(context, mediationCustomInitConfig.getAppId());
+                callInitSuccess();
             }
         });
+
     }
 
     @Override
