@@ -20,6 +20,7 @@
 -dontwarn com.beizi.ad.**
 -keep class com.beizi.fusion.** {*; }
 -keep class com.beizi.ad.** {*; }
+-keep class com.ads.demo.custom.beizi.** {*; }
 
 -keep class com.qq.e.** {
     public protected *;

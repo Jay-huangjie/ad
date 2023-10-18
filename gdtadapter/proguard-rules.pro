@@ -64,6 +64,7 @@
 
 
  -keep class com.zlfcapp.ad.gdt.** { *; }
+ -keep class com.ads.demo.custom.gdt.** { *; }
 
  -keep class com.qq.e.** {
      public protected *;

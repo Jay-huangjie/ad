@@ -93,7 +93,7 @@ public class BeiziCustomerSplash extends MediationCustomSplashLoader {
                     }
                 },5000);
                 splashAd.loadAd(UIUtils.getScreenWidthInPx(context),
-                        UIUtils.getScreenHeight(context));
+                        UIUtils.getScreenHeightInPx(context));
             }
         });
     }

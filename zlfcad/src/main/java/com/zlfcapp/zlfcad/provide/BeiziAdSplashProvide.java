@@ -64,7 +64,7 @@ public class BeiziAdSplashProvide extends BaseProvide {
     @Override
     public void loadAd() {
         splashAd.loadAd(UIUtils.getScreenWidthInPx(mActivity),
-                UIUtils.getScreenHeight(mActivity));
+                UIUtils.getScreenHeightInPx(mActivity));
     }
 
     @Override
