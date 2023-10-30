@@ -26,42 +26,37 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         FrameLayout mSplashContainer = findViewById(R.id.adContainer);
-        new Handler().postDelayed(new Runnable() {
+        provide = new AdSplashProvide(SplashActivity.this, new SplashAdListener() {
             @Override
-            public void run() {
-                provide = new AdSplashProvide(SplashActivity.this, new SplashAdListener() {
-                    @Override
-                    public void onAdLoaded() {
-                        provide.showAd(mSplashContainer);
-                    }
-
-                    @Override
-                    public void onAdClicked() {
-
-                    }
-
-                    @Override
-                    public void onAdExposure() {
-
-                    }
-
-                    @Override
-                    public void onAdDismissed() {
-
-                    }
-
-                    @Override
-                    public void onAdTimeout() {
-
-                    }
-
-                    @Override
-                    public void onAdFailed(int errorCode, String failedMsg) {
-                        Log.e("HJ", "Error:" + failedMsg);
-                    }
-                });
+            public void onAdLoaded() {
+                provide.showAd(mSplashContainer);
             }
-        },10000);
+
+            @Override
+            public void onAdClicked() {
+
+            }
+
+            @Override
+            public void onAdExposure() {
+
+            }
+
+            @Override
+            public void onAdDismissed() {
+
+            }
+
+            @Override
+            public void onAdTimeout() {
+
+            }
+
+            @Override
+            public void onAdFailed(int errorCode, String failedMsg) {
+                Log.e("HJ", "Error:" + failedMsg);
+            }
+        });
 
 
 //        LinkedHashMap<String, Integer> map = new LinkedHashMap<>();

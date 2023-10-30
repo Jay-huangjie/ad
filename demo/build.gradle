@@ -76,7 +76,7 @@ dependencies {
 
     //TogetherAd
 //    implementation project(':csj')
-    implementation project(':gdtadapter')
+//    implementation project(':gdtadapter')
     implementation project(':zlfcad')
 //    implementation project(':huawei')
 //    implementation project(':beizi')

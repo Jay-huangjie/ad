@@ -43,7 +43,8 @@ abstract class CsjProviderSplash : CsjProviderReward() {
         )
         TogetherAdCsj.mTTAdManager.createAdNative(activity)
             .loadSplashAd(adSlotBuilder.build(), object : TTAdNative.CSJSplashAdListener {
-                override fun onSplashLoadSuccess() {
+
+                override fun onSplashLoadSuccess(p0: CSJSplashAd?) {
 
                 }
 
@@ -120,7 +121,8 @@ abstract class CsjProviderSplash : CsjProviderReward() {
         )
         TogetherAdCsj.mTTAdManager.createAdNative(activity)
             .loadSplashAd(adSlotBuilder.build(), object : TTAdNative.CSJSplashAdListener {
-                override fun onSplashLoadSuccess() {
+
+                override fun onSplashLoadSuccess(p0: CSJSplashAd?) {
 
                 }
 

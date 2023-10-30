@@ -57,8 +57,9 @@ public class GroMoreAdSplashProvide extends BaseProvide {
                 )
                 .build();
         adNative.loadSplashAd(adslot, new TTAdNative.CSJSplashAdListener() {
+
             @Override
-            public void onSplashLoadSuccess() {
+            public void onSplashLoadSuccess(CSJSplashAd csjSplashAd) {
 
             }
 
