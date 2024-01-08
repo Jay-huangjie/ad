@@ -3,6 +3,8 @@ package com.mediation.ads.provide;
 import android.app.Activity;
 import android.util.Log;
 
+import com.bytedance.sdk.openadsdk.TTAdManager;
+import com.bytedance.sdk.openadsdk.TTAdSdk;
 import com.mediation.ads.AdInitManager;
 
 /**
@@ -22,6 +24,9 @@ public abstract class BaseProvide {
 
     //加载广告
     public void loadAd(String id) {
+        if (!AdInitManager.initSuccess) {
+            AdInitManager.initSuccess = TTAdSdk.isInitSuccess();
+        }
         if (AdInitManager.initSuccess) {
             init(id);
         } else {
@@ -49,7 +54,7 @@ public abstract class BaseProvide {
         onDestroy();
     }
 
-    public void log(String message){
+    public void log(String message) {
         Log.e(TAG, message);
     }
 
