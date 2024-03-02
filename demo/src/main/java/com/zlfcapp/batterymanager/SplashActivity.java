@@ -54,7 +54,7 @@ public class SplashActivity extends AppCompatActivity {
 
             @Override
             public void onAdFailed(int errorCode, String failedMsg) {
-                Log.e("HJ", "Error:" + failedMsg);
+                Log.e("HJ", "Error:" + failedMsg+"--"+errorCode);
             }
         });
 

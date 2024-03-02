@@ -30,6 +30,24 @@
 
 -dontwarn  org.apache.**
 
+-keepclassmembers class * extends android.app.Activity {
+    public void *(android.view.View);
+}
+
+-keepclassmembers enum * {
+    public static **[] values();
+    public static ** valueOf(java.lang.String);
+}
+
+-keepclassmembers class * extends android.app.Activity {
+   public void *(android.view.View);
+}
+
+-keepclassmembers enum * {
+    public static **[] values();
+    public static ** valueOf(java.lang.String);
+}
+
 # 百度广告渠道混淆
 -dontwarn com.baidu.mobads.sdk.api.**
 -keepclassmembers class * extends android.app.Activity {

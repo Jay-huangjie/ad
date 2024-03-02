@@ -84,57 +84,7 @@ public class AdCustomManager {
 
 
     public static void initBeizi(Context context) {
-        BeiZis.init(context, config.getBzAppId(), new BeiZiCustomController() {
-            /**
-             * 是否允许SDK主动使用地理位置信息
-             *
-             * @return true可以获取，false禁止获取。默认为true
-             */
-            @Override
-            public boolean isCanUseLocation() {
-                return true;
-            }
-
-            /**
-             * 是否允许SDK主动使用ACCESS_WIFI_STATE权限
-             *
-             * @return true可以使用，false禁止使用。默认为true
-             */
-            @Override
-            public boolean isCanUseWifiState() {
-                return true;
-            }
-
-            /**
-             * 是否允许SDK主动使用手机硬件参数，如：imei，imsi
-             *
-             * @return true可以使用，false禁止使用。默认为true
-             */
-            @Override
-            public boolean isCanUsePhoneState() {
-                return true;
-            }
-
-            /**
-             * 是否能使用Oaid
-             *
-             * @return true可以使用，false禁止使用。默认为true
-             */
-            @Override
-            public boolean isCanUseOaid() {
-                return true;
-            }
-
-            /**
-             * 是否能使用Gaid
-             *
-             * @return true可以使用，false禁止使用。默认为true
-             */
-            @Override
-            public boolean isCanUseGaid() {
-                return true;
-            }
-        });
+        BeiZis.init(context, config.getBzAppId());
     }
 
     public static void initGroMore(Context context) {

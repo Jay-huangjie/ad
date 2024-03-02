@@ -12,10 +12,10 @@ ext {
     //  .\gradlew publishToMavenLocal
     sdk = [
             gromoreSdk   : '5.8.0.7',
-            gdtSdkName   : 'GDTSDK.unionNormal.4.551.1421',
+            gdtSdkName   : 'GDTSDK.unionNormal.4.550.1420',
             gdtAdapter   : '4.550.1420.2',
-            bz_sdk       : 'beizi_ad_sdk_3.4.20.40',
-            bz_fusion_sdk: 'beizi_fusion_sdk_4.90.3.9',
+            bz_sdk       : 'beizi_ad_sdk_3.5.0.5',
+            bz_fusion_sdk: 'beizi_fusion_sdk_4.90.4.5',
             oaid_sdk     : 'oaid_sdk_1.0.25'
     ]
 }

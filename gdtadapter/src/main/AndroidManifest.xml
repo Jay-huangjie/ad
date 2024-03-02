@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.zlfc.gdtadapter">
    <application>
        <!--
@@ -15,5 +16,25 @@
                android:name="android.support.FILE_PROVIDER_PATHS"
                android:resource="@xml/gdt_file_path" />
        </provider>
+
+       <activity
+           android:name="com.qq.e.ads.PortraitADActivity"
+           android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
+           android:screenOrientation="portrait" />
+       <activity
+           android:name="com.qq.e.ads.LandscapeADActivity"
+           android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
+           android:screenOrientation="landscape"
+           tools:replace="android:screenOrientation" />
+
+       <!-- 声明SDK所需要的组件 -->
+       <service
+           android:name="com.qq.e.comm.DownloadService"
+           android:exported="false" />
+       <!-- 请开发者注意字母的大小写，ADActivity，而不是AdActivity -->
+
+       <activity
+           android:name="com.qq.e.ads.ADActivity"
+           android:configChanges="keyboard|keyboardHidden|orientation|screenSize" />
    </application>
 </manifest>
