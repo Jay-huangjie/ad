@@ -36,7 +36,7 @@ abstract class GdtProviderNative : GdtProviderInter() {
         }
 
         val mAdManager = NativeUnifiedAD(activity, TogetherAdGdt.idMapGDT[alias], nativeADUnifiedListener)
-        mAdManager.setDownAPPConfirmPolicy(GdtProvider.Native.downAPPConfirmPolicy)
+//        mAdManager.setDownAPPConfirmPolicy(GdtProvider.Native.downAPPConfirmPolicy)
         GdtProvider.Native.categories?.let { mAdManager.setCategories(it) }
         mAdManager.setMaxVideoDuration(GdtProvider.Native.maxVideoDuration)//有效值就是 5-60
         mAdManager.setMinVideoDuration(GdtProvider.Native.minVideoDuration)

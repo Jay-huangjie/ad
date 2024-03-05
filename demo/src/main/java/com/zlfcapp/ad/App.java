@@ -19,7 +19,7 @@ public class App extends Application {
     }
 
     public void initZlfcad() {
-        AdCustomManager.initAd(this, false, new AdCustomConfig.Builder()
+        AdCustomManager.initAd(this, true, new AdCustomConfig.Builder()
                 .setBzAppId("21158")
                 .setBzSplashAdId("105288")
                 .setPublisherDid("11111")
