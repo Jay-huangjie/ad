@@ -142,12 +142,14 @@ public class AdCustomConfig {
             return this;
         }
 
-        public void setDebug(boolean debug) {
+        public Builder setDebug(boolean debug) {
             this.debug = debug;
+            return this;
         }
 
-        public void setBindingPrice(double mBindingPrice) {
+        public Builder setBindingPrice(double mBindingPrice) {
             this.mBindingPrice = mBindingPrice;
+            return this;
         }
     }
 
