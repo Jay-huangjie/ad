@@ -1,4 +1,5 @@
 package com.zlfcapp.zlfcad;
+
 import com.bytedance.sdk.openadsdk.mediation.init.MediationConfigUserInfoForSegment;
 
 /**
@@ -23,6 +24,8 @@ public class AdCustomConfig {
     //BeiZi 竞价
     private double mBindingPrice;
 
+    private boolean debug;
+
 
     private AdCustomConfig(Builder builder) {
         bzAppId = builder.bzAppId;
@@ -31,9 +34,10 @@ public class AdCustomConfig {
         bzSplashAdId = builder.bzSplashAdId;
         groMoreSplashAdId = builder.groMoreSplashAdId;
         mAdNetworkSlotId = builder.mAdNetworkSlotId;
+        debug = builder.debug;
         if (builder.mBindingPrice == 0) {
             mBindingPrice = 1500;
-        }else {
+        } else {
             mBindingPrice = builder.mBindingPrice;
         }
         if (builder.userInfo == null) {
@@ -81,6 +85,10 @@ public class AdCustomConfig {
         return mBindingPrice;
     }
 
+    public boolean isDebug() {
+        return debug;
+    }
+
     public static class Builder {
         private String bzAppId;
         private MediationConfigUserInfoForSegment userInfo;
@@ -90,6 +98,7 @@ public class AdCustomConfig {
         private String mAdNetworkSlotId;
         private String bzSplashAdId;
         private double mBindingPrice;
+        private boolean debug;
 
         public Builder() {
         }
@@ -131,6 +140,10 @@ public class AdCustomConfig {
         public Builder setmAdNetworkSlotId(String mAdNetworkSlotId) {
             this.mAdNetworkSlotId = mAdNetworkSlotId;
             return this;
+        }
+
+        public void setDebug(boolean debug) {
+            this.debug = debug;
         }
 
         public void setBindingPrice(double mBindingPrice) {

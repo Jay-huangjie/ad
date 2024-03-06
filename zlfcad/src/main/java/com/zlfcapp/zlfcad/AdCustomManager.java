@@ -139,8 +139,8 @@ public class AdCustomManager {
                 .appId(config.getCsjAppId())
                 .appName(getAppName(context))
                 .supportMultiProcess(true)
-                .debug(BuildConfig.DEBUG)
                 .useMediation(true)
+                .debug(config.isDebug())
                 .setMediationConfig(new MediationConfig.Builder() //可设置聚合特有参数详细设置请参考该api
                         .setMediationConfigUserInfoForSegment(config.getUserInfo())//如果您需要配置流量分组信息请参考该api
                         .build())
