@@ -20,16 +20,19 @@ android {
             consumerProguardFiles 'proguard-rules.pro'
         }
     }
-
-    repositories { flatDir { dirs '../libs_gdt' } }
+    repositories {
+        flatDir name: 'libs', dirs: 'libs'
+        flatDir dirs: ['libs', '../libs_gdt','../libs_csj']
+    }
 }
 
 dependencies {
     implementation 'androidx.appcompat:appcompat:1.3.1'
     compileOnly fileTree(dir: '../libs_gdt', include: ['*.aar'])
+    compileOnly fileTree(dir: '../libs_csj', include: ['*.aar'])
+    compileOnly fileTree(dir: 'libs', include: ['*.aar'])
     embed(name: rootProject.ext.sdk.gdtSdkName, ext: 'aar')
-    api "com.pangle.cn:mediation-gdt-adapter:$rootProject.ext.sdk.gdtAdapter"
-    compileOnly "com.pangle.cn:mediation-sdk:$rootProject.ext.sdk.gromoreSdk"
+    embed(name: rootProject.ext.sdk.gdtAdapter, ext: 'aar')
 }
 
 afterEvaluate {

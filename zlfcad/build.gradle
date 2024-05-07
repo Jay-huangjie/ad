@@ -20,17 +20,21 @@ android {
             consumerProguardFiles 'proguard-rules.pro'
         }
     }
-    repositories { flatDir { dirs '../libs_bz' } }
+    repositories {
+        flatDir name: 'libs', dirs: 'libs'
+        flatDir dirs: ['libs', '../libs_csj', '../libs_bz']
+    }
 }
 
 /*更新新的sdk 需要去掉embed，拉取下最新的，再来放开*/
 dependencies {
     implementation 'androidx.appcompat:appcompat:1.3.1'
     compileOnly fileTree(dir: '../libs_bz', include: ['*.aar'])
+    compileOnly fileTree(dir: '../libs_csj', include: ['*.aar'])
     embed(name: rootProject.ext.sdk.bz_sdk, ext: 'aar')
     embed(name: rootProject.ext.sdk.bz_fusion_sdk, ext: 'aar')
     embed(name: rootProject.ext.sdk.oaid_sdk, ext: 'aar')
-    api "com.pangle.cn:mediation-sdk:$rootProject.ext.sdk.gromoreSdk"
+    embed(name: rootProject.ext.sdk.csjSdkName, ext: 'aar')
 }
 
 afterEvaluate {

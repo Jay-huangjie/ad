@@ -22,12 +22,15 @@ android {
         }
     }
 
+    repositories { flatDir { dirs '../libs_csj' } }
+
 }
 //本地编译检测  gradlew publishToMavenLocal
 dependencies {
     api fileTree(dir: 'libs', include: ['*.jar'])
+    compileOnly fileTree(dir: '../libs_csj', include: ['*.aar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    api "com.pangle.cn:mediation-sdk:$rootProject.ext.sdk.gromoreSdk"
+    embed(name: rootProject.ext.sdk.csjSdkName, ext: 'aar')
     api project(':core')
 }
 
