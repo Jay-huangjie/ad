@@ -13,7 +13,7 @@ import com.mediation.ads.listener.AdListener;
  * 插全屏管理类。
  * 只需要复制粘贴到项目中，通过回调处理相应的业务逻辑即可使用完成广告加载&展示
  */
-public class AdInterstitialProvide extends BaseProvide{
+public class AdInterstitialProvide extends BaseProvide {
 
     private TTFullScreenVideoAd mTTFullScreenVideoAd;
     private AdListener mCallback;
@@ -28,13 +28,13 @@ public class AdInterstitialProvide extends BaseProvide{
         return mTTFullScreenVideoAd;
     }
 
-    public void showAd(TTFullScreenVideoAd ad) {
+    public void showAd(TTFullScreenVideoAd ad, boolean isCache) {
         mTTFullScreenVideoAd = ad;
-        if (mTTFullScreenVideoAd.getMediationManager().isReady()) {
+        if (mTTFullScreenVideoAd.getMediationManager().isReady() || !isCache) {
             mTTFullScreenVideoAd.setFullScreenVideoAdInteractionListener(new TTFullScreenVideoAd.FullScreenVideoAdInteractionListener() {
                 @Override
                 public void onAdShow() {
-                      mCallback.onAdExposure();
+                    mCallback.onAdExposure();
                 }
 
                 @Override
@@ -58,7 +58,7 @@ public class AdInterstitialProvide extends BaseProvide{
                 }
             });
             mTTFullScreenVideoAd.showFullScreenVideoAd(mActivity);
-        }else {
+        } else {
             mCallback.onAdFailed(-100, "广告加载成功,但是还没准备好");
         }
 
@@ -82,7 +82,7 @@ public class AdInterstitialProvide extends BaseProvide{
             public void onFullScreenVideoAdLoad(TTFullScreenVideoAd ttFullScreenVideoAd) {
                 mCallback.onAdLoaded();
                 if (ttFullScreenVideoAd != null) {
-                    showAd(ttFullScreenVideoAd);
+                    showAd(ttFullScreenVideoAd, false);
                 } else {
                     mCallback.onAdFailed(0, "广告加载成功,但是无广告");
                 }
@@ -97,7 +97,7 @@ public class AdInterstitialProvide extends BaseProvide{
             public void onFullScreenVideoCached(TTFullScreenVideoAd ttFullScreenVideoAd) {
                 mCallback.onAdLoaded();
                 if (ttFullScreenVideoAd != null) {
-                    showAd(ttFullScreenVideoAd);
+                    showAd(ttFullScreenVideoAd, true);
                 } else {
                     mCallback.onAdFailed(0, "广告加载成功,但是无广告");
                 }
