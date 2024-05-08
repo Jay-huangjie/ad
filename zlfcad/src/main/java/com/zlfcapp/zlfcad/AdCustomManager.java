@@ -14,6 +14,7 @@ import com.beizi.fusion.BeiZis;
 import com.bytedance.sdk.openadsdk.TTAdConfig;
 import com.bytedance.sdk.openadsdk.TTAdSdk;
 import com.bytedance.sdk.openadsdk.mediation.init.MediationConfig;
+import com.mediation.ads.AdInitManager;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -74,11 +75,8 @@ public class AdCustomManager {
     private static void doInit(@NonNull Context context) {
         if (!sInit) {
             sInit = true;
-            if (AdCustomManager.adOpen) {
-                initGroMore(context);
-            } else {
-                initBeizi(context);
-            }
+            initBeizi(context);
+            initGroMore(context);
         }
     }
 
@@ -89,10 +87,10 @@ public class AdCustomManager {
 
     public static void initGroMore(Context context) {
         if (!groMoreInit) {
-            TTAdSdk.init(context, buildConfig(context));
-            TTAdSdk.start(new TTAdSdk.Callback() {
+            AdInitManager.isDebug = config.isDebug();
+            AdInitManager.addInitCallback(new AdInitManager.InitCallback() {
                 @Override
-                public void success() {
+                public void onSuccess() {
                     groMoreInit = true;
                     mHandler.post(new Runnable() {
                         @Override
@@ -107,7 +105,7 @@ public class AdCustomManager {
                 }
 
                 @Override
-                public void fail(int i, String s) {
+                public void onFair() {
                     groMoreInit = false;
                     mHandler.post(new Runnable() {
                         @Override
@@ -121,6 +119,7 @@ public class AdCustomManager {
                     });
                 }
             });
+            AdInitManager.init(context, config.getCsjAppId(), config.getUserInfo());
         }
     }
 
@@ -132,33 +131,6 @@ public class AdCustomManager {
 
     public static boolean isGroMoreInit() {
         return groMoreInit;
-    }
-
-    private static TTAdConfig buildConfig(Context context) {
-        return new TTAdConfig.Builder()
-                .appId(config.getCsjAppId())
-                .appName(getAppName(context))
-                .supportMultiProcess(true)
-                .useMediation(true)
-                .debug(config.isDebug())
-                .setMediationConfig(new MediationConfig.Builder() //可设置聚合特有参数详细设置请参考该api
-                        .setMediationConfigUserInfoForSegment(config.getUserInfo())//如果您需要配置流量分组信息请参考该api
-                        .build())
-                .build();
-    }
-
-
-    private static String getAppName(Context context) {
-        String name = "";
-        PackageManager packageManager = context.getPackageManager();
-        ApplicationInfo applicationInfo = null;
-        try {
-            applicationInfo = packageManager.getApplicationInfo(context.getApplicationInfo().packageName, 0);
-            name = (String) (applicationInfo != null ? packageManager.getApplicationLabel(applicationInfo) : name);
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-        }
-        return name;
     }
 
 }

@@ -29,12 +29,12 @@ android {
 /*更新新的sdk 需要去掉embed，拉取下最新的，再来放开*/
 dependencies {
     implementation 'androidx.appcompat:appcompat:1.3.1'
+    api project(':mediation')
     compileOnly fileTree(dir: '../libs_bz', include: ['*.aar'])
     compileOnly fileTree(dir: '../libs_csj', include: ['*.aar'])
     embed(name: rootProject.ext.sdk.bz_sdk, ext: 'aar')
     embed(name: rootProject.ext.sdk.bz_fusion_sdk, ext: 'aar')
     embed(name: rootProject.ext.sdk.oaid_sdk, ext: 'aar')
-    embed(name: rootProject.ext.sdk.csjSdkName, ext: 'aar')
 }
 
 afterEvaluate {

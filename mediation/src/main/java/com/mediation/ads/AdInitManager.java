@@ -23,6 +23,11 @@ import java.util.List;
  */
 public class AdInitManager {
 
+    /**
+     * SDK是否是debug模式，请在init之前调用
+     */
+    public static boolean isDebug = false;
+
     private static boolean sInit;
 
     public static boolean initSuccess;
@@ -76,7 +81,7 @@ public class AdInitManager {
         return new TTAdConfig.Builder()
                 .appId(appID)
                 .appName(getAppName(context))
-                .debug(BuildConfig.DEBUG)
+                .debug(isDebug)
                 .useMediation(true)
                 .setMediationConfig(new MediationConfig.Builder() //可设置聚合特有参数详细设置请参考该api
                         .setMediationConfigUserInfoForSegment(info)//如果您需要配置流量分组信息请参考该api
