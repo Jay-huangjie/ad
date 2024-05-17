@@ -111,3 +111,31 @@ AdBannerProvide provide = new AdBannerProvide(this, mSplashContainer, new AdList
 ```
 provide.destroy();
 ```
+
+### zlfcad 
+清单文件里声明：
+```
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="${applicationId}.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/beizi_file_path" />
+        </provider>
+```
+
+xml:
+```
+<paths xmlns:android="http://schemas.android.com/apk/res/android">
+    <external-path
+        name="external"
+        path="Beizi" />
+
+    <external-path name="external_files" path="." />
+
+</paths>
+```
+
+如果你已经声明了FileProvider和别的path，只要把xml里的paths复制进去即可
