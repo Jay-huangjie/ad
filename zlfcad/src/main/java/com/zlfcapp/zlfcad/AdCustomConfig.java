@@ -26,6 +26,8 @@ public class AdCustomConfig {
 
     private boolean debug;
 
+    private String oaid;
+
 
     private AdCustomConfig(Builder builder) {
         bzAppId = builder.bzAppId;
@@ -35,6 +37,7 @@ public class AdCustomConfig {
         groMoreSplashAdId = builder.groMoreSplashAdId;
         mAdNetworkSlotId = builder.mAdNetworkSlotId;
         debug = builder.debug;
+        oaid = builder.oaid;
         if (builder.mBindingPrice == 0) {
             mBindingPrice = 1500;
         } else {
@@ -89,7 +92,12 @@ public class AdCustomConfig {
         return debug;
     }
 
+    public String getOaid() {
+        return oaid;
+    }
+
     public static class Builder {
+        private String oaid;
         private String bzAppId;
         private MediationConfigUserInfoForSegment userInfo;
         private String publisherDid;
@@ -144,6 +152,11 @@ public class AdCustomConfig {
 
         public Builder setDebug(boolean debug) {
             this.debug = debug;
+            return this;
+        }
+
+        public Builder setOaid(String oaid) {
+            this.oaid = oaid;
             return this;
         }
 

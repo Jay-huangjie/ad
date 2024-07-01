@@ -2,6 +2,7 @@ package com.ifmvo.togetherad.csj
 
 import android.annotation.SuppressLint
 import android.content.Context
+import androidx.annotation.NonNull
 import com.bytedance.sdk.openadsdk.*
 import com.ifmvo.togetherad.core.TogetherAd
 import com.ifmvo.togetherad.core.entity.AdProviderEntity
@@ -64,7 +65,6 @@ object TogetherAdCsj {
     //全局使用的 TTAdManager
     val mTTAdManager = TTAdSdk.getAdManager()
 
-    @NotNull
     var mContext: Context? = null
 
     /**
@@ -131,7 +131,7 @@ object TogetherAdCsj {
         ttAdConfig.appId(csjAdAppId)
         ttAdConfig.appName(appName)
         ttAdConfig.themeStatus(themeStatus)//设置是否为夜间模式
-        ttAdConfig.useTextureView(useTextureView) //使用TextureView控件播放视频,默认为SurfaceView,当有SurfaceView冲突的场景，可以使用TextureView
+//        ttAdConfig.useTextureView(useTextureView) //使用TextureView控件播放视频,默认为SurfaceView,当有SurfaceView冲突的场景，可以使用TextureView
         ttAdConfig.titleBarTheme(titleBarTheme)
         ttAdConfig.allowShowNotify(allowShowNotify) //是否允许sdk展示通知栏提示
         ttAdConfig.debug(debug) //测试阶段打开，可以通过日志排查问题，上线时去除该调用

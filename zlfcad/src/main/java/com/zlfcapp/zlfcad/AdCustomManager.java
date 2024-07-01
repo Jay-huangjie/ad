@@ -82,7 +82,7 @@ public class AdCustomManager {
 
 
     public static void initBeizi(Context context) {
-        BeiZis.init(context, config.getBzAppId());
+        BeiZis.init(context, config.getBzAppId(), null, null, config.getOaid());
     }
 
     public static void initGroMore(Context context) {
