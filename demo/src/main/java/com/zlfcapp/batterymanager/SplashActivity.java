@@ -26,6 +26,7 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         FrameLayout mSplashContainer = findViewById(R.id.adContainer);
+        Log.e("HJ","test");
 //        mSplashContainer.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
