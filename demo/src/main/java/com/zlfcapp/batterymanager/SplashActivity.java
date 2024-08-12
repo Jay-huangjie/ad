@@ -11,9 +11,6 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.bytedance.tools.ui.ToolsActivity;
-import com.zlfcapp.zlfcad.core.AdSplashProvide;
-import com.zlfcapp.zlfcad.listener.SplashAdListener;
 
 
 /**
@@ -22,7 +19,7 @@ import com.zlfcapp.zlfcad.listener.SplashAdListener;
 public class SplashActivity extends AppCompatActivity {
 
 
-    private AdSplashProvide provide;
+//    private AdSplashProvide provide;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -40,37 +37,37 @@ public class SplashActivity extends AppCompatActivity {
 //                }
 //            }
 //        });
-        provide = new AdSplashProvide(SplashActivity.this, new SplashAdListener() {
-            @Override
-            public void onAdLoaded() {
-                provide.showAd(mSplashContainer);
-            }
-
-            @Override
-            public void onAdClicked() {
-
-            }
-
-            @Override
-            public void onAdExposure() {
-
-            }
-
-            @Override
-            public void onAdDismissed() {
-
-            }
-
-            @Override
-            public void onAdTimeout() {
-
-            }
-
-            @Override
-            public void onAdFailed(int errorCode, String failedMsg) {
-                Log.e("HJ", "Error:" + failedMsg+"--"+errorCode);
-            }
-        });
+//        provide = new AdSplashProvide(SplashActivity.this, new SplashAdListener() {
+//            @Override
+//            public void onAdLoaded() {
+//                provide.showAd(mSplashContainer);
+//            }
+//
+//            @Override
+//            public void onAdClicked() {
+//
+//            }
+//
+//            @Override
+//            public void onAdExposure() {
+//
+//            }
+//
+//            @Override
+//            public void onAdDismissed() {
+//
+//            }
+//
+//            @Override
+//            public void onAdTimeout() {
+//
+//            }
+//
+//            @Override
+//            public void onAdFailed(int errorCode, String failedMsg) {
+//                Log.e("HJ", "Error:" + failedMsg+"--"+errorCode);
+//            }
+//        });
 
 
 //        LinkedHashMap<String, Integer> map = new LinkedHashMap<>();
