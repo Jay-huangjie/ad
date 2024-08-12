@@ -94,7 +94,6 @@ abstract class GdtProviderSplash : GdtProviderReward() {
              * 如果需要使用默认值，可以调用上一个构造方法，或者给 fetchDelay 设为0。
              */
         }, GdtProvider.Splash.maxFetchDelay)
-
         splashAd?.fetchAdOnly()
     }
 
@@ -178,7 +177,7 @@ abstract class GdtProviderSplash : GdtProviderReward() {
          * 取值范围为[3000, 5000]ms。
          * 如果需要使用默认值，可以调用上一个构造方法，或者给 fetchDelay 设为0。
          */
-        splashAd?.fetchAndShowIn(container)
+        splashAd?.fetchAdOnly()
     }
 
     override fun destroySplashAd(context: Context) {
