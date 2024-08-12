@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.zlfc.beiziadapter">
+
+    <!--Beizi-->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-sdk tools:overrideLibrary="com.beizi.ad,com.beizi.fusion,com.bun.miitmdid,com.kwad.sdk,pl.droidsonroids.gif,com.bytedance.sdk.openadsdk"/>
+   <application>
+
+   </application>
+</manifest>
