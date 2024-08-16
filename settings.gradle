@@ -1,4 +1,4 @@
-include ':huawei'
+//include ':huawei'
 include ':core'
 include ':gdt'
 include ':csj'
