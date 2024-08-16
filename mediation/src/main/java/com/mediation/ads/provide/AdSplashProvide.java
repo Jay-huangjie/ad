@@ -126,7 +126,7 @@ public class AdSplashProvide extends BaseProvide {
     }
 
 
-    public void showAd() {
+    private void showAd() {
         View splashView = mCsjSplashAd.getSplashView();
         UIUtils.removeFromParent(splashView);
         adContain.removeAllViews();
