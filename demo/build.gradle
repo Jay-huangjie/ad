@@ -73,9 +73,9 @@ dependencies {
 
 //    implementation 'com.huawei.hms:ads-identifier:3.4.39.302'
 //    implementation 'com.huawei.hms:ads-installreferrer:3.4.39.302'
-//    implementation 'com.github.Jay-huangjie.ad:adGdtAdapter:1.8.0'
-//    implementation 'com.github.Jay-huangjie.ad:adsdk:1.8.0'
-//    implementation 'com.github.Jay-huangjie.ad:mediation:1.8.0'
+    implementation 'com.github.Jay-huangjie.ad:adGdtAdapter:1.8.5'
+    implementation 'com.github.Jay-huangjie.ad:adsdk:1.8.5'
+    implementation 'com.github.Jay-huangjie.ad:mediation:1.8.5'
     //TogetherAd
 //    implementation project(':csj')
 //    implementation project(':gdtadapter')

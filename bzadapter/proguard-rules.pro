@@ -27,3 +27,9 @@
  -keep class android.support.v7.**{
      public *;
  }
+
+ # 倍孜混淆
+ -dontwarn com.beizi.fusion.**
+ -dontwarn com.beizi.ad.**
+ -keep class com.beizi.fusion.** {*; }
+ -keep class com.beizi.ad.** {*; }

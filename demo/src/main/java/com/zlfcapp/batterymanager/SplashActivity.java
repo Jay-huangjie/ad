@@ -11,6 +11,12 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.bytedance.sdk.openadsdk.mediation.MediationConstant;
+import com.bytedance.sdk.openadsdk.mediation.ad.MediationSplashRequestInfo;
+import com.bytedance.tools.ui.ToolsActivity;
+import com.mediation.ads.listener.AdListener;
+import com.mediation.ads.provide.AdSplashProvide;
+import com.zlfcapp.zlfcad.listener.SplashAdListener;
 
 
 /**
@@ -18,30 +24,71 @@ import androidx.appcompat.app.AppCompatActivity;
  */
 public class SplashActivity extends AppCompatActivity {
 
-
-//    private AdSplashProvide provide;
+    private AdSplashProvide provide;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         FrameLayout mSplashContainer = findViewById(R.id.adContainer);
-        Log.e("HJ","test");
-//        mSplashContainer.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                try {
-//                    Intent intent = new Intent(SplashActivity.this, ToolsActivity.class);
-//                    startActivity(intent);
-//                } catch (Exception e) {
-//                    Toast.makeText(SplashActivity.this,"测试工具不可用" + e, Toast.LENGTH_SHORT).show();
+
+        mSplashContainer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    Intent intent = new Intent(SplashActivity.this, ToolsActivity.class);
+                    startActivity(intent);
+                } catch (Exception e) {
+                    Toast.makeText(SplashActivity.this,"测试工具不可用" + e, Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        provide = new AdSplashProvide(this, mSplashContainer,
+                new MediationSplashRequestInfo(MediationConstant.ADN_PANGLE, "888051093", "5100771", "") {
+                }, new AdListener() {
+            @Override
+            public void onAdLoaded() {
+//                if (provide != null) {
+//                    provide.showAd();
 //                }
+            }
+
+            @Override
+            public void onAdClicked() {
+
+            }
+
+            @Override
+            public void onAdExposure() {
+
+            }
+
+            @Override
+            public void onAdDismissed() {
+
+            }
+
+            @Override
+            public void onAdFailed(int errorCode, String failedMsg) {
+
+            }
+        });
+        provide.loadAd("102239173");
+
+
+
+//        provide = new com.zlfcapp.zlfcad.core.AdSplashProvide(this, new SplashAdListener() {
+//
+//            @Override
+//            public void onAdFailed(int i, String s) {
+//
 //            }
-//        });
-//        provide = new AdSplashProvide(SplashActivity.this, new SplashAdListener() {
+//
 //            @Override
 //            public void onAdLoaded() {
-//                provide.showAd(mSplashContainer);
+//                if (provide != null) {
+//                    provide.showAd(mSplashContainer);
+//                }
 //            }
 //
 //            @Override
@@ -63,12 +110,8 @@ public class SplashActivity extends AppCompatActivity {
 //            public void onAdTimeout() {
 //
 //            }
-//
-//            @Override
-//            public void onAdFailed(int errorCode, String failedMsg) {
-//                Log.e("HJ", "Error:" + failedMsg+"--"+errorCode);
-//            }
 //        });
+
 
 
 //        LinkedHashMap<String, Integer> map = new LinkedHashMap<>();
