@@ -16,8 +16,6 @@ import com.bytedance.sdk.openadsdk.mediation.ad.MediationSplashRequestInfo;
 import com.bytedance.tools.ui.ToolsActivity;
 import com.mediation.ads.listener.AdListener;
 import com.mediation.ads.provide.AdSplashProvide;
-import com.zlfcapp.zlfcad.listener.SplashAdListener;
-
 
 /**
  * created by hj on 2023/6/1.
