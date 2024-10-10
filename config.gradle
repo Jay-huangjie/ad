@@ -14,7 +14,7 @@ ext {
             csjSdkName   : 'open_ad_sdk_6.4.1.6',
             gdtSdkName   : 'GDTSDK.unionNormal.4.591.1461',
             gdtAdapter   : 'mediation_gdt_adapter_4.591.1461.2',
-            bz_sdk       : 'beizi_ad_sdk_3.5.0.21',
-            bz_fusion_sdk: 'beizi_fusion_sdk_4.90.4.24',
+            bz_sdk       : 'beizi_ad_sdk_3.5.0.31',
+            bz_fusion_sdk: 'beizi_fusion_sdk_4.90.4.31',
     ]
 }
