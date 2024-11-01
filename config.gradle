@@ -11,9 +11,9 @@ ext {
     ]
     //  .\gradlew publishToMavenLocal
     sdk = [
-            csjSdkName   : 'open_ad_sdk_6.4.1.6',
-            gdtSdkName   : 'GDTSDK.unionNormal.4.591.1461',
-            gdtAdapter   : 'mediation_gdt_adapter_4.591.1461.2',
+            csjSdkName   : 'open_ad_sdk_6.4.3.6',
+            gdtSdkName   : 'GDTSDK.unionNormal.4.603.1473',
+            gdtAdapter   : 'mediation_gdt_adapter_4.603.1473.0',
             bz_sdk       : 'beizi_ad_sdk_3.5.0.31',
             bz_fusion_sdk: 'beizi_fusion_sdk_4.90.4.31',
     ]
