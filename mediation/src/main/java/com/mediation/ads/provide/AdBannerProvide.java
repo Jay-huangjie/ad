@@ -19,7 +19,7 @@ import java.util.List;
 /**
  * created by hj on 2023/6/2.
  */
-public class AdBannerProvide extends BaseProvide{
+public class AdBannerProvide extends BaseProvide {
 
     private AdListener mListener;
 
@@ -44,14 +44,15 @@ public class AdBannerProvide extends BaseProvide{
 
 
     @Override
-    protected void init(String id) {
+    protected void init(String id, AdSlot adSlot) {
         adContain.removeAllViews();
-
         /** 这里是简单的banner请求adSlot设置，如果需要更多的设置，可参考AdUtils.kt中bannerAdSlot函数部分。 */
-        AdSlot adSlot = new AdSlot.Builder()
-                .setCodeId(id)
-                .setImageAcceptedSize(width, height) // 单位px
-                .build();
+        if (adSlot == null) {
+            adSlot = new AdSlot.Builder()
+                    .setCodeId(id)
+                    .setImageAcceptedSize(width, height) // 单位px
+                    .build();
+        }
         TTAdNative adNativeLoader = TTAdSdk.getAdManager().createAdNative(mActivity);
         adNativeLoader.loadBannerExpressAd(adSlot, new TTAdNative.NativeExpressAdListener() {
             @Override
@@ -114,6 +115,7 @@ public class AdBannerProvide extends BaseProvide{
             }
         });
     }
+
 
     @Override
     protected void onDestroy() {

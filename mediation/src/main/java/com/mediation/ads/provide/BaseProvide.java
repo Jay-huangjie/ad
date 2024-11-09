@@ -3,6 +3,9 @@ package com.mediation.ads.provide;
 import android.app.Activity;
 import android.util.Log;
 
+import androidx.annotation.Nullable;
+
+import com.bytedance.sdk.openadsdk.AdSlot;
 import com.bytedance.sdk.openadsdk.TTAdManager;
 import com.bytedance.sdk.openadsdk.TTAdSdk;
 import com.mediation.ads.AdInitManager;
@@ -22,18 +25,23 @@ public abstract class BaseProvide {
         this.mActivity = mActivity;
     }
 
-    //加载广告
     public void loadAd(String id) {
+        loadAd(id, null);
+    }
+
+
+    //加载广告
+    public void loadAd(String id,@Nullable AdSlot adSlot) {
         if (!AdInitManager.initSuccess) {
             AdInitManager.initSuccess = TTAdSdk.isInitSuccess();
         }
         if (AdInitManager.initSuccess) {
-            init(id);
+            init(id, adSlot);
         } else {
             mCallBack = new AdInitManager.InitCallback() {
                 @Override
                 public void onSuccess() {
-                    init(id);
+                    init(id, adSlot);
                 }
 
                 @Override
@@ -58,7 +66,7 @@ public abstract class BaseProvide {
         Log.e(TAG, message);
     }
 
-    protected abstract void init(String id);
+    protected abstract void init(String id, AdSlot adSlot);
 
     protected abstract void onDestroy();
 

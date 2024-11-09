@@ -66,12 +66,14 @@ public class AdInterstitialProvide extends BaseProvide {
 
 
     @Override
-    protected void init(String id) {
+    protected void init(String id, AdSlot adSlot) {
         TTAdNative adNative = TTAdSdk.getAdManager().createAdNative(mActivity);
-        AdSlot adSlot = new AdSlot.Builder()
-                .setCodeId(id)
-                .setOrientation(TTAdConstant.VERTICAL)
-                .build();
+        if (adSlot == null) {
+            adSlot = new AdSlot.Builder()
+                    .setCodeId(id)
+                    .setOrientation(TTAdConstant.VERTICAL)
+                    .build();
+        }
         adNative.loadFullScreenVideoAd(adSlot, new TTAdNative.FullScreenVideoAdListener() {
             @Override
             public void onError(int i, String s) {

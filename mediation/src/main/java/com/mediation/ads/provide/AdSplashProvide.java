@@ -45,19 +45,21 @@ public class AdSplashProvide extends BaseProvide {
     }
 
     @Override
-    protected void init(String id) {
+    protected void init(String id, AdSlot adSlot) {
         Handler mHandler = new Handler();
         TTAdNative adNative = TTAdSdk.getAdManager().createAdNative(mActivity);
-        AdSlot adslot = new AdSlot.Builder().
-                setCodeId(id)
-                .setImageAcceptedSize(UIUtils.getScreenWidthInPx(mActivity), UIUtils.getScreenHeightInPx(mActivity))
-                .setMediationAdSlot(
-                        new MediationAdSlot.Builder()
-                                .setMediationSplashRequestInfo(requestInfo)
-                                .build()
-                )
-                .build();
-        adNative.loadSplashAd(adslot, new TTAdNative.CSJSplashAdListener() {
+        if (adSlot == null) {
+            adSlot = new AdSlot.Builder().
+                    setCodeId(id)
+                    .setImageAcceptedSize(UIUtils.getScreenWidthInPx(mActivity), UIUtils.getScreenHeightInPx(mActivity))
+                    .setMediationAdSlot(
+                            new MediationAdSlot.Builder()
+                                    .setMediationSplashRequestInfo(requestInfo)
+                                    .build()
+                    )
+                    .build();
+        }
+        adNative.loadSplashAd(adSlot, new TTAdNative.CSJSplashAdListener() {
             @Override
             public void onSplashLoadSuccess(CSJSplashAd csjSplashAd) {
 
