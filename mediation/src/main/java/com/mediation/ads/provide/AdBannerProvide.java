@@ -13,6 +13,7 @@ import com.bytedance.sdk.openadsdk.TTAdSdk;
 import com.bytedance.sdk.openadsdk.TTNativeExpressAd;
 import com.mediation.ads.UIUtils;
 import com.mediation.ads.listener.AdListener;
+import com.mediation.ads.listener.IAdSlotBuild;
 
 import java.util.List;
 
@@ -44,15 +45,15 @@ public class AdBannerProvide extends BaseProvide {
 
 
     @Override
-    protected void init(String id, AdSlot adSlot) {
+    protected void init(String id, IAdSlotBuild iAdSlotBuild) {
         adContain.removeAllViews();
-        /** 这里是简单的banner请求adSlot设置，如果需要更多的设置，可参考AdUtils.kt中bannerAdSlot函数部分。 */
-        if (adSlot == null) {
-            adSlot = new AdSlot.Builder()
-                    .setCodeId(id)
-                    .setImageAcceptedSize(width, height) // 单位px
-                    .build();
+        AdSlot.Builder builder = new AdSlot.Builder()
+                .setCodeId(id)
+                .setImageAcceptedSize(width, height);// 单位px
+        if (iAdSlotBuild != null) {
+            iAdSlotBuild.getBuild(builder);
         }
+        AdSlot adSlot = builder.build();
         TTAdNative adNativeLoader = TTAdSdk.getAdManager().createAdNative(mActivity);
         adNativeLoader.loadBannerExpressAd(adSlot, new TTAdNative.NativeExpressAdListener() {
             @Override

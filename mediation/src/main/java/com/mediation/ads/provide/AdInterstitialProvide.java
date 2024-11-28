@@ -8,6 +8,7 @@ import com.bytedance.sdk.openadsdk.TTAdNative;
 import com.bytedance.sdk.openadsdk.TTAdSdk;
 import com.bytedance.sdk.openadsdk.TTFullScreenVideoAd;
 import com.mediation.ads.listener.AdListener;
+import com.mediation.ads.listener.IAdSlotBuild;
 
 /**
  * 插全屏管理类。
@@ -66,14 +67,15 @@ public class AdInterstitialProvide extends BaseProvide {
 
 
     @Override
-    protected void init(String id, AdSlot adSlot) {
+    protected void init(String id, IAdSlotBuild iAdSlotBuild) {
         TTAdNative adNative = TTAdSdk.getAdManager().createAdNative(mActivity);
-        if (adSlot == null) {
-            adSlot = new AdSlot.Builder()
-                    .setCodeId(id)
-                    .setOrientation(TTAdConstant.VERTICAL)
-                    .build();
+        AdSlot.Builder builder = new AdSlot.Builder()
+                .setCodeId(id)
+                .setOrientation(TTAdConstant.ORIENTATION_VERTICAL);
+        if (iAdSlotBuild != null) {
+            iAdSlotBuild.getBuild(builder);
         }
+        AdSlot adSlot = builder.build();
         adNative.loadFullScreenVideoAd(adSlot, new TTAdNative.FullScreenVideoAdListener() {
             @Override
             public void onError(int i, String s) {

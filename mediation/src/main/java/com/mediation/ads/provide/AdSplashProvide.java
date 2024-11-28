@@ -15,6 +15,7 @@ import com.bytedance.sdk.openadsdk.mediation.ad.MediationAdSlot;
 import com.bytedance.sdk.openadsdk.mediation.ad.MediationSplashRequestInfo;
 import com.mediation.ads.UIUtils;
 import com.mediation.ads.listener.AdListener;
+import com.mediation.ads.listener.IAdSlotBuild;
 
 /**
  * 开屏管理类。
@@ -45,20 +46,21 @@ public class AdSplashProvide extends BaseProvide {
     }
 
     @Override
-    protected void init(String id, AdSlot adSlot) {
+    protected void init(String id, IAdSlotBuild iAdSlotBuild) {
         Handler mHandler = new Handler();
         TTAdNative adNative = TTAdSdk.getAdManager().createAdNative(mActivity);
-        if (adSlot == null) {
-            adSlot = new AdSlot.Builder().
-                    setCodeId(id)
-                    .setImageAcceptedSize(UIUtils.getScreenWidthInPx(mActivity), UIUtils.getScreenHeightInPx(mActivity))
-                    .setMediationAdSlot(
-                            new MediationAdSlot.Builder()
-                                    .setMediationSplashRequestInfo(requestInfo)
-                                    .build()
-                    )
-                    .build();
+        AdSlot.Builder builder = new AdSlot.Builder().
+                setCodeId(id)
+                .setImageAcceptedSize(UIUtils.getScreenWidthInPx(mActivity), UIUtils.getScreenHeightInPx(mActivity))
+                .setMediationAdSlot(
+                        new MediationAdSlot.Builder()
+                                .setMediationSplashRequestInfo(requestInfo)
+                                .build()
+                );
+        if (iAdSlotBuild != null) {
+            iAdSlotBuild.getBuild(builder);
         }
+        AdSlot adSlot = builder.build();
         adNative.loadSplashAd(adSlot, new TTAdNative.CSJSplashAdListener() {
             @Override
             public void onSplashLoadSuccess(CSJSplashAd csjSplashAd) {

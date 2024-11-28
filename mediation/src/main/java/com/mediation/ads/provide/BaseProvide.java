@@ -9,6 +9,7 @@ import com.bytedance.sdk.openadsdk.AdSlot;
 import com.bytedance.sdk.openadsdk.TTAdManager;
 import com.bytedance.sdk.openadsdk.TTAdSdk;
 import com.mediation.ads.AdInitManager;
+import com.mediation.ads.listener.IAdSlotBuild;
 
 /**
  * created by hj on 2023/6/2.
@@ -31,17 +32,17 @@ public abstract class BaseProvide {
 
 
     //加载广告
-    public void loadAd(String id,@Nullable AdSlot adSlot) {
+    public void loadAd(String id, IAdSlotBuild iAdSlotBuild) {
         if (!AdInitManager.initSuccess) {
             AdInitManager.initSuccess = TTAdSdk.isInitSuccess();
         }
         if (AdInitManager.initSuccess) {
-            init(id, adSlot);
+            init(id, iAdSlotBuild);
         } else {
             mCallBack = new AdInitManager.InitCallback() {
                 @Override
                 public void onSuccess() {
-                    init(id, adSlot);
+                    init(id, iAdSlotBuild);
                 }
 
                 @Override
@@ -66,7 +67,7 @@ public abstract class BaseProvide {
         Log.e(TAG, message);
     }
 
-    protected abstract void init(String id, AdSlot adSlot);
+    protected abstract void init(String id, IAdSlotBuild iAdSlotBuild);
 
     protected abstract void onDestroy();
 
