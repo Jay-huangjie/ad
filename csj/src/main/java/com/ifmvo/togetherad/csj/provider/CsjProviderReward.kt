@@ -52,7 +52,7 @@ abstract class CsjProviderReward : CsjProviderNativeExpress() {
             override fun onRewardVideoAdLoad(ad: TTRewardVideoAd) {
 
                 mttRewardVideoAd = ad
-                mttRewardVideoAd?.setShowDownLoadBar(CsjProvider.Reward.showDownLoadBar)
+//                mttRewardVideoAd?.setShowDownLoadBar(CsjProvider.Reward.showDownLoadBar)
 
                 val rewardAdListener = object : TTRewardVideoAd.RewardAdInteractionListener {
                     override fun onSkippedVideo() {
@@ -167,7 +167,7 @@ abstract class CsjProviderReward : CsjProviderNativeExpress() {
             override fun onRewardVideoAdLoad(ad: TTRewardVideoAd) {
 
                 mttRewardVideoAd = ad
-                mttRewardVideoAd?.setShowDownLoadBar(CsjProvider.Reward.showDownLoadBar)
+//                mttRewardVideoAd?.setShowDownLoadBar(CsjProvider.Reward.showDownLoadBar)
 
                 val rewardAdListener = object : TTRewardVideoAd.RewardAdInteractionListener {
                     override fun onSkippedVideo() {
