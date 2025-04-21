@@ -2,7 +2,7 @@ ext {
     android = [
             compileSdkVersion: 28,
 
-            minSdkVersion    : 21,
+            minSdkVersion    : 24,
             targetSdkVersion : 28,
 
             versionCode      : 20220119,
@@ -11,9 +11,9 @@ ext {
     ]
     //  .\gradlew publishToMavenLocal
     sdk = [
-            csjSdkName   : 'open_ad_sdk_6.7.0.6',
-            gdtSdkName   : 'GDTSDK.unionNormal.4.611.1481',
-            gdtAdapter   : 'mediation_gdt_adapter_4.611.1481.0',
+            csjSdkName   : 'open_ad_sdk_6.8.0.9',
+            gdtSdkName   : 'GDTSDK.unionNormal.4.630.1500',
+            gdtAdapter   : 'mediation_gdt_adapter_4.630.1500.1',
             bz_sdk       : 'beizi_ad_sdk_3.5.0.31',
             bz_fusion_sdk: 'beizi_fusion_sdk_4.90.4.31',
     ]
